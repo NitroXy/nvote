@@ -40,6 +40,25 @@ body {
     color: green;
 }
 
+#upload label {
+    display: inline-block;
+    width: 150px;
+}
+
+#upload .help {
+    padding-left: 1em;
+    font-size: 0.8em;
+    color: #666;
+}
+
+#upload input[type=text] {
+    width: 200px;
+}
+
+#upload textarea {
+    width: 354px;
+}
+
 .entry {
     border: 1px solid #000;
     padding: 1em;

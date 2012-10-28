@@ -15,33 +15,33 @@
 			<option value="<?=$cur->category_id?>"<?=$cur->category_id == $selected_category ? ' selected="selected"' : ''?>><?=$cur->name?></option>
 			<?php } ?>
 		</select>
-		<span id="cat_description"></span>
+		<span id="cat_description" class="help"></span>
 	</div>
 	<?php } ?>
 
 	<div>
 		<label for="title">Titel:</label>
 		<input type="text" name="title" id="title" value="<?=$title?>" />
-		<span>Bidragets titel.</span>
+		<span class="help">Bidragets titel.</span>
 	</div>
 
 	<div>
 		<label for="author">Skapare:</label>
 		<input type="text" name="author" id="author" value="<?=$author?>" />
-		<span>Uppge grupp eller alla de som bidragit till skapandet</span>
+		<span class="help">Uppge grupp eller alla de som bidragit till skapandet</span>
 	</div>
 
 	<div>
-		<label for="description">Beskrivning:</label>
+		<label for="description">Beskrivning:</label><br/>
 		<textarea name="description" id="description"><?=$description?></textarea>
-		<span></span>
+		<span class="help"></span>
 	</div>
 
 	<?php if ( $allow_file ){ ?>
 	<div>
 		<label for="filename">Filnamn:</label>
 		<input type="file" name="file" id="filename" />
-		<span>Max filstorlek <?=ini_get('upload_max_filesize')?>.</span>
+		<span class="help">Max filstorlek <?=ini_get('upload_max_filesize')?>.</span>
 	</div>
 	<?php } ?>
 
