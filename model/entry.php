@@ -100,9 +100,9 @@ class Entry extends BasicObject {
 		$ext = pathinfo($location, PATHINFO_EXTENSION);
 
 		global $dir;
-		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
+		$author = preg_replace('/[^a-zA-Z0-9]/', '_', $this->author);
 		$title = preg_replace('/[^a-zA-Z0-9]/', '_', $this->title);
-		$filename = "{$title}_by_{$username}.{$ext}";
+		$filename = "{$title}_by_{$author}.{$ext}";
 	}
 
 	public function get_revision(){
