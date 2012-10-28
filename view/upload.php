@@ -12,7 +12,7 @@
 		<label for="category">Kategori:</label>
 		<select name="category" id="category">
 			<?php foreach ( $category as $cur ){ ?>
-			<option value="<?=$cur->category_id?>"><?=$cur->name?></option>
+			<option value="<?=$cur->category_id?>"<?=$cur->category_id == $selected_category ? ' selected="selected"' : ''?>><?=$cur->name?></option>
 			<?php } ?>
 		</select>
 		<span id="cat_description"></span>
@@ -47,8 +47,3 @@
 
 	<input type="submit" name="upload" id="upload" value="Ladda upp" />
 </form>
-<?php
-
-unset($_SESSION['title']);
-unset($_SESSION['author']);
-unset($_SESSION['description']);

@@ -1,5 +1,6 @@
 <?php
 
+need_login();
 $entry_id = (int)$_GET['arg'];
 $entry = Entry::from_id($entry_id);
 

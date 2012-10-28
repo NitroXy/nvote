@@ -37,6 +37,7 @@ if ( $method == 'POST' ){
 		$mime = $file['type'];
 	}
 
+	$_SESSION['category'] = $_POST['category'];
 	$_SESSION['title'] = $_POST['title'];
 	$_SESSION['author'] = $_POST['author'];
 	$_SESSION['description'] = $_POST['description'];
@@ -84,6 +85,7 @@ if ( $method == 'POST' ){
 		redirect('upload');
 	}
 
+	unset($_SESSION['category']);
 	unset($_SESSION['title']);
 	unset($_SESSION['author']);
 	unset($_SESSION['description']);
@@ -91,8 +93,14 @@ if ( $method == 'POST' ){
 	flash('success', $entry ? 'Ändringarna sparade' : 'Bidraget uppladdat');
 	redirect('entry');
 } else if ( $method == 'GET' ){
+	$selected_category = sessiondata('category');
 	$title = sessiondata('title');
 	$author = sessiondata('author', $u->name);
 	$description = sessiondata('description');
 	$allow_file = true;
+
+	unset($_SESSION['category']);
+	unset($_SESSION['title']);
+	unset($_SESSION['author']);
+	unset($_SESSION['description']);
 }
