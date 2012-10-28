@@ -21,7 +21,11 @@ body {
 
 #nav li {
     display: table-cell;
-    width: 80px;
+    padding: 0 1em;
+}
+
+#nav li:first-child {
+    padding-left: 0;
 }
 
 #message {
