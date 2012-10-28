@@ -17,7 +17,11 @@ $accepted = array(
 	'application/zip',
 	'audio/mpeg',
 	'audio/x-wav',
+	'image/png',
+	'image/jpeg',
+	'image/gif',
 	'video/mp4',
+	'video/avi',
 );
 
 class Entry extends BasicObject {
@@ -81,7 +85,7 @@ class Entry extends BasicObject {
 		global $event;
 		$ext = pathinfo($original, PATHINFO_EXTENSION);
 		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
-		return "upload/{$event}/{$this->Category->dirname()}/{$username}_r{$revision}.{$ext}";
+		return "upload/{$event}/{$this->Category->dirname()}/{$username}_{$this->entry_id}_r{$revision}.{$ext}";
 	}
 
 	/**
