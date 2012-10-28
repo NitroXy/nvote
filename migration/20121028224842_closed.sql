@@ -1,0 +1,1 @@
+ALTER TABLE `category` ADD `entry_open` BOOLEAN NOT NULL DEFAULT FALSE;

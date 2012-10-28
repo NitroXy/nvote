@@ -31,6 +31,11 @@ if ( $method == 'POST' ){
 		}
 	}
 
+	if ( !$entry->Category->entry_open ){
+		flash('error', 'Inlämningen har stängt');
+		redirect($from);
+	}
+
 	$entry->title = $_POST['title'];
 	$entry->author = $_POST['author'];
 	$entry->description = $_POST['description'];
@@ -48,6 +53,7 @@ if ( $method == 'POST' ){
 	flash('success', $entry ? 'Ändringarna sparade' : 'Bidraget uppladdat');
 	redirect('my');
 } else if ( $method == 'GET' ){
+	$category = $open_cat;
 	$selected_category = sessiondata('category');
 	$title = sessiondata('title');
 	$author = sessiondata('author', $u->name);

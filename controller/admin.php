@@ -6,7 +6,8 @@ function open_votes(){
 	global $category;
 
 	foreach ( $category as $cur ){
-		$cur->vote_open = isset($_POST[$cur->category_id]);
+		$cur->entry_open = isset($_POST['i'.$cur->category_id]);
+		$cur->vote_open  = isset($_POST['r'.$cur->category_id]);
 		$cur->commit();
 	}
 	flash('success', 'Ändringarna sparade');

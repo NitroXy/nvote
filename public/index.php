@@ -9,14 +9,12 @@ require('../functions.php');
 require('../model/category.php');
 require('../model/entry.php');
 
-$category = Category::selection();
-
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";
 if ( !(file_exists($dst) && is_writable($dst)) ){
 		die("\"$dst\" fattas eller är inte skrivbar");
 }
-foreach ( $category as $cur ){
+foreach ( Category::selection(array('event' => $event)) as $cur ){
 	$tmp = "$dst/{$cur->name}";
 	if ( !file_exists($tmp) ){
 		mkdir($tmp);
@@ -31,6 +29,8 @@ if ( isset($_SESSION['flash']) ){
 	$flash = $_SESSION['flash'];
 	unset($_SESSION['flash']);
 }
+
+$open_cat = Category::selection(array('event' => $event, 'entry_open' => true));
 
 /* execute controller */
 if ( file_exists($controller) ){
@@ -48,7 +48,7 @@ if ( file_exists($controller) ){
 		<script type="application/javascript" src="/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
-				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '{$x->description}'"; }, $category), ', ') ?>
+				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '{$x->description}'"; }, $open_cat), ', ') ?>
 			};
 			var upload_max_filesize = <?=return_bytes(ini_get('upload_max_filesize'))?>;
 		</script>
@@ -70,7 +70,9 @@ if ( file_exists($controller) ){
 					<li><a href="/admin">Admin</a></li>
 					<?php } ?>
 					<?php if ( $u ){ ?>
+					<?php if ( count($open_cat) > 0 ){ ?>
 					<li><a href="/upload">Inlämning</a></li>
+					<?php } ?>
 					<li><a href="/my">Mina bidrag</a></li>
 					<li><a href="/logout">Logga ut</a></li>
 					<?php } else { ?>
