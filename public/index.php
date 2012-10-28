@@ -22,7 +22,7 @@ foreach ( $category as $cur ){
 		mkdir($tmp);
 	}
 }
-$main = isset($_GET['main']) ? preg_replace('[^a-b]', '', $_GET['main']) : 'index';
+$main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : 'index';
 $controller = "../controller/$main.php";
 $view = "../view/$main.php";
 
