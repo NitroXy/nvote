@@ -5,14 +5,19 @@ class User extends BasicObject {
 		return 'user';
 	}
 
-	public static function find_or_create($user) {
-		$user = static::one(array("username" => $user));
+	public static function find_or_create_from_cas() {
+		$attr = phpCAS::getAttributes();
+		$user = static::selection(array("user_id" => $attr["user_id"]));
 		if(!$user) {
-			
+			$user = new User();
+			$user->user_id = $attr["user_id"];
+			$user->username = phpCAS::getUser();
+			$user->name = $attr["fullname"];
+			$user->admin = false;
+			$user->commit();
 		} else {
-			return $user;
+			$user = $user[0];
 		}
+		return $user;
 	}
-
-	//private static function fetch_user_data(
 }

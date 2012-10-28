@@ -1,0 +1,6 @@
+<?php
+
+	phpCAS::forceAuthentication();
+
+?>
+

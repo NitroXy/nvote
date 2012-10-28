@@ -2,16 +2,11 @@
 
 require_once "nxauth.php";
 
-class UserMockup {
-	public $user_id = 1;
-	public $username = 'Test user';
-	public $name = 'Herr Test An. vändare';
-	public $admin = false;
-};
+phpCAS::setNoCasServerValidation();
 
-$u = new UserMockup();
-
-echo "Auth: ". phpCAS::getUser() . "<br/>";
-foreach(phpCAS::getAttributes() as $k => $v) {
-	echo "$k: $v<br/>";	
+if(phpCAS::isAuthenticated()) {
+	$attr = phpCAS::getAttributes();
+	$u = User::find_or_create_from_cas();
+} else {
+	$u = NULL;
 }

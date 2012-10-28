@@ -3,11 +3,11 @@
 
 session_start();
 require('../config.php');
+require('../model/user.php');
 require('../auth.php');
 require('../functions.php');
 require('../model/category.php');
 require('../model/entry.php');
-require('../model/user.php');
 
 $category = Category::selection();
 
