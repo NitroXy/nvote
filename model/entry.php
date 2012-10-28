@@ -82,10 +82,10 @@ class Entry extends BasicObject {
 		return "{$dir}/{$this->Category->name}/{$this->title}_{$username}_r{$revision}.{$ext}";
 	}
 
-	private function get_revision(){
+	public function get_revision(){
 		global $db;
 		$id = $this->entry_id;
-		$stmt = $db->prepare('SELECT IFNULL(MAX(`revision`)+1,1) FROM `revision` WHERE `entry_id` = ?');
+		$stmt = $db->prepare('SELECT IFNULL(MAX(`revision`),0) FROM `revision` WHERE `entry_id` = ?');
 		$stmt->bind_param('i', $id);
 		$stmt->bind_result($revision);
 		if ( !$stmt->execute() ){

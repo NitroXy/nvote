@@ -10,7 +10,7 @@
 
 <div class="entry">
 	<h3 class="title"><?=$cur->title?></h3>
-	<span class="author">av <b><?=$cur->author?><b/></span>
+	<span class="author">av <b><?=$cur->author?><b/> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 	<ul>
 		<li><a href="/edit/<?=$cur->entry_id?>">Redigera</a></li>
