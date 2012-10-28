@@ -46,7 +46,7 @@ if ( $method == 'POST' ){
 	unset($_SESSION['description']);
 
 	flash('success', $entry ? 'Ändringarna sparade' : 'Bidraget uppladdat');
-	redirect('entry');
+	redirect('my');
 } else if ( $method == 'GET' ){
 	$selected_category = sessiondata('category');
 	$title = sessiondata('title');

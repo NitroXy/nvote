@@ -69,7 +69,7 @@ if ( file_exists($controller) ){
 					<li><a href="/admin">Admin</a></li>
 					<?php } ?>
 					<?php if ( $u ){ ?>
-					<li><a href="/entry">Mina bidrag</a></li>
+					<li><a href="/my">Mina bidrag</a></li>
 					<li><a href="/logout">Logga ut</a></li>
 					<?php } else { ?>
 					<li><a href="/login">Logga in</a></li>

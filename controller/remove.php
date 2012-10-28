@@ -11,4 +11,4 @@ if ( !$entry ){
 
 $entry->delete();
 flash('success', 'Bidraget togs bort');
-redirect('entry');
+redirect('my');
