@@ -1,12 +1,16 @@
 <?php /* -*- mode: html; -*- */ ?>
 <h1>Mina inlämnade bidrag</h1>
 
+<?php $category = null; ?>
 <?php foreach ( $entry as $cur ){ ?>
-<div class="entry">
-	<h2 class="title"><?=$cur->title?></h2>
-	<span class="author">av <b><?=$cur->author?><b/></span>
 
-	<div class="category">Kategori: <?=$cur->Category->name?></div>
+<?php if ( $category != $cur->category_id ){ ?>
+<h2><?=$cur->Category->name?></h2>
+<?php $category = $cur->category_id; } ?>
+
+<div class="entry">
+	<h3 class="title"><?=$cur->title?></h3>
+	<span class="author">av <b><?=$cur->author?><b/></span>
 	<div class="description"><?=$cur->description?></div>
 	<ul>
 		<li><a href="/edit/<?=$cur->entry_id?>">Redigera</a></li>
