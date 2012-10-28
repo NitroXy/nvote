@@ -62,7 +62,12 @@ if ( file_exists($controller) ){
 					<li><a href="/">Start</a></li>
 					<li><a href="/rules">Regler</a></li>
 					<li><a href="/upload">Inlämning</a></li>
+					<?php if ( $u ){ ?>
+					<li><a href="entry">Mina bidrag</a></li>
+					<li>Inloggad som <?=$u->name?>. <a href="/logout">Logga ut</a></li>
+					<?php } else { ?>
 					<li><a href="/login">Logga in</a></li>
+					<?php } ?>
 				</ul>
 			</div>
 			<div id="content">
