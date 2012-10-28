@@ -29,19 +29,21 @@ ul {
 }
 
 #message {
-
+    margin: 1em 0;
+    padding: 0.5em;
+    border: 1px solid #000;
 }
 
 #message.error {
-    color: red;
+    background: #fcc;
 }
 
 #message.info {
-    color: blue;
+    background: #ccf;
 }
 
 #message.success {
-    color: green;
+    background: #cfc;
 }
 
 #upload label {
