@@ -1,5 +1,7 @@
 <?php
 
+need_admin();
+
 function open_votes(){
 	global $category;
 

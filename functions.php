@@ -36,3 +36,10 @@ function need_login(){
 		redirect();
 	}
 }
+
+function need_admin(){
+	global $u;
+	if ( !($u && $u->admin) ){
+		redirect();
+	}
+}
