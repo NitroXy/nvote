@@ -42,6 +42,7 @@ $(document).ready(function(){
 		update_category_description();
 	});
 
+	/* validate filesize */
 	$('#upload input[type=file]').change(function(){
 		if ( !this.files ){
 			return; /* file api not supported */
@@ -55,6 +56,18 @@ $(document).ready(function(){
 			$('#upload input[type=submit]').attr('disabled', 'disabled');
 		} else {
 			$('#upload input[type=submit]').removeAttr('disabled');
+		}
+	});
+
+	/* validate fields */
+	$('#upload input[type=submit]').click(function(){
+		if ( $('#upload #title').val().length == 0 ){
+			flash.error('Du måste ange en titel');
+			return false;
+		}
+		if ( $('#upload #author').val().length == 0 ){
+			flash.error('Du måste ange author');
+			return false;
 		}
 	});
 });

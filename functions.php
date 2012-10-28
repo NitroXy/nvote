@@ -25,3 +25,7 @@ function return_bytes($val){
 function flash($class, $message){
 	$_SESSION['flash'] = array($class => $message);
 }
+
+function sessiondata($key, $default=null){
+	return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
+}
