@@ -2,65 +2,20 @@
 
 need_login();
 
-$upload_errors = array(
-	UPLOAD_ERR_OK          => "No errors.",
-	UPLOAD_ERR_INI_SIZE    => "Larger than upload_max_filesize.",
-	UPLOAD_ERR_FORM_SIZE   => "Larger than form MAX_FILE_SIZE.",
-	UPLOAD_ERR_PARTIAL     => "Partial upload.",
-	UPLOAD_ERR_NO_FILE     => "No file.",
-	UPLOAD_ERR_NO_TMP_DIR  => "No temporary directory.",
-	UPLOAD_ERR_CANT_WRITE  => "Can't write to disk.",
-	UPLOAD_ERR_EXTENSION   => "File upload stopped by extension.",
-);
-
-$accepted = array(
-	'application/gzip',
-	'application/rar',
-	'application/zip',
-	'audio/mpeg',
-	'audio/x-wav',
-	'video/mp4',
-);
-
 $method = $_SERVER['REQUEST_METHOD'];
 if ( $method == 'POST' ){
-	if ( !$u ){
-		redirect();
-	}
-
 	$from = "edit/{$entry_id}";
 	$file = false;
 
 	if ( !isset($_POST['entry_id']) ){
 		$file = $_FILES['file'];
-		$error = $file['error'];
-		$mime = $file['type'];
+		$from = "upload";
 	}
 
 	$_SESSION['category'] = $_POST['category'];
 	$_SESSION['title'] = $_POST['title'];
 	$_SESSION['author'] = $_POST['author'];
 	$_SESSION['description'] = $_POST['description'];
-
-	if ( $file ){
-		/* check for error indicator */
-		if ( $error > 0 ){
-			$_SESSION['flash'] = array('error' => $upload_errors[$error]);
-			redirect('upload');
-		}
-
-		/* ensure a file was uploaded */
-		if ( $file['size'] == 0 ){
-			$_SESSION['flash'] = array('error' => 'Ingen fil.');
-			redirect('upload');
-		}
-
-		/* validate mime-types */
-		if ( !in_array($mime, $accepted) ){
-			$_SESSION['flash'] = array('error' => "Filformatet \"$mime\" accepterades inte.");
-			redirect('upload');
-		}
-	}
 
 	$entry_id = isset($_POST['entry_id']) ? $_POST['entry_id'] : false;
 	if ( !$entry_id ){

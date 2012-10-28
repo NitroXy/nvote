@@ -1,11 +1,54 @@
 <?php
 
+$upload_errors = array(
+	UPLOAD_ERR_OK          => "No errors.",
+	UPLOAD_ERR_INI_SIZE    => "Larger than upload_max_filesize.",
+	UPLOAD_ERR_FORM_SIZE   => "Larger than form MAX_FILE_SIZE.",
+	UPLOAD_ERR_PARTIAL     => "Partial upload.",
+	UPLOAD_ERR_NO_FILE     => "No file.",
+	UPLOAD_ERR_NO_TMP_DIR  => "No temporary directory.",
+	UPLOAD_ERR_CANT_WRITE  => "Can't write to disk.",
+	UPLOAD_ERR_EXTENSION   => "File upload stopped by extension.",
+);
+
+$accepted = array(
+	'application/gzip',
+	'application/rar',
+	'application/zip',
+	'audio/mpeg',
+	'audio/x-wav',
+	'video/mp4',
+);
+
 class Entry extends BasicObject {
 	protected static function table_name(){
 		return 'entry';
 	}
 
 	public function upload($file){
+		$error = $file['error'];
+		$mime = $file['type'];
+
+		/* check for error indicator */
+		if ( $error > 0 ){
+			global $upload_errors;
+			flash('error', $upload_errors[$error]);
+			return false;
+		}
+
+		/* ensure a file was uploaded */
+		if ( $file['size'] == 0 ){
+			flash('error', 'Ingen fil.');
+			return false;
+		}
+
+		/* validate mime-types */
+		global $accepted;
+		if ( !in_array($mime, $accepted) ){
+			flash('error', "Filformatet \"$mime\" accepterades inte.");
+			return false;
+		}
+
 		$id = $this->entry_id;
 		$original = $file['name'];
 		$revision = $this->get_revision() + 1;
@@ -47,8 +90,9 @@ class Entry extends BasicObject {
 		$stmt->bind_result($revision);
 		if ( !$stmt->execute() ){
 			flash('error', "Failed to execute query: {$stmt->error}");
-			return false;
+			return 0;
 		}
-		return $revision;
+		$stmt->fetch();
+		return (int)$revision;
 	}
 }
