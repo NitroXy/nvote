@@ -1,4 +1,4 @@
 RewriteEngine on
 AddDefaultCharset utf-8
 
-RewriteRule ^([^./]*)$ /index.php?main=$1 [L]
+RewriteRule ^([^./]*)$ /index.php?main=$1&%{QUERY_STRING} [L]
