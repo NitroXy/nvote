@@ -57,6 +57,7 @@ if ( $method == 'POST' ){
 		$entry = new Entry();
 		$entry->user_id = $u->user_id;
 		$entry->category_id = $_POST['category'];
+		$entry->event = $event;
 	} else {
 		$entry = Entry::from_id($entry_id);
 		if ( $u->user_id != $entry->user_id ){

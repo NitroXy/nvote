@@ -1,0 +1,1 @@
+ALTER TABLE `entry` ADD `event` TEXT NOT NULL;
