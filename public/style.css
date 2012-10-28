@@ -7,16 +7,16 @@ body {
     background: #bbb;
 }
 
+ul {
+    list-style: none;
+}
+
 #wrapper {
     background: #fff;
     width: 800px;
     margin: 1em auto;
     padding: 1em;
     border: 1px solid #000;
-}
-
-#nav ul {
-    list-style: none;
 }
 
 #nav li {
@@ -71,10 +71,6 @@ body {
 
 .entry .title {
     display: inline;
-}
-
-.entry ul {
-    list-style: none;
 }
 
 .entry li {
