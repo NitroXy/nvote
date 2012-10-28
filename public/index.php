@@ -56,7 +56,9 @@ if ( file_exists($controller) ){
 		<div id="wrapper">
 			<div id="header">
 				<h1>NVote</h1>
+				<?php if ( $u ){ ?>
 				<p>Inloggad som <?=$u->name?>.</p>
+				<?php } ?>
 			</div>
 			<div id="nav">
 				<ul>
