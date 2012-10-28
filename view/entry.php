@@ -11,6 +11,10 @@
 	<ul>
 		<li><a href="/edit/<?=$cur->entry_id?>">Redigera</a></li>
 		<li><a href="/upload/<?=$cur->entry_id?>">Ladda upp ny version</a></li>
+		<li><a href="/remove/<?=$cur->entry_id?>">Ta bort</a></li>
 	</ul>
 </div>
+<?php } ?>
+<?php if ( count($entry) == 0 ){ ?>
+<p>Inga bidrag inlämnade.</p>
 <?php } ?>
