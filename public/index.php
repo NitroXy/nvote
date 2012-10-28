@@ -66,7 +66,7 @@ if ( file_exists($controller) ){
 					<li><a href="/">Start</a></li>
 					<li><a href="/rules">Regler</a></li>
 					<li><a href="/upload">Inlämning</a></li>
-					<?php if ( $u->admin ){ ?>
+					<?php if ( $u && $u->admin ){ ?>
 					<li><a href="/admin">Admin</a></li>
 					<?php } ?>
 					<?php if ( $u ){ ?>
