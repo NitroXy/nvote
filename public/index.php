@@ -15,7 +15,7 @@ if ( !(file_exists($dst) && is_writable($dst)) ){
 		die("\"$dst\" fattas eller är inte skrivbar");
 }
 foreach ( Category::selection(array('event' => $event)) as $cur ){
-	$tmp = "$dst/{$cur->name}";
+	$tmp = "$dst/{$cur->dirname()}";
 	if ( !file_exists($tmp) ){
 		mkdir($tmp);
 	}

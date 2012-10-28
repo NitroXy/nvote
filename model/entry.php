@@ -81,7 +81,7 @@ class Entry extends BasicObject {
 		global $event;
 		$ext = pathinfo($original, PATHINFO_EXTENSION);
 		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
-		return "upload/{$event}/{$this->Category->name}/{$username}_r{$revision}.{$ext}";
+		return "upload/{$event}/{$this->Category->dirname()}/{$username}_r{$revision}.{$ext}";
 	}
 
 	/**
