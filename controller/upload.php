@@ -1,5 +1,7 @@
 <?php
 
+need_login();
+
 $upload_errors = array(
 	UPLOAD_ERR_OK          => "No errors.",
 	UPLOAD_ERR_INI_SIZE    => "Larger than upload_max_filesize.",
@@ -26,33 +28,40 @@ if ( $method == 'POST' ){
 		redirect();
 	}
 
-	$file = $_FILES['file'];
-	$error = $file['error'];
-	$mime = $file['type'];
+	$from = "edit/{$entry_id}";
+	$file = false;
+
+	if ( !isset($_POST['entry_id']) ){
+		$file = $_FILES['file'];
+		$error = $file['error'];
+		$mime = $file['type'];
+	}
 
 	$_SESSION['title'] = $_POST['title'];
 	$_SESSION['author'] = $_POST['author'];
 	$_SESSION['description'] = $_POST['description'];
 
-	/* check for error indicator */
-	if ( $error > 0 ){
-		$_SESSION['flash'] = array('error' => $upload_errors[$error]);
-		redirect('upload');
+	if ( $file ){
+		/* check for error indicator */
+		if ( $error > 0 ){
+			$_SESSION['flash'] = array('error' => $upload_errors[$error]);
+			redirect('upload');
+		}
+
+		/* ensure a file was uploaded */
+		if ( $file['size'] == 0 ){
+			$_SESSION['flash'] = array('error' => 'Ingen fil.');
+			redirect('upload');
+		}
+
+		/* validate mime-types */
+		if ( !in_array($mime, $accepted) ){
+			$_SESSION['flash'] = array('error' => "Filformatet \"$mime\" accepterades inte.");
+			redirect('upload');
+		}
 	}
 
-	/* ensure a file was uploaded */
-	if ( $file['size'] == 0 ){
-		$_SESSION['flash'] = array('error' => 'Ingen fil.');
-		redirect('upload');
-	}
-
-	/* validate mime-types */
-	if ( !in_array($mime, $accepted) ){
-		$_SESSION['flash'] = array('error' => "Filformatet \"$mime\" accepterades inte.");
-		redirect('upload');
-	}
-
-	$entry_id = isset($_POST['entry']) ? $_POST['entry'] : false;
+	$entry_id = isset($_POST['entry_id']) ? $_POST['entry_id'] : false;
 	if ( !$entry_id ){
 		$entry = new Entry();
 		$entry->user_id = $u->user_id;
@@ -62,7 +71,7 @@ if ( $method == 'POST' ){
 		$entry = Entry::from_id($entry_id);
 		if ( $u->user_id != $entry->user_id ){
 			flash('error', 'fel användare');
-			redirect('upload');
+			redirect($from);
 		}
 	}
 
@@ -71,7 +80,7 @@ if ( $method == 'POST' ){
 	$entry->description = $_POST['description'];
 	$entry->commit();
 
-	if ( !$entry->upload($file) ){
+	if ( $file && !$entry->upload($file) ){
 		redirect('upload');
 	}
 
@@ -79,5 +88,11 @@ if ( $method == 'POST' ){
 	unset($_SESSION['author']);
 	unset($_SESSION['description']);
 
-	redirect('upload_done');
+	flash('success', $entry ? 'Ändringarna sparade' : 'Bidraget uppladdat');
+	redirect('entry');
+} else if ( $method == 'GET' ){
+	$title = sessiondata('title');
+	$author = sessiondata('author', $u->name);
+	$description = sessiondata('description');
+	$allow_file = true;
 }

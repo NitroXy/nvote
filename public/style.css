@@ -39,3 +39,30 @@ body {
 #message.success {
     color: green;
 }
+
+.entry {
+    border: 1px solid #000;
+    padding: 1em;
+    margin-bottom: 1em;
+}
+
+.entry .title {
+    display: inline;
+}
+
+.entry ul {
+    list-style: none;
+}
+
+.entry li {
+    display: table-cell;
+    padding: 0 1em;
+}
+
+.entry li:first-child {
+    padding-left: 0;
+}
+
+.entry a {
+    font-size: 0.8em;
+}

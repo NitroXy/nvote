@@ -29,3 +29,10 @@ function flash($class, $message){
 function sessiondata($key, $default=null){
 	return isset($_SESSION[$key]) ? $_SESSION[$key] : $default;
 }
+
+function need_login(){
+	global $u;
+	if ( !$u ){
+		redirect();
+	}
+}
