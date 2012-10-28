@@ -9,8 +9,8 @@
 <?php $category = $cur->category_id; } ?>
 
 <div class="entry">
-	<h3 class="title"><?=$cur->title?></h3>
-	<span class="author">av <b><?=$cur->author?><b/> (rev <?=$cur->get_revision()?>)</span>
+	<h3 class="title"><a href="/download/<?=$cur->entry_id?>"><?=str_replace(' ', '&nbsp;', $cur->title)?></a></h3>
+	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 	<ul>
 		<li><a href="/edit/<?=$cur->entry_id?>">Redigera</a></li>

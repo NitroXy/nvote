@@ -55,7 +55,9 @@ class Entry extends BasicObject {
 		$filename = $this->generate_filename($original, $revision);
 
 		/* store uploaded file */
-		if ( !move_uploaded_file($file['tmp_name'], $filename) ){
+		global $dir;
+		$dst = "$dir/$filename";
+		if ( !move_uploaded_file($file['tmp_name'], $dst) ){
 			flash('error', 'Misslyckades att spara filen, försök igen och kontakta crew om du forfarande misslyckas.');
 			return false;
 		}
@@ -76,10 +78,31 @@ class Entry extends BasicObject {
 	}
 
 	private function generate_filename($original, $revision){
-		global $dir;
+		global $event;
 		$ext = pathinfo($original, PATHINFO_EXTENSION);
 		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
-		return "{$dir}/{$this->Category->name}/{$username}_r{$revision}.{$ext}";
+		return "upload/{$event}/{$this->Category->name}/{$username}_r{$revision}.{$ext}";
+	}
+
+	/**
+	 * Fills $location with the local path to the final revision and $filename
+	 * with the intended filename.
+	 */
+	public function final_filename(&$location, &$filename){
+		global $db;
+		$id = $this->entry_id;
+		$stmt = $db->prepare('SELECT `filename` FROM `revision` WHERE `entry_id` = ? ORDER BY `revision` DESC LIMIT 1');
+		$stmt->bind_param('i', $id);
+		$stmt->execute();
+		$stmt->bind_result($location);
+		$stmt->fetch();
+		$stmt->close();
+		$ext = pathinfo($location, PATHINFO_EXTENSION);
+
+		global $dir;
+		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
+		$title = preg_replace('/[^a-zA-Z0-9]/', '_', $this->title);
+		$filename = "{$title}_by_{$username}.{$ext}";
 	}
 
 	public function get_revision(){

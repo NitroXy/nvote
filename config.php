@@ -22,4 +22,4 @@ BasicObject::$output_htmlspecialchars = true;
 
 $db = Config::fix_database();
 $event = 'nx15';
-$dir = dirname(__FILE__) . "/upload/$event";
+$dir = dirname(__FILE__);

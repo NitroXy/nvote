@@ -12,11 +12,12 @@ require('../model/entry.php');
 $category = Category::selection();
 
 /* ensure all directories works properly */
-if ( !(file_exists($dir) && is_writable($dir)) ){
-		die("$dir fattas eller är inte skrivbar");
+$dst = "$dir/upload/$event";
+if ( !(file_exists($dst) && is_writable($dst)) ){
+		die("\"$dst\" fattas eller är inte skrivbar");
 }
 foreach ( $category as $cur ){
-	$tmp = "$dir/{$cur->name}";
+	$tmp = "$dst/{$cur->name}";
 	if ( !file_exists($tmp) ){
 		mkdir($tmp);
 	}
