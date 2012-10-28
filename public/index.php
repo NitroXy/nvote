@@ -42,9 +42,9 @@ if ( file_exists($controller) ){
 	<head>
 		<title>NVote</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="application/javascript" src="jquery-1.8.2.min.js"></script>
-		<script type="application/javascript" src="nvote.js"></script>
+		<link rel="stylesheet" type="text/css" href="/style.css" />
+		<script type="application/javascript" src="/jquery-1.8.2.min.js"></script>
+		<script type="application/javascript" src="/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
 				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '{$x->description}'"; }, $category), ', ') ?>
@@ -56,6 +56,9 @@ if ( file_exists($controller) ){
 		<div id="wrapper">
 			<div id="header">
 				<h1>NVote</h1>
+				<?php if ( $u ){ ?>
+				<p>Inloggad som <?=$u->name?>.</p>
+				<?php } ?>
 			</div>
 			<div id="nav">
 				<ul>
@@ -63,8 +66,8 @@ if ( file_exists($controller) ){
 					<li><a href="/rules">Regler</a></li>
 					<li><a href="/upload">Inlämning</a></li>
 					<?php if ( $u ){ ?>
-					<li><a href="entry">Mina bidrag</a></li>
-					<li>Inloggad som <?=$u->name?>. <a href="/logout">Logga ut</a></li>
+					<li><a href="/entry">Mina bidrag</a></li>
+					<li><a href="/logout">Logga ut</a></li>
 					<?php } else { ?>
 					<li><a href="/login">Logga in</a></li>
 					<?php } ?>
