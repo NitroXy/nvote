@@ -1,6 +1,8 @@
 <h1><?=$category->name?></h1>
 <?php if($u && $u->admin && !$admin_mode) { ?>
 	<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
+<?php } else { ?>
+	<a href="/vote/<?=$category->id?>">Till normalläge</a>
 <?php }?>
 
 <?php foreach ( $entry as $cur ){ ?>
