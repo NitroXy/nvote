@@ -10,7 +10,7 @@ if ( $method == 'POST' ){
 
 	if ( !isset($_POST['entry_id']) ){
 		$from = "upload";
-		if( !isset($_FILES['file'] ) {
+		if( !isset($_FILES['file'] )) {
 			flash('error', 'Kunde inte ladda upp filen. Är den för stor?');
 			redirect($from);
 		}
