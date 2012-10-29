@@ -9,8 +9,12 @@ if ( $method == 'POST' ){
 	$file = false;
 
 	if ( !isset($_POST['entry_id']) ){
-		$file = $_FILES['file'];
 		$from = "upload";
+		if( !isset($_FILES['file'] ) {
+			flash('error', 'Kunde inte ladda upp filen. Är den för stor?');
+			redirect($from);
+		}
+		$file = $_FILES['file'];
 	}
 
 	$_SESSION['category'] = $_POST['category'];
