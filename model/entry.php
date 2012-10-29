@@ -22,14 +22,20 @@ $video_types = array(
 	'video/mp4',
 	'video/avi',
 	'video/x-matroska',
+	'video/mpeg',
 );
 
 $misc_types = array(
 	'application/gzip',
 	'application/rar',
 	'application/zip',
+	'application/x-bzip2',
+	'application/x-tar',
+	'application/ogg',
 	'audio/mpeg',
 	'audio/x-wav',
+	'audio/x-flac',
+	'text/plain',
 );
 
 $accepted = array_merge($image_types, $video_types, $misc_types);
@@ -65,7 +71,7 @@ class Entry extends BasicObject {
 		/* validate mime-types */
 		global $accepted;
 		if ( !in_array($mime, $accepted) ){
-			flash('error', "Filformatet \"$mime\" accepterades inte.");
+			flash('error', "Filformatet \"$mime\" accepterades inte (prata med scene-crew om du tycker att du borde få ladda upp detta).");
 			return false;
 		}
 
