@@ -205,6 +205,7 @@ class Entry extends BasicObject {
 
 	private function resize_screenshot() {
 		global $imagemagick_convert, $dir;
-		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -background transparent -resize 400x400 $dir/{$this->screenshot_filename}");
+		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -resize 200x200 -background transparent -gravity center -extent 200x200 $dir/{$this->screenshot_filename}");
 	}
+
 }
