@@ -38,6 +38,10 @@ class Entry extends BasicObject {
 		return 'entry';
 	}
 
+	/*protected static function default_order() {
+		return ''; //random
+	}*/
+
 	public function upload($file){
 		$error = $file['error'];
 		$mime = $file['type'];

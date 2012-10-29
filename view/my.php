@@ -8,7 +8,12 @@
 <h2><?=$cur->Category->name?></h2>
 <?php $category = $cur->category_id; } ?>
 
-<div class="entry">
+<div class="entry <?=($cur->disqualified?'disqualified':'')?>">
+	<?php if($cur->disqualified) { ?>
+		<h1>Diskvalifierad</h1>
+		<strong>Anledning: <?=$cur->disqualified_reason?></strong>
+		<p class="clear"/>
+	<?php } ?>
 	<?php if($cur->has_screenshot()) { ?>
 	<img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/>
 	<?php } ?>
