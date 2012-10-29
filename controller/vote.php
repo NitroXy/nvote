@@ -40,29 +40,25 @@ if ( isset($_GET['arg']) ){
 	if(! $admin_mode ) $selection['disqualified'] = 0;
 	$entry = Entry::selection($selection);
 
-	$vote_map = array();
+	if(!$admin_mode) {
+		$vote_map = array();
+		$blank_votes = array();
 
-	$user_votes = array_map(function($v) {
-		global $vote_map;
-		$vote_map[$v->entry_id] = $v->score;
-		return $v->entry_id;
-	}, Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)));
-
-	$entries_unvoted = array();
-	$entries_voted = array();
-	foreach($entry as $e) {
-		if(in_array($e->entry_id, $user_votes)) {
-			$entries_voted[$vote_map[$e->entry_id]] = $e;
-		} else {
-			$entries_unvoted[] = $e;
+		foreach(Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)) as $v) {
+			$vote_map[$v->entry_id] = $v->score;
+			if($v->entry_id == null) $blank_votes[] = $v->score;
 		}
+
+		shuffle($entry);
+		usort($entry, function($a, $b) {
+			global $u;
+			return $b->user_vote($u) - $a->user_vote($b);
+		});
+	} else {
+		usort($entry, function($a, $b) {
+			return $a->score() - $b->score();
+		});
 	}
-
-	ksort($entries_voted);
-
-	shuffle($entries_unvoted);
-
-	$entry = array_merge($entries_voted, $entries_unvoted);
 
 	$view = '../view/list_entry.php';
 } else {

@@ -25,7 +25,7 @@ class Vote extends ValidatingBasicObject {
 			'user_id' => $this->user_id,
 			'vote_id:!=' => $this->vote_id
 		)) > 0) {
-			$this->add_error('score', "Du kan inte ge ett bidrag flera placeringar");
+			$this->add_error('score', "Du kan inte ge ett bidrag flera olika poäng");
 		}
 	}
 
