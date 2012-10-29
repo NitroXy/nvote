@@ -1,0 +1,15 @@
+#!/bin/bash
+
+template=$1
+author=$2
+title=$3
+dst=$4
+
+convert $template \
+	-fill white \
+	-gravity center \
+	-font $(dirname $0)/Eurostile.ttf \
+	-pointsize 90 -draw "fill white text  0,-50  '\"$title\"'" \
+	-pointsize 50 -draw "fill white text  0, 50  '$author'" \
+	/tmp/nvote_poster.png
+ffmpeg -loop 1 -f image2 -i /tmp/nvote_poster.png -r 29.97 -pix_fmt yuv420p -t 10 -q:v 2 -an -y $dst

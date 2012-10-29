@@ -14,3 +14,6 @@
 	</ul>
 	<input type="submit" value="spara" />
 </form>
+
+<h1>Projektor</h1>
+<a href="/generate">Generera slides</a> (processen tar tid, resultatet hamnar i $event/final/$cat)

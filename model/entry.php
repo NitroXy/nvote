@@ -253,4 +253,13 @@ class Entry extends BasicObject {
 		return Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
 	}
 
+	public function mimetype(){
+		global $dir;
+		$this->final_filename($location, $dst);
+		$src = "$dir/$location";
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mime = finfo_file($finfo, $src);
+		finfo_close($finfo);
+		return $mime;
+	}
 }
