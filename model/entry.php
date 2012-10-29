@@ -208,4 +208,13 @@ class Entry extends BasicObject {
 		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -resize 200x200 -background transparent -gravity center -extent 200x200 $dir/{$this->screenshot_filename}");
 	}
 
+	public function user_vote($user) {
+		$vote = Vote::one(array('user_id' => $user->user_id, 'entry_id' => $this->entry_id));
+		if($vote != null) {
+			return $vote->score;
+		} else {
+			return 0;
+		}
+	}
+
 }

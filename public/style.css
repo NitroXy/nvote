@@ -143,3 +143,26 @@ h1, h2, h3 {
 .clear {
 	clear: both;
 }
+
+.vote {
+	float: right;
+	margin-right: 10px;
+	margin-top: 50px;
+}
+
+.vote_header {
+	margin-right: 29px;
+	margin-top: 10px;
+}
+
+.vote_header strong {
+	margin-right: 10px;
+}
+
+.vote_table {
+	display: inline;
+}
+
+.vote_button {
+	margin: 15px 5px;
+}
