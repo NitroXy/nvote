@@ -18,6 +18,8 @@ header("Content-type: $mime");
 
 if ( $m[0] != 'image' ){
 	header("Content-Disposition: attachment; filename=\"$dst\"");
+} else {
+	header("Content-Disposition: inline; filename=\"$dst\"");
 }
 
 echo file_get_contents($src);
