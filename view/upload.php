@@ -46,9 +46,9 @@
 	<?php } ?>
 
 	<div>
-		<label for="filename">Screenshot (genereras automatiskt för bilder):</label>
+		<label for="filename">Screenshot:</label>
 		<input type="file" name="screenshot" id="screenshot" />
-		<span class="help">Max filstorlek <?=ini_get('upload_max_filesize')?>.</span>
+		<span class="help">Genereras automatiskt för bilder.</span>
 	</div>
 
 	<input type="submit" name="upload" id="upload" value="Ladda upp" />
