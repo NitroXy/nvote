@@ -12,6 +12,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 
 <?php if(!$admin_mode) { ?>
 <form action="/vote/<?=$category->id?>" method="post">
+	<input type="hidden" name="vote" value="do"/>
 	<input type="submit" value="Spara röster" class="vote_button"/>
 
 	<div class="vote vote_header">
@@ -57,10 +58,10 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 			</tr>
 			<tr>
 				<td><input type="radio" name="score_1" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>" <?=($cur->user_vote($u) == 1)?'checked="checked"':''?>/></td>
-				<td><input type="radio" name="score_2" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>"/></td>
-				<td><input type="radio" name="score_3" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>"/></td>
-				<td><input type="radio" name="score_4" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>"/></td>
-				<td><input type="radio" name="score_5" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>"/></td>
+				<td><input type="radio" name="score_2" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>" <?=($cur->user_vote($u) == 2)?'checked="checked"':''?>/></td>
+				<td><input type="radio" name="score_3" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>" <?=($cur->user_vote($u) == 3)?'checked="checked"':''?>/></td>
+				<td><input type="radio" name="score_4" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>" <?=($cur->user_vote($u) == 4)?'checked="checked"':''?>/></td>
+				<td><input type="radio" name="score_5" value="<?=$cur->entry_id?>" class="score score_for_<?=$cur->entry_id?>" <?=($cur->user_vote($u) == 5)?'checked="checked"':''?>/></td>
 			</tr>
 		</table>
 	</div>

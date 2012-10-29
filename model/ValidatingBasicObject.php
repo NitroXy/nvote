@@ -266,4 +266,12 @@ class ValidationException extends Exception {
 		$this->message = "Validations failed in $object.\n Errors: ".print_r($this->errors,true);
 	}
 
+	public function flash(){
+		$errors = array();
+		foreach ( $this->errors as $field => $error ){
+			$errors[] = "{$error[0]}";
+		}
+		$_SESSION['flash'] = array('error' => implode("\n", $errors));
+	}
+
 }

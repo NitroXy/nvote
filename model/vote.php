@@ -6,6 +6,9 @@ class Vote extends ValidatingBasicObject {
 	}
 
 	protected function validation_hooks() {
+
+		$this->validate_in_range('score', array('minimum' => 1, 'maximum' => 5, 'message' => "Poängen måste vara mellan 1 och 5"));
+
 		//Validate that the user have not a vote with the same score in this category:
 		if(static::count(array(
 			'score' => $this->score,
@@ -24,6 +27,15 @@ class Vote extends ValidatingBasicObject {
 		)) > 0) {
 			$this->add_error('score', "Du kan inte ge ett bidrag flera placeringar");
 		}
+	}
+
+	public static function find_or_new($category, $user, $score) {
+		$data = array('category_id' => $category->category_id, 'user_id' => $user->user_id, 'score' => $score);
+		$v = Vote::one($data);
+		if($v) return $v;
+		$data['entry_id'] = null;
+		$v = new Vote($data);
+		return $v;
 	}
 
 }
