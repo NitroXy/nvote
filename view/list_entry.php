@@ -71,7 +71,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 		</table>
 	</div>
 	<?php } else { ?>
-		<div class="score"><?=$cur->score()?></div>
+		<div class="score_display"><?=$cur->score()?></div>
 	<?php } ?>
 
 	<p class="clear" />

@@ -163,11 +163,15 @@ h1, h2, h3 {
 	display: inline;
 }
 
+.vote_table td {
+	padding: 2px;
+}
+
 .vote_button {
 	margin: 15px 5px;
 }
 
-.score {
+.score_display {
 	float: right;
 	font-size: 5em;
 	font-weight: bold;
