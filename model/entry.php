@@ -203,7 +203,7 @@ class Entry extends BasicObject {
 		return (strlen($this->screenshot_filename) > 0 && file_exists("$dir/{$this->screenshot_filename}"));
 	}
 
-	private function resize_screenshot() {
+	public function resize_screenshot() {
 		global $imagemagick_convert, $dir;
 		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -resize 200x200 -background transparent -gravity center -extent 200x200 $dir/{$this->screenshot_filename}");
 	}
