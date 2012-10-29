@@ -50,7 +50,7 @@ if ( file_exists($controller) ){
 	<body>
 		<div id="wrapper">
 			<div id="header">
-				<h1>NVote</h1>
+				<h1>NitroXy 15 Scene</h1>
 				<?php if ( $u ){ ?>
 				<p>Inloggad som <?=$u->name?>.</p>
 				<?php } ?>
