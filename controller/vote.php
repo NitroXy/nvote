@@ -7,8 +7,9 @@ if ( isset($_GET['arg']) ){
 		$view = '../view/bad_cat.php';
 		return;
 	}
+	$admin_mode = (isset($_GET['admin']) && $u && $u->admin );
 	$selection = array('category_id' => $cat_id);
-	if(! ( isset($_GET['all']) && $u->admin) ) $selection['disqualified'] = 0;
+	if(! $admin_mode ) $selection['disqualified'] = 0;
 	$entry = Entry::selection($selection);
 	$view = '../view/list_entry.php';
 } else {

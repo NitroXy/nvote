@@ -1,6 +1,6 @@
 <h1><?=$category->name?></h1>
-<?php if($u && $u->admin) { ?>
-	<a href="/vote/<?=$category->id?>?all">Visa även diskvalifierad bidrag</a>
+<?php if($u && $u->admin && !$admin_mode) { ?>
+	<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
 <?php }?>
 
 <?php foreach ( $entry as $cur ){ ?>
@@ -12,7 +12,7 @@
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 	<p class="clear" />
-	<?php if($u && $u->admin) { ?>
+	<?php if($admin_mode) { ?>
 	<form action="/disqualify" method="post">
 		<input type="hidden" name="entry_id" value="<?=$cur->id?>"/>
 		<input type="hidden" name="cat_id" value="<?=$category->id?>"/>

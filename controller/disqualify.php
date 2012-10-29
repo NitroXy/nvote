@@ -12,5 +12,5 @@ if(isset($_POST['entry_id'])) {
 	} else {
 		flash('success', "Av-diskvalifierade bidrag {$entry->title}");
 	}
-	redirect("vote/{$_POST['cat_id']}");
+	redirect("vote/{$_POST['cat_id']}?admin");
 }
