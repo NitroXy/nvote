@@ -18,18 +18,21 @@ $image_types = array(
 	'image/gif',
 );
 
-$accepted = array(
+$video_types = array(
+	'video/mp4',
+	'video/avi',
+	'video/x-matroska',
+);
+
+$misc_types = array(
 	'application/gzip',
 	'application/rar',
 	'application/zip',
 	'audio/mpeg',
 	'audio/x-wav',
-	'video/mp4',
-	'video/avi',
-	'image/png',
-	'image/jpeg',
-	'image/gif',
 );
+
+$accepted = array_merge($image_types, $video_types, $misc_types);
 
 $imagemagick_convert = "convert";
 
@@ -79,18 +82,7 @@ class Entry extends BasicObject {
 			return false;
 		}
 
-		//Generate screenshot if possible:
-		global $image_types;
-
-		$screenshot_filename = $this->generate_screenshot_filename($original);
-		$screenshot_dst = "$dir/$screenshot_filename";
-
-		if(in_array($mime, $image_types)) {
-			copy($dst, $screenshot_dst);
-			$this->screenshot_filename = $screenshot_filename;
-			$this->resize_screenshot();
-			$this->commit();
-		} //TODO: video frame
+		$this->autogenerate_screenshot($dst, $mime);
 
 		global $db;
 		$stmt = $db->prepare('INSERT INTO `revision` (`entry_id`, `revision`, `filename`, `original`) VALUES (?, ?, ?, ?)');
@@ -107,9 +99,42 @@ class Entry extends BasicObject {
 		return true;
 	}
 
-	private function generate_filename($original, $revision){
+	private function autogenerate_screenshot($original, $mime){
+		global $image_types;
+		global $video_types;
+		global $dir;
+
+		if(in_array($mime, $image_types)) {
+			$screenshot_filename = $this->generate_screenshot_filename($original);
+			$screenshot_dst = "$dir/$screenshot_filename";
+
+			copy($dst, $screenshot_dst);
+			$this->screenshot_filename = $screenshot_filename;
+			$this->resize_screenshot();
+			$this->commit();
+		} else if(in_array($mime, $video_types)){
+			$screenshot_filename = $this->generate_screenshot_filename($original, "gif");
+			$screenshot_dst = "$dir/$screenshot_filename";
+
+			$tmp = "/tmp/nvote-" . getmypid() . "-" . time();
+			mkdir($tmp);
+			exec("ffmpeg -i " . escapeshellarg($original) . " -bt 15M -s 200x200 -f image2 -r 1/20 $tmp/img%03d.jpg");
+			exec("convert -delay 100 -loop 0 $tmp/img00* $screenshot_dst");
+			foreach ( glob($tmp. '/*') as $file ) {
+				unlink($file);
+			}
+			rmdir($tmp);
+			$this->screenshot_filename = $screenshot_filename;
+			$this->resize_screenshot();
+			$this->commit();
+		}
+	}
+
+	private function generate_filename($original, $revision, $ext=null){
 		global $event;
-		$ext = pathinfo($original, PATHINFO_EXTENSION);
+		if ( $ext == null ){
+			$ext = pathinfo($original, PATHINFO_EXTENSION);
+		}
 		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
 		return "upload/{$event}/{$this->Category->dirname()}/{$username}_{$this->entry_id}_r{$revision}.{$ext}";
 	}
@@ -138,8 +163,8 @@ class Entry extends BasicObject {
 	/**
 	 * filename for screenshot
 	 */
-	private function generate_screenshot_filename($original) {
-		return str_replace("rscreenshot","screenshot",$this->generate_filename($original, "screenshot"));
+	private function generate_screenshot_filename($original, $ext=null) {
+		return str_replace("rscreenshot","screenshot",$this->generate_filename($original, "screenshot", $ext));
 	}
 
 	public function get_revision(){
