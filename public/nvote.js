@@ -69,5 +69,8 @@ $(document).ready(function(){
 			flash.error('Du måste ange author');
 			return false;
 		}
+
+		$(this).attr('disabled', 'disabled');
+		flash.info('Ditt bidrag laddas upp, vänta...');
 	});
 });
