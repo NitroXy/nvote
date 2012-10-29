@@ -8,6 +8,7 @@ require('../auth.php');
 require('../functions.php');
 require('../model/category.php');
 require('../model/entry.php');
+require('../model/vote.php');
 
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";

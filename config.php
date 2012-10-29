@@ -18,6 +18,7 @@ class Config {
 }
 
 require_once('model/BasicObject.php');
+require_once('model/ValidatingBasicObject.php');
 BasicObject::$output_htmlspecialchars = true;
 
 $db = Config::fix_database();
