@@ -9,6 +9,9 @@
 <?php $category = $cur->category_id; } ?>
 
 <div class="entry">
+	<?php if($cur->has_screenshot()) { ?>
+	<img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/>
+	<?php } ?>
 	<h3 class="title"><a href="/download/<?=$cur->entry_id?>"><?=str_replace(' ', '&nbsp;', $cur->title)?></a></h3>
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
@@ -17,6 +20,7 @@
 		<li><a href="/reupload/<?=$cur->entry_id?>">Ladda upp ny version</a></li>
 		<li><a href="/remove/<?=$cur->entry_id?>">Ta bort</a></li>
 	</ul>
+	<p class="clear"/>
 </div>
 <?php } ?>
 <?php if ( count($entry) == 0 ){ ?>

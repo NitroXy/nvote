@@ -4,6 +4,7 @@ need_login();
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ( $method == 'POST' ){
+	$entry_id = isset($_POST['entry_id']) ? $_POST['entry_id'] : false;
 	$from = "edit/{$entry_id}";
 	$file = false;
 
@@ -17,7 +18,6 @@ if ( $method == 'POST' ){
 	$_SESSION['author'] = $_POST['author'];
 	$_SESSION['description'] = $_POST['description'];
 
-	$entry_id = isset($_POST['entry_id']) ? $_POST['entry_id'] : false;
 	if ( !$entry_id ){
 		$entry = new Entry();
 		$entry->user_id = $u->user_id;
@@ -39,6 +39,9 @@ if ( $method == 'POST' ){
 	$entry->title = $_POST['title'];
 	$entry->author = $_POST['author'];
 	$entry->description = $_POST['description'];
+	if($_FILES['screenshot'] && !$entry->set_screenshot($_FILES['screenshot'])) {
+		redirect($from);
+	}
 	$entry->commit();
 
 	if ( $file && !$entry->upload($file) ){

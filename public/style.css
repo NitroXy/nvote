@@ -123,3 +123,19 @@ h1, h2, h3 {
 .entry a {
     font-size: 0.8em;
 }
+
+.entry .description {
+	color: #5c5c5c;
+	font-size: 0.9em;
+	margin: 5px 5px 5px 0px;
+}
+
+.screenshot {
+	width: 200px;
+	float: left;
+	margin-right: 10px;
+}
+
+.clear {
+	clear: both;
+}

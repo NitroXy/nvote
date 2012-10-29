@@ -11,18 +11,27 @@ $upload_errors = array(
 	UPLOAD_ERR_EXTENSION   => "File upload stopped by extension.",
 );
 
+
+$image_types = array(
+	'image/png',
+	'image/jpeg',
+	'image/gif',
+);
+
 $accepted = array(
 	'application/gzip',
 	'application/rar',
 	'application/zip',
 	'audio/mpeg',
 	'audio/x-wav',
+	'video/mp4',
+	'video/avi',
 	'image/png',
 	'image/jpeg',
 	'image/gif',
-	'video/mp4',
-	'video/avi',
 );
+
+$imagemagick_convert = "convert";
 
 class Entry extends BasicObject {
 	protected static function table_name(){
@@ -109,6 +118,13 @@ class Entry extends BasicObject {
 		$filename = "{$title}_by_{$author}.{$ext}";
 	}
 
+	/**
+	 * filename for screenshot
+	 */
+	private function generate_screenshot_filename($original) {
+		return str_replace("rscreenshot","screenshot",$this->generate_filename($original, "screenshot"));
+	}
+
 	public function get_revision(){
 		global $db;
 		$id = $this->entry_id;
@@ -121,5 +137,57 @@ class Entry extends BasicObject {
 		}
 		$stmt->fetch();
 		return (int)$revision;
+	}
+
+	public function set_screenshot($file) {
+		$error = $file['error'];
+		$mime = $file['type'];
+
+		/* ensure a file was uploaded */
+		if ( $file['size'] == 0 ){
+			return true; //Don't fail, since this is allowed
+		}
+
+		/* check for error indicator */
+		if ( $error > 0 ){
+			global $upload_errors;
+			flash('error', $upload_errors[$error]);
+			return false;
+		}
+
+
+		/* validate mime-types */
+		global $image_types;
+		if ( !in_array($mime, $image_types) ){
+			flash('error', "Filformatet \"$mime\" accepterades inte som screenshot.");
+			return false;
+		}
+
+		$id = $this->entry_id;
+		$original = $file['name'];
+		$filename = $this->generate_screenshot_filename($original);
+		/* store uploaded file */
+		global $dir;
+		$dst = "$dir/$filename";
+		if ( !move_uploaded_file($file['tmp_name'], $dst) ){
+			flash('error', 'Misslyckades att spara filen, försök igen och kontakta crew om du forfarande misslyckas.');
+			return false;
+		}
+
+		$this->screenshot_filename = $filename;
+
+		$this->resize_screenshot();
+
+		return true;
+	}
+
+	public function has_screenshot() {
+		global $dir;
+		return (strlen($this->screenshot_filename) > 0 && file_exists("$dir/{$this->screenshot_filename}"));
+	}
+
+	private function resize_screenshot() {
+		global $imagemagick_convert, $dir;
+		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -background transparent -resize 400x400 $dir/{$this->screenshot_filename}");
 	}
 }
