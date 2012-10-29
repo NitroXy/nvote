@@ -102,7 +102,6 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 	$(function() {
 		$(".score").click(function() {
 			var sel_val = $(this).val();
-			console.log(sel_val);
 			$(".score_for_" + sel_val).each(function(i, v) {
 				$(v).attr('checked', false);
 			});
