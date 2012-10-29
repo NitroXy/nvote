@@ -39,14 +39,19 @@ if ( $method == 'POST' ){
 	$entry->title = $_POST['title'];
 	$entry->author = $_POST['author'];
 	$entry->description = $_POST['description'];
+
+	$db->autocommit(false);
+	$entry->commit();
 	if($_FILES['screenshot'] && !$entry->set_screenshot($_FILES['screenshot'])) {
+		$db->rollback();
 		redirect($from);
 	}
-	$entry->commit();
-
 	if ( $file && !$entry->upload($file) ){
-		redirect('upload');
+		$db->rollback();
+		redirect($from);
 	}
+	$db->commit();
+	$db->autocommit(true);
 
 	unset($_SESSION['category']);
 	unset($_SESSION['title']);
