@@ -45,7 +45,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 		<p class="clear"/>
 	<?php } ?>
 <?php if($cur->has_screenshot()) { ?>
-	<img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/>
+	<a href="/download/<?=$cur->entry_id?>"><img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/></a>
 <?php } ?>
 	<h3 class="title"><a href="/download/<?=$cur->entry_id?>"><?=str_replace(' ', '&nbsp;', $cur->title)?></a></h3>
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
