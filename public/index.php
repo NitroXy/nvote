@@ -2,14 +2,7 @@
 <?php
 
 session_start();
-require('../config.php');
-require('../model/user.php');
-require('../auth.php');
-require('../functions.php');
-require('../model/category.php');
-require('../model/entry.php');
-require('../model/vote.php');
-
+require('../includes.php');
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";
 if ( !(file_exists($dst) && is_writable($dst)) ){
