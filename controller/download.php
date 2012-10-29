@@ -13,7 +13,12 @@ $finfo = finfo_open(FILEINFO_MIME_TYPE);
 $mime = finfo_file($finfo, $src);
 finfo_close($finfo);
 
+$m = explode('/', $mime);
 header("Content-type: $mime");
-header("Content-Disposition: attachment; filename=\"$dst\"");
+
+if ( $m[0] != 'image' ){
+	header("Content-Disposition: attachment; filename=\"$dst\"");
+}
+
 echo file_get_contents($src);
 exit;
