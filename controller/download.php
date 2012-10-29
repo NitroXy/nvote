@@ -16,6 +16,7 @@ finfo_close($finfo);
 $m = explode('/', $mime);
 header("Content-type: $mime");
 
+header("Content-Length: ".filesize($src));
 if ( $m[0] != 'image' ){
 	header("Content-Disposition: attachment; filename=\"$dst\"");
 } else {

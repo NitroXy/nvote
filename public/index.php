@@ -59,7 +59,7 @@ if ( file_exists($controller) ){
 				<ul>
 					<li><a href="/">Start</a></li>
 					<li><a href="/rules">Regler</a></li>
-					<?php if ( Category::count(array('vote_open' => 1)) > 0 || ($u && $u->admin)) { ?>
+					<?php if ($u && Category::count(array('vote_open' => 1)) > 0 || ($u && $u->admin)) { ?>
 					<li><a href="/vote">Bidrag</a></li>
 					<?php } ?>
 					<?php if ( $u && $u->admin ){ ?>

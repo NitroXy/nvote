@@ -1,5 +1,7 @@
 <?php
 
+need_login();
+
 $admin_mode = (isset($_GET['admin']) && $u && $u->admin );
 
 if ( isset($_GET['arg']) ){
