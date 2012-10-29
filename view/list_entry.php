@@ -38,7 +38,12 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 <?php } ?>
 
 <?php foreach ( $entry as $cur ){ ?>
-<div class="entry">
+<div class="entry <?=($cur->disqualified?'disqualified':'')?>">
+	<?php if($cur->disqualified) { ?>
+		<h1>Diskvalifierad</h1>
+		<strong>Anledning: <?=$cur->disqualified_reason?></strong>
+		<p class="clear"/>
+	<?php } ?>
 <?php if($cur->has_screenshot()) { ?>
 	<img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/>
 <?php } ?>

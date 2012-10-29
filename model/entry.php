@@ -243,6 +243,7 @@ class Entry extends BasicObject {
 	}
 
 	public function score() {
+		if($this->disqualified) return -1;
 		return Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
 	}
 

@@ -173,3 +173,9 @@ h1, h2, h3 {
 	font-weight: bold;
 	margin: 29px 30px;
 }
+
+.vote_info {
+	color: #5c5c5c;
+	font-size: 0.9em;
+	margin: 10px;
+}
