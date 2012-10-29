@@ -6,7 +6,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 </p>
 <?php if($u && $u->admin && !$admin_mode) { ?>
 	<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
-<?php } else { ?>
+<?php } else if($u && $u->admin) { ?>
 	<a href="/vote/<?=$category->id?>">Till normalläge</a>
 <?php }?>
 
