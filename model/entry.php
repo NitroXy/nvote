@@ -108,7 +108,7 @@ class Entry extends BasicObject {
 			$screenshot_filename = $this->generate_screenshot_filename($original);
 			$screenshot_dst = "$dir/$screenshot_filename";
 
-			copy($dst, $screenshot_dst);
+			copy($original, $screenshot_dst);
 			$this->screenshot_filename = $screenshot_filename;
 			$this->resize_screenshot();
 			$this->commit();
@@ -230,7 +230,7 @@ class Entry extends BasicObject {
 
 	public function resize_screenshot() {
 		global $imagemagick_convert, $dir;
-		exec("$imagemagick_convert $dir/{$this->screenshot_filename} -resize 200x200 -background transparent -gravity center -extent 200x200 $dir/{$this->screenshot_filename}");
+		system("$imagemagick_convert $dir/{$this->screenshot_filename} -resize 200x200 -background transparent -gravity center -extent 200x200 $dir/{$this->screenshot_filename}");
 	}
 
 	public function user_vote($user) {
