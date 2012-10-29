@@ -8,6 +8,11 @@ if ( !$entry ){
 	return;
 }
 
+if ( !$entry->Category->entry_open ){
+	$view = '../view/entry_closed.php';
+	return;
+}
+
 $view = '../view/upload.php';
 $title = $entry->title;
 $author = $entry->author;
