@@ -22,5 +22,5 @@ if ( $m[0] != 'image' ){
 	header("Content-Disposition: inline; filename=\"$dst\"");
 }
 
-echo file_get_contents($src);
+readfile($src);
 exit;
