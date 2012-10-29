@@ -75,6 +75,19 @@ class Entry extends BasicObject {
 			return false;
 		}
 
+		//Generate screenshot if possible:
+		global $image_types;
+
+		$screenshot_filename = $this->generate_screenshot_filename($original);
+		$screenshot_dst = "$dir/$screenshot_filename";
+
+		if(in_array($mime, $image_types)) {
+			copy($dst, $screenshot_dst);
+			$this->screenshot_filename = $screenshot_filename;
+			$this->resize_screenshot();
+			$this->commit();
+		} //TODO: video frame
+
 		global $db;
 		$stmt = $db->prepare('INSERT INTO `revision` (`entry_id`, `revision`, `filename`, `original`) VALUES (?, ?, ?, ?)');
 		if ( !$stmt ){
