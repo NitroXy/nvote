@@ -166,3 +166,10 @@ h1, h2, h3 {
 .vote_button {
 	margin: 15px 5px;
 }
+
+.score {
+	float: right;
+	font-size: 5em;
+	font-weight: bold;
+	margin: 29px 30px;
+}

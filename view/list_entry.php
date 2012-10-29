@@ -65,6 +65,8 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 			</tr>
 		</table>
 	</div>
+	<?php } else { ?>
+		<div class="score"><?=$cur->score()?></div>
 	<?php } ?>
 
 	<p class="clear" />
