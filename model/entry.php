@@ -32,6 +32,7 @@ $misc_types = array(
 	'application/x-bzip2',
 	'application/x-tar',
 	'application/x-zip-compressed',
+	'application/octet-stream',
 	'application/ogg',
 	'audio/mpeg',
 	'audio/x-wav',
