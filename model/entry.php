@@ -31,6 +31,8 @@ $misc_types = array(
 	'application/zip',
 	'application/x-bzip2',
 	'application/x-tar',
+	'application/x-zip-compressed',
+	'application/octet-stream',
 	'application/ogg',
 	'audio/mpeg',
 	'audio/x-wav',
@@ -253,4 +255,13 @@ class Entry extends BasicObject {
 		return Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
 	}
 
+	public function mimetype(){
+		global $dir;
+		$this->final_filename($location, $dst);
+		$src = "$dir/$location";
+		$finfo = finfo_open(FILEINFO_MIME_TYPE);
+		$mime = finfo_file($finfo, $src);
+		finfo_close($finfo);
+		return $mime;
+	}
 }

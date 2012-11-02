@@ -60,7 +60,7 @@ $(document).ready(function(){
 	});
 
 	/* validate fields */
-	$('#upload input[type=submit]').click(function(){
+	$('#upload').submit(function(){
 		if ( $('#upload #title').val().length == 0 ){
 			flash.error('Du måste ange en titel');
 			return false;
@@ -72,5 +72,6 @@ $(document).ready(function(){
 
 		$(this).attr('disabled', 'disabled');
 		flash.info('Ditt bidrag laddas upp, vänta...');
+		return true;
 	});
 });

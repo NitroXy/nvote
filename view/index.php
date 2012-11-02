@@ -1,5 +1,5 @@
 <p>Totalt finns det 1000kr i prispotten.</p>
-<p><b>Deadline är Tisdag 12.00</b>. Du måste ha gjort bidraget själv och inte publicerat det tidigare, men det finns ingen krav på att det ska vara gjort under eventet.</p>
+<p><b>Deadline är Tisdag 17.00</b>. Du måste ha gjort bidraget själv och inte publicerat det tidigare, men det finns ingen krav på att det ska vara gjort under eventet.</p>
 
 <p>Kategorierna som finns är som följer:</p>
 <h2>Graphics/Photo</h2>
