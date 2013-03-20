@@ -2,7 +2,8 @@
 
 require_once "nxauth.php";
 
-phpCAS::setNoCasServerValidation();
+//phpCAS::setNoCasServerValidation();
+phpCAS::setCasServerCACert(dirname(__FILE__). "/GeoTrustGlobalCA_nochain");
 
 if(phpCAS::isAuthenticated()) {
 	$attr = phpCAS::getAttributes();
