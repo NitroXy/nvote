@@ -1,6 +1,6 @@
 <?php
 
-	phpCAS::forceAuthentication();
+	NXAuth::authenticate();
 
 ?>
 

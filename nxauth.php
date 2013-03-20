@@ -1,7 +1,18 @@
 <?php
 
-require_once "libs/CAS.php"; //Include phpCAS
+require_once "libs/nxauth/include.php";
 
-phpCAS::client(CAS_VERSION_2_0, "nitroxy.com", 443, "cas");
+{
 
-?>
+	/* Settings for CAS via NitroXy.com */
+
+	$cas_config = array(
+		'site' => "nitroxy.torandi.com",
+		'port' => 443,
+		'private_key' => null, /* Specify path to applications private key (NEVER check in the private key to a git repo) for extra data (if any) */
+		'ca_cert' => null,
+	);
+
+	NXAuth::init($cas_config);
+
+}

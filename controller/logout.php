@@ -1,4 +1,5 @@
 <?php
 
-phpCAS::logout();
+NXAuth::logout();
+
 ?>
