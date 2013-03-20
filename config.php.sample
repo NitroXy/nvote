@@ -3,8 +3,8 @@
 class Config {
 	private static $db_host = "127.0.0.1";
 	private static $db_name = "nvote";
-	private static $db_user = "nvote";
-	private static $db_password = "9sd8fg7h9087sdfg";
+	private static $db_user = "root";
+	private static $db_password = "";
 
 	public static function fix_database($username=null) {
 		if(is_null($username)) {
