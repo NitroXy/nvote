@@ -9,7 +9,8 @@ require_once "libs/nxauth/include.php";
 	$cas_config = array(
 		'site' => "nitroxy.torandi.com",
 		'port' => 443,
-		'private_key' => null, /* Specify path to applications private key (NEVER check in the private key to a git repo) for extra data (if any) */
+		'site_id' => "nvote",
+		'private_key' => dirname(__FILE__) . "/cas_key.priv",
 		'ca_cert' => null,
 	);
 
