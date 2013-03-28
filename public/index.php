@@ -60,19 +60,22 @@ if ( file_exists($controller) ){
 					<li><a href="/">Start</a></li>
 					<li><a href="/rules">Regler</a></li>
 					<?php if ($u && Category::count(array('vote_open' => 1)) > 0 || ($u && $u->admin)) { ?>
-					<li><a href="/vote">Bidrag</a></li>
-					<?php } ?>
-					<?php if ( $u && $u->admin ){ ?>
-					<li><a href="/admin">Admin</a></li>
+						<li><a href="/vote">Bidrag</a></li>
 					<?php } ?>
 					<?php if ( $u ){ ?>
-					<?php if ( count($open_cat) > 0 ){ ?>
-					<li><a href="/upload">Inlämning</a></li>
-					<?php } ?>
-					<li><a href="/my">Mina bidrag</a></li>
-					<li><a href="/logout">Logga ut</a></li>
+						<?php if ( count($open_cat) > 0 ){ ?>
+							<li><a href="/upload">Inlämning</a></li>
+						<?php } ?>
+
+						<li><a href="/my">Mina bidrag</a></li>
+
+						<?php if ( $u && $u->admin ){ ?>
+							<li><a href="/admin">Admin</a></li>
+						<?php } ?>
+
+						<li><a href="/logout">Logga ut</a></li>
 					<?php } else { ?>
-					<li><a href="/login">Logga in</a></li>
+						<li><a href="/login">Logga in</a></li>
 					<?php } ?>
 				</ul>
 			</div>
