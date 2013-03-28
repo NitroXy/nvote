@@ -39,6 +39,7 @@ function need_login(){
 
 function need_admin(){
 	if ( !Can::administrate() ){
+		flash('error', 'Måste vara admin');
 		redirect();
 	}
 }

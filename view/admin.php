@@ -1,18 +1,29 @@
+<script type='text/javascript' src='/js/admin.js'></script>
 <h1>Kategorier</h1>
 
 <form action="/admin/open" method="post">
-	<p><b>I</b>nlämning - <b>R</b>östning</p>
-	<p><span title="Inlämning öppen">I</span>&nbsp;&nbsp;<span title="Röstning öppen">R</span></p>
-	<ul>
+	<table>
+		<thead>
+			<tr>
+				<th>Kategori</th>
+				<th>Inlämning</th>
+				<th>Röstning</th>
+			</tr>
+		</thead>
+		<tbody>
 		<?php foreach ($category as $cur){ ?>
-		<li>
-			<input type="checkbox" name="i<?=$cur->category_id?>" <?=$cur->entry_open ? ' checked="checked"' : '' ?>/>
-			<input type="checkbox" name="r<?=$cur->category_id?>" <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/>
-			<?=$cur->name?>
-		</li>
+			<tr>
+				<td><?=$cur->name?></td>
+				<td>
+					<input type="checkbox" class='cat_status' data-what='submit' data-id='<?=$cur->category_id?>' <?=$cur->entry_open ? ' checked="checked"' : '' ?>/>
+				</td>
+				<td>
+					<input type="checkbox" class='cat_status' what='vote' data-id='<?=$cur->category_id?>' <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/>
+				</td>
+			</tr>
 		<?php } ?>
-	</ul>
-	<input type="submit" value="spara" />
+		</tbody>
+	</table>
 </form>
 
 <h1>Projektor</h1>
