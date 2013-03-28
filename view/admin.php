@@ -3,8 +3,8 @@
 	<p class='error'>Slå på javascript eller gå och lek med en katt.</p>
 </noscript>
 
-<div class='block'>
 <h1>Kategorier</h1>
+<div class='block'>
 <h2>Befintliga</h2>
 <form>
 	<table>
@@ -58,7 +58,7 @@ foreach(Event::selection() as $e) { ?>
 </form>
 </div>
 
-<div class='block'>
 <h1>Projektor</h1>
+<div class='block'>
 <a href="/generate">Generera slides</a> (processen tar tid, resultatet hamnar i $event/final/$cat)
 </div>

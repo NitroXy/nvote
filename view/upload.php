@@ -4,6 +4,7 @@
 <h1>Redigera bidrag</h1>
 <?php } ?>
 
+<div class='block'>
 <form action="/upload" method="post" id="upload" enctype="multipart/form-data">
 	<?php if ( isset($entry) ){ ?>
 	<input type="hidden" name="entry_id" value="<?=$entry->entry_id?>" />
@@ -53,3 +54,4 @@
 
 	<input type="submit" name="upload" id="upload" value="Ladda upp" />
 </form>
+</div>

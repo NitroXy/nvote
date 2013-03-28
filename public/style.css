@@ -24,6 +24,10 @@ ul.ul {
     margin-left: 1.5em;
 }
 
+a {
+	color: #888;
+}
+
 #header {
     background: #333;
     padding: 1.5em 1em 0em 5em;
@@ -88,7 +92,7 @@ ul.ul {
 }
 
 #content {
-    margin: 1em 1em 2em 7em;
+    margin: 0em 7em 2em 7em;
     padding: 1em;
 		color: #444;
 		font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
@@ -99,6 +103,13 @@ ul.ul {
 #content h1, h2, h3 {
 	text-transform: uppercase;
 	letter-spacing: 1px;
+}
+
+#content h1 {
+	font-size: 4em;
+	font-weight: 800;
+	color: #ccc;
+	margin-bottom: -0.5em;
 }
 
 #upload label {
@@ -151,6 +162,24 @@ ul.ul {
 	color: #5c5c5c;
 	font-size: 0.9em;
 	margin: 5px 5px 5px 0px;
+}
+
+.big_links {
+	padding-left: 10px;
+	margin-top: 3em;
+}
+
+.big_links a {
+	color: #aaa;
+	text-decoration: none;
+	display: block;
+	font-size: 3em;
+	font-weight: 800;
+	text-transform: uppercase;
+}
+
+.big_links a:hover {
+	color: #C66600;
 }
 
 .screenshot {
@@ -212,6 +241,16 @@ ul.ul {
 	width: 400px !important;
 }
 
+.block {
+	background: #fff;
+	padding: 2em;
+	margin: 2em 0;
+}
+
+.block h2 {
+	margin-top: 0px;
+}
+
 input, select, textarea {
 	background: #ccc;
 	color: #000;
@@ -226,4 +265,13 @@ label {
 	font-weight: bold;
 	margin-top: 10px;
 	color: #777;
+}
+
+#admin_toggle {
+	float: right;
+	margin-right: 10px;
+}
+
+#admin_toggle a {
+	color: #999 !important;
 }
