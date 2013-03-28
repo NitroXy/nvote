@@ -17,10 +17,9 @@ class Config {
 	}
 }
 
-require_once('model/BasicObject.php');
-require_once('model/ValidatingBasicObject.php');
+require_once('libs/BasicObject/BasicObject.php');
+require_once('libs/BasicObject/ValidatingBasicObject.php');
 BasicObject::$output_htmlspecialchars = true;
 
 $db = Config::fix_database();
 $crew_groups = array('Kreativ'); /* Crew groups that are admins */
-$dir = dirname(__FILE__);

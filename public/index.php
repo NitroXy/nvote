@@ -59,7 +59,7 @@ if ( file_exists($controller) ){
 	</head>
 	<body>
 			<div id="header">
-				<div id="title">
+				<div id="page_title">
 					NITROXY
 					<span id='kreativ'>KREATIV</span>
 				</div>

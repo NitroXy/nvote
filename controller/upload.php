@@ -68,7 +68,7 @@ if ( $method == 'POST' ){
 	$category = $open_cat;
 	$selected_category = sessiondata('category');
 	$title = sessiondata('title');
-	$author = sessiondata('author', $u->name);
+	$author = sessiondata('author', $u->username);
 	$description = sessiondata('description');
 	$allow_file = true;
 

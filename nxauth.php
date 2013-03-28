@@ -1,6 +1,6 @@
 <?php
 
-require_once "libs/nxauth/include.php";
+require_once "$dir/libs/nxauth/include.php";
 
 {
 

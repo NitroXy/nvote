@@ -18,11 +18,38 @@ $category = Category::selection(array('event' => $event));
 
 if ( $method == 'POST' ){
 	$arg = $_GET['arg'];
-	if ( $arg == 'open' ){
-		open_votes();
+	switch ( $arg ) {
+	case 'category_status':
+		$category = Category::from_id($_POST['id']);
+		$value = $_POST['value'];
+		if($_POST['what'] == 'entry') {
+			$category->entry_open = $value;
+		} else if($_POST['what'] == 'vote') {
+			$category->vote_open = $value;
+		} else {
+			die("Unknown what");
+		}
+		$category->commit();
+		die("");
+		break;
+	case 'create_category':
+		$category = new Category(array(
+			'name'=> $_POST['name'],
+			'description' => $_POST['description'],
+			'event' => $event,
+		));
+		$category->commit();
 		redirect('admin');
+		break;
+	case 'clone':
+		foreach(Category::selection(array('event' => $_POST['event'])) as $category) {
+			$c = $category->duplicate();
+			$c->event = $event;
+			$c->commit();
+		}
+		redirect('admin');
+		break;
+	default:
+		die("Invalid command");
 	}
-	die("invalid subfunc");
-} else if ( $method == 'GET' ){
-
 }

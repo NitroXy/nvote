@@ -1,5 +1,7 @@
 <?php
 
+global $upload_errors, $image_types, $video_types, $misc_types, $accepted;
+
 $upload_errors = array(
 	UPLOAD_ERR_OK          => "No errors.",
 	UPLOAD_ERR_INI_SIZE    => "Larger than upload_max_filesize.",
@@ -73,7 +75,7 @@ class Entry extends BasicObject {
 		/* validate mime-types */
 		global $accepted;
 		if ( !in_array($mime, $accepted) ){
-			flash('error', "Filformatet \"$mime\" accepterades inte (prata med scene-crew om du tycker att du borde få ladda upp detta).");
+			flash('error', "Filformatet \"$mime\" accepterades inte (prata med kreativ-crew om du tycker att du borde få ladda upp detta).");
 			return false;
 		}
 
