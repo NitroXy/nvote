@@ -11,18 +11,12 @@
 <h1><?=$category->name?></h1>
 
 <?php if(Can::vote() && !$admin_mode) { ?>
-<div class='block'>
-Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
-Du kan inte ge två bidrag samma poäng.<br/>
-</div>
-
 <form action="/vote/<?=$category->id?>" method="post" id="vote_form">
 <div class='block'>
 	<input type="hidden" name="vote" value="do"/>
-	<noscript><input type="submit" value="Spara röster" class="vote_button"/></noscript>
-
 	<div class="vote vote_header">
-		<strong>Blank: </strong>
+		<noscript><p><input type="submit" value="Spara röster" class="vote_button"/></p></noscript>
+		<label>Blank: </label>
 		<table class="vote_table">
 			<tr>
 				<th>5</th>
@@ -40,6 +34,8 @@ Du kan inte ge två bidrag samma poäng.<br/>
 			</tr>
 		</table>
 		</div>
+		Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
+		Du kan inte ge två bidrag samma poäng.<br/>
 		<p class="clear"/>
 </div>
 <?php } ?>
