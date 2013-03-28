@@ -22,5 +22,5 @@ require_once('model/ValidatingBasicObject.php');
 BasicObject::$output_htmlspecialchars = true;
 
 $db = Config::fix_database();
-$event = 'nx15';
+$crew_groups = array('Kreativ'); /* Crew groups that are admins */
 $dir = dirname(__FILE__);

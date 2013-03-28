@@ -4,9 +4,9 @@ Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
 Du kan inte ge två bidrag samma poäng.<br/>
 När du är klar, kom ihåg att klicka "Spara röster"<br/>
 </p>
-<?php if($u && $u->admin && !$admin_mode) { ?>
+<?php if(Can::administrate() && !$admin_mode) { ?>
 	<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
-<?php } else if($u && $u->admin) { ?>
+<?php } else if(Can::administrate()) { ?>
 	<a href="/vote/<?=$category->id?>">Till normalläge</a>
 <?php }?>
 

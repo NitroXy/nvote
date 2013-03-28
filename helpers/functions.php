@@ -38,8 +38,7 @@ function need_login(){
 }
 
 function need_admin(){
-	global $u;
-	if ( !($u && $u->admin) ){
+	if ( !Can::administrate() ){
 		redirect();
 	}
 }

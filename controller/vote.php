@@ -2,12 +2,12 @@
 
 need_login();
 
-$admin_mode = (isset($_GET['admin']) && $u && $u->admin );
+$admin_mode = (isset($_GET['admin']) && Can::administrate() );
 
 if ( isset($_GET['arg']) ){
 	$cat_id = $_GET['arg'];
 	$category = Category::from_id($cat_id);
-	if ( !($category && (($u && $u->admin) || $category->vote_open)) ){
+	if ( !($category && (Can::administrate() || $category->vote_open)) ){
 		$view = '../view/bad_cat.php';
 		return;
 	}

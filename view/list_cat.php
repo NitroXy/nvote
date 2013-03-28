@@ -1,6 +1,6 @@
-<?php if($u && $u->admin && !$admin_mode) { ?>
+<?php if(Can::administrate() && !$admin_mode) { ?>
 	<a href="/vote?admin">Till adminläge</a>
-<?php } else if($u && $u->admin) { ?>
+<?php } else if(Can::administrate()) { ?>
 	<a href="/vote">Till normalläge</a>
 <?php }?>
 <h1>Kategorier</h1>
