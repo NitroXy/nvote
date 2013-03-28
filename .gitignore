@@ -4,4 +4,4 @@
 upload
 config.php
 .console_history
-cas_key.priv
+*.priv
