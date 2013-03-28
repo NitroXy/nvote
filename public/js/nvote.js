@@ -26,6 +26,12 @@ var flash = function(){
     };
 }();
 
+function flash_data(data) {
+	if(data.success) flash.success(data.success);
+	if(data.info) flash.info(data.info);
+	if(data.error) flash.error(data.error);
+}
+
 function update_category_description(){
 	var selected = $('#upload #category').val();
 	if ( !selected ){

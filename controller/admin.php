@@ -2,17 +2,6 @@
 
 need_admin();
 
-function open_votes(){
-	global $category;
-
-	foreach ( $category as $cur ){
-		$cur->entry_open = isset($_POST['i'.$cur->category_id]);
-		$cur->vote_open  = isset($_POST['r'.$cur->category_id]);
-		$cur->commit();
-	}
-	flash('success', 'Ändringarna sparade');
-}
-
 $method = $_SERVER['REQUEST_METHOD'];
 $category = Category::selection(array('event' => $event));
 
@@ -21,16 +10,19 @@ if ( $method == 'POST' ){
 	switch ( $arg ) {
 	case 'category_status':
 		$category = Category::from_id($_POST['id']);
+		if(!$category) {
+			flash_json('error', "Okänt kategori-id");
+		}
 		$value = $_POST['value'];
 		if($_POST['what'] == 'entry') {
 			$category->entry_open = $value;
 		} else if($_POST['what'] == 'vote') {
 			$category->vote_open = $value;
 		} else {
-			die("Unknown what");
+			flash_json('error', "Internt fel (unknown 'what')");
 		}
 		$category->commit();
-		die("");
+		flash_json('success', "Ändringarna sparades");
 		break;
 	case 'create_category':
 		$category = new Category(array(

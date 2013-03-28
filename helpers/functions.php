@@ -50,3 +50,13 @@ function need_admin(){
 		redirect();
 	}
 }
+
+function output_json($data) {
+	header("Content-Type: text/json");
+	echo json_encode($data);
+	exit();
+}
+
+function flash_json($class, $message) {
+	output_json(array($class => $message));
+}

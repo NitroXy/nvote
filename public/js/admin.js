@@ -4,6 +4,8 @@ $(function() {
 			what: $(this).data('what'),
 			id: $(this).data('id'),
 			value: $(this).is(':checked') ? 1 : 0
-		});
+		}, function(data) {
+			flash_data(data);
+		})
 	});
 })
