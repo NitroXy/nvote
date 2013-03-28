@@ -1,6 +1,6 @@
 <?php
 
-	NXAuth::authenticate();
+	NXAuth::login();
 
 ?>
 
