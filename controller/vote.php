@@ -14,7 +14,9 @@ if ( isset($_GET['arg']) ){
 		//handle votes
 		//Fulhack: nollställ alla röster i kategorin från användaren först
 		$stmt = $db->prepare('update vote set entry_id = NULL where category_id = ? and user_id = ?');
-		$stmt->bind_param('ii', $category->category_id(), $u->user_id());
+		$cat = $category->category_id();
+		$uid = $u->user_id();
+		$stmt->bind_param('ii', $cat, $uid);
 		$stmt->execute();
 		$stmt->close();
 
@@ -29,9 +31,17 @@ if ( isset($_GET['arg']) ){
 				}
 			}
 
-			$flash['success'] = "Rösterna sparades";
+			if(!isset($_POST['ajax'])) {
+				$flash['success'] = "Dina röster har sparats";
+			} else {
+				flash_json('success', "Dina röster har sparats");
+			}
 		} catch (ValidationException $e) {
-			$e->flash();
+			if(!isset($_POST['ajax'])) {
+				$e->flash();
+			} else {
+				flash_json('error', "Ett fel uppstod: ".$e->getMessage());
+			}
 		}
 		redirect("vote/$cat_id");
 	}

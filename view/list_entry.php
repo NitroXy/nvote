@@ -14,13 +14,12 @@
 <div class='block'>
 Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
 Du kan inte ge två bidrag samma poäng.<br/>
-När du är klar, kom ihåg att klicka "Spara röster"<br/>
 </div>
 
+<form action="/vote/<?=$category->id?>" method="post" id="vote_form">
 <div class='block'>
-<form action="/vote/<?=$category->id?>" method="post">
 	<input type="hidden" name="vote" value="do"/>
-	<input type="submit" value="Spara röster" class="vote_button"/>
+	<noscript><input type="submit" value="Spara röster" class="vote_button"/></noscript>
 
 	<div class="vote vote_header">
 		<strong>Blank: </strong>
@@ -102,9 +101,11 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 <?php } ?>
 
 <?php if(Can::vote() && !$admin_mode) { ?>
+<noscript>
 <div class='block'>
 		<input type="submit" value="Spara röster" class="vote_button"/>
-	</div>
+</div>
+</noscript>
 	</form>
 <?php } ?>
 
@@ -117,6 +118,15 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 			});
 			$(this).attr('checked', true);
 
+			vote();
 		})
 	})
+
+	function vote() {
+		$.post('/vote/<?=$category->id?>', $("#vote_form").serialize() + "&ajax=1",
+			function(data) {
+				flash_data(data)
+			}
+		);
+	}
 </script>
