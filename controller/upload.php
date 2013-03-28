@@ -17,7 +17,9 @@ if ( $method == 'POST' ){
 		$file = $_FILES['file'];
 	}
 
-	$_SESSION['category'] = $_POST['category'];
+	if(isset($_POST['category'])) {
+		$_SESSION['category'] = $_POST['category'];
+	}
 	$_SESSION['title'] = $_POST['title'];
 	$_SESSION['author'] = $_POST['author'];
 	$_SESSION['description'] = $_POST['description'];
@@ -54,6 +56,7 @@ if ( $method == 'POST' ){
 		$db->rollback();
 		redirect($from);
 	}
+	$entry->commit();
 	$db->commit();
 	$db->autocommit(true);
 
