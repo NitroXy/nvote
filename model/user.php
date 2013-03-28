@@ -27,6 +27,8 @@ class User extends BasicObject {
 			return NXAPI::crew_groups(array('event' => $event, 'user' => $this->user_id));
 		case "has_ticket":
 			return (NXAPI::ticket_status(array('event' => $event, 'user' => $this->user_id)) == 'paid');
+		case "is_crew":
+			return NXAPI::is_crew(array('event' => $event, 'user' => $this->user_id));
 		default:
 			return parent::__get($attr);
 		}

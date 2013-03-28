@@ -33,6 +33,13 @@ function sessiondata($key, $default=null){
 function need_login(){
 	global $u;
 	if ( !$u ){
+		flash('error', "Du måste vara inloggad");
+		redirect();
+	}
+}
+
+function need_right($right) {
+	if( !$right ) {
 		redirect();
 	}
 }

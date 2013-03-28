@@ -1,6 +1,6 @@
 <?php
 
-need_login();
+need_right(Can::submit());
 
 $method = $_SERVER['REQUEST_METHOD'];
 if ( $method == 'POST' ){

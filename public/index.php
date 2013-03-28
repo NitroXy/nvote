@@ -64,13 +64,13 @@ if ( file_exists($controller) ){
 					<span id='kreativ'>KREATIV</span>
 				</div>
 				<?php if ( $u ){ ?>
-				<p id='login_info'>Inloggad som <?=$u->name?>.</p>
+				<p id='login_info'>Inloggad som <?=$u->username?>.</p>
 				<?php } ?>
 				<div id="nav">
 					<ul>
 						<li><a href="/">Start</a></li>
 						<li><a href="/rules">Regler</a></li>
-						<?php if ($u && Category::count(array('vote_open' => 1)) > 0 || (Can::administrate())) { ?>
+						<?php if ( Category::count(array('vote_open' => 1)) > 0 || (Can::administrate())) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>

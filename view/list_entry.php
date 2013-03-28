@@ -10,13 +10,13 @@
 
 <h1><?=$category->name?></h1>
 
-<div class='block vote_info'>
+<?php if(Can::vote() && !$admin_mode) { ?>
+<div class='block'>
 Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
 Du kan inte ge två bidrag samma poäng.<br/>
 När du är klar, kom ihåg att klicka "Spara röster"<br/>
 </div>
 
-<?php if(!$admin_mode) { ?>
 <div class='block'>
 <form action="/vote/<?=$category->id?>" method="post">
 	<input type="hidden" name="vote" value="do"/>
@@ -59,7 +59,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 
-	<?php if(!$admin_mode) { ?>
+	<?php if(Can::vote() && !$admin_mode) { ?>
 	<div class="vote">
 		<table class="vote_table">
 			<tr>
@@ -78,7 +78,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 			</tr>
 		</table>
 	</div>
-	<?php } else { ?>
+	<?php } else if($admin_mode) { ?>
 		<div class="score_display"><?=$cur->score()?></div>
 	<?php } ?>
 
@@ -101,7 +101,7 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 </div>
 <?php } ?>
 
-<?php if(!$admin_mode) { ?>
+<?php if(Can::vote() && !$admin_mode) { ?>
 <div class='block'>
 		<input type="submit" value="Spara röster" class="vote_button"/>
 	</div>

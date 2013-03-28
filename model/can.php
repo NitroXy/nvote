@@ -7,13 +7,13 @@ class Can {
 	public static function vote() {
 		global $u;
 		if(!$u) return false;
-		return $u->has_ticket;
+		return ( $u->has_ticket || $u->is_crew );
 	}
 
 	public static function submit() {
 		global $u;
 		if(!$u) return false;
-		return $u->has_ticket;
+		return ( $u->has_ticket || $u->is_crew );
 	}
 
 	public static function administrate() {

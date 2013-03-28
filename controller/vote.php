@@ -1,7 +1,5 @@
 <?php
 
-need_login();
-
 $admin_mode = (isset($_GET['admin']) && Can::administrate() );
 
 if ( isset($_GET['arg']) ){
@@ -12,7 +10,7 @@ if ( isset($_GET['arg']) ){
 		return;
 	}
 
-	if( $u && isset($_POST['vote']) ) {
+	if( Can::vote() && isset($_POST['vote']) ) {
 		//handle votes
 		//Fulhack: nollställ alla röster i kategorin från användaren först
 		$stmt = $db->prepare('update vote set entry_id = NULL where category_id = ? and user_id = ?');
@@ -46,16 +44,18 @@ if ( isset($_GET['arg']) ){
 		$vote_map = array();
 		$blank_votes = array();
 
-		foreach(Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)) as $v) {
-			$vote_map[$v->entry_id] = $v->score;
-			if($v->entry_id == null) $blank_votes[] = $v->score;
-		}
+		if( $u ) {
+			foreach(Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)) as $v) {
+				$vote_map[$v->entry_id] = $v->score;
+				if($v->entry_id == null) $blank_votes[] = $v->score;
+			}
 
-		shuffle($entry);
-		usort($entry, function($a, $b) {
-			global $u;
-			return $b->user_vote($u) - $a->user_vote($b);
-		});
+			shuffle($entry);
+			usort($entry, function($a, $b) {
+				global $u;
+				return $b->user_vote($u) - $a->user_vote($b);
+			});
+		}
 	} else {
 		usort($entry, function($a, $b) {
 			return $b->score() - $a->score();
