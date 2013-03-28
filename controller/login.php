@@ -2,5 +2,6 @@
 
 	NXAuth::login();
 
+	redirect("");
 ?>
 
