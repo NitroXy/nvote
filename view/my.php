@@ -8,7 +8,7 @@
 <h2><?=$cur->Category->name?></h2>
 <?php $category = $cur->category_id; } ?>
 
-<div class="entry <?=($cur->disqualified?'disqualified':'')?>">
+<div class="block entry <?=($cur->disqualified?'disqualified':'')?>">
 	<?php if($cur->disqualified) { ?>
 		<h1>Diskvalifierad</h1>
 		<strong>Anledning: <?=$cur->disqualified_reason?></strong>

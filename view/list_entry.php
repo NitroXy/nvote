@@ -1,16 +1,23 @@
+<?php if(Can::administrate() ) { ?>
+<div id='admin_toggle'>
+<?php if(!$admin_mode) { ?>
+		<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
+	<?php } else { ?>
+		<a href="/vote/<?=$category->id?>">Till normalläge</a>
+	<?php }?>
+</div>
+<?php }?>
+
 <h1><?=$category->name?></h1>
-<p class="vote_info">
+
+<div class='block vote_info'>
 Rösta genom att ge bidragen 1-5 poäng, 5 poäng är bäst.<br/>
 Du kan inte ge två bidrag samma poäng.<br/>
 När du är klar, kom ihåg att klicka "Spara röster"<br/>
-</p>
-<?php if(Can::administrate() && !$admin_mode) { ?>
-	<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
-<?php } else if(Can::administrate()) { ?>
-	<a href="/vote/<?=$category->id?>">Till normalläge</a>
-<?php }?>
+</div>
 
 <?php if(!$admin_mode) { ?>
+<div class='block'>
 <form action="/vote/<?=$category->id?>" method="post">
 	<input type="hidden" name="vote" value="do"/>
 	<input type="submit" value="Spara röster" class="vote_button"/>
@@ -35,10 +42,11 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 		</table>
 		</div>
 		<p class="clear"/>
+</div>
 <?php } ?>
 
 <?php foreach ( $entry as $cur ){ ?>
-<div class="entry <?=($cur->disqualified?'disqualified':'')?>">
+<div class="block entry <?=($cur->disqualified?'disqualified':'')?>">
 	<?php if($cur->disqualified) { ?>
 		<h1>Diskvalifierad</h1>
 		<strong>Anledning: <?=$cur->disqualified_reason?></strong>
@@ -94,7 +102,9 @@ När du är klar, kom ihåg att klicka "Spara röster"<br/>
 <?php } ?>
 
 <?php if(!$admin_mode) { ?>
+<div class='block'>
 		<input type="submit" value="Spara röster" class="vote_button"/>
+	</div>
 	</form>
 <?php } ?>
 

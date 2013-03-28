@@ -131,18 +131,8 @@ a {
     width: 354px;
 }
 
-.entry {
-    border: 1px solid #000;
-    padding: 1em;
-    margin-bottom: 1em;
-}
-
 .disqualified {
 	background-color: #ff7878;
-}
-
-.entry .title {
-    display: inline;
 }
 
 .entry li {
@@ -151,12 +141,23 @@ a {
 }
 
 .entry li:first-child {
-    padding-left: 0;
+	padding-left: 0;
 }
 
-.entry a {
-    font-size: 0.8em;
+.entry .title a {
+	text-decoration: none;
+	color: #aaa;
+	text-decoration: none;
+	display: block;
+	font-size: 2em;
+	font-weight: 800;
+	text-transform: uppercase;
 }
+
+.entry .title a:hover {
+	color: #C66600;
+}
+
 
 .entry .description {
 	color: #5c5c5c;
@@ -195,7 +196,6 @@ a {
 .vote {
 	float: right;
 	margin-right: 10px;
-	margin-top: 50px;
 }
 
 .vote_header {
@@ -252,7 +252,7 @@ a {
 }
 
 input, select, textarea {
-	background: #ccc;
+	background: #eee;
 	color: #000;
 	border: 1px solid black;
 	padding: 3px 5px;
