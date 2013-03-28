@@ -45,7 +45,7 @@ if ( file_exists($controller) ){
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>NVote</title>
+		<title>NitroXy Kreativ</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<link rel="stylesheet" type="text/css" href="/style.css" />
 		<script type="application/javascript" src="/jquery-1.8.2.min.js"></script>
@@ -58,37 +58,40 @@ if ( file_exists($controller) ){
 		</script>
 	</head>
 	<body>
-		<div id="wrapper">
 			<div id="header">
-				<h1>NitroXy 15 Scene</h1>
+				<div id="title">
+					NITROXY
+					<span id='kreativ'>KREATIV</span>
+				</div>
 				<?php if ( $u ){ ?>
-				<p>Inloggad som <?=$u->name?>.</p>
+				<p id='login_info'>Inloggad som <?=$u->name?>.</p>
 				<?php } ?>
-			</div>
-			<div id="nav">
-				<ul>
-					<li><a href="/">Start</a></li>
-					<li><a href="/rules">Regler</a></li>
-					<?php if ($u && Category::count(array('vote_open' => 1)) > 0 || ($u && $u->admin)) { ?>
-						<li><a href="/vote">Bidrag</a></li>
-					<?php } ?>
-					<?php if ( $u ){ ?>
-						<?php if ( count($open_cat) > 0 ){ ?>
-							<li><a href="/upload">Inlämning</a></li>
+				<div id="nav">
+					<ul>
+						<li><a href="/">Start</a></li>
+						<li><a href="/rules">Regler</a></li>
+						<?php if ($u && Category::count(array('vote_open' => 1)) > 0 || ($u && $u->admin)) { ?>
+							<li><a href="/vote">Bidrag</a></li>
 						<?php } ?>
+						<?php if ( $u ){ ?>
+							<?php if ( count($open_cat) > 0 ){ ?>
+								<li><a href="/upload">Inlämning</a></li>
+							<?php } ?>
 
-						<li><a href="/my">Mina bidrag</a></li>
+							<li><a href="/my">Mina bidrag</a></li>
 
-						<?php if ( $u && $u->admin ){ ?>
-							<li><a href="/admin">Admin</a></li>
+							<?php if ( $u && $u->admin ){ ?>
+								<li><a href="/admin">Admin</a></li>
+							<?php } ?>
+
+							<li><a href="/logout">Logga ut</a></li>
+						<?php } else { ?>
+							<li><a href="/login">Logga in</a></li>
 						<?php } ?>
-
-						<li><a href="/logout">Logga ut</a></li>
-					<?php } else { ?>
-						<li><a href="/login">Logga in</a></li>
-					<?php } ?>
-				</ul>
+					</ul>
+				</div>
 			</div>
+
 			<div id="content">
 				<?php foreach ( $flash as $class => $message ){ ?>
 				<p id="message" class="<?=$class?>"><?=$message?></p>
@@ -104,6 +107,5 @@ if ( file_exists($controller) ){
 			</div>
 			<div id="footer">
 			</div>
-		</div>
 	</body>
 </html>
