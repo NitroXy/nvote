@@ -9,8 +9,8 @@ require_once "$dir/libs/nxauth/include.php";
 	$cas_config = array(
 		'site' => "nitroxy.com",
 		'port' => 443,
-		'key_id' => "Torandi",
-		'private_key' => dirname(__FILE__) . "/torandi.priv",
+		'key_id' => "nvote",
+		'private_key' => dirname(__FILE__) . "/nvote.priv",
 		'ca_cert' => "$nxauth_root/certs/GeoTrustGlobalCA.pem", /* If this is null no cert validation will be done */
 	);
 
