@@ -14,11 +14,12 @@ require_once "$dir/libs/nxauth/include.php";
 		'ca_cert' => "$nxauth_root/certs/GeoTrustGlobalCA.pem", /* If this is null no cert validation will be done */
 	);
 
+	/* Include local user config */
+	if(file_exists("$dir/nxauth.local.php")) {
+		require_once "$dir/nxauth.local.php";
+	}
+
 	NXAuth::init($cas_config);
 
 }
 
-/* Include local user config */
-if(file_exists("$dir/nxauth.local.php")) {
-	require_once "$dir/nxauth.local.php";
-}
