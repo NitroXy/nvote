@@ -43,7 +43,7 @@
 <?php foreach ( $entry as $cur ){ ?>
 <div class="block entry <?=($cur->disqualified?'disqualified':'')?>">
 	<?php if($cur->disqualified) { ?>
-		<h1>Diskvalifierad</h1>
+		<h2>Diskvalifierad</h2>
 		<strong>Anledning: <?=$cur->disqualified_reason?></strong>
 		<p class="clear"/>
 	<?php } ?>

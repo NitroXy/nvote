@@ -132,7 +132,16 @@ a {
 }
 
 .disqualified {
-	background-color: #ff7878;
+	background-color: #ffb6b6 !important;
+}
+
+.disqualified h2 {
+	color: red;
+}
+
+.disqualified .title a {
+	color: #636363 !important;
+	text-decoration: line-through !important;
 }
 
 .entry li {
