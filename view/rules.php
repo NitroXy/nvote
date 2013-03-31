@@ -13,8 +13,16 @@
 </div>
 
 <div class='block'>
-<h2>Graphics/Photo</h2>
-<p>Grafik, renderat, pixel, foto, anything goes.</p>
+<h2>Graphics</h2>
+<p>Grafik, renderat, pixel, anything goes (förutom fotografier).</p>
+<ul>
+  <li>Skala gärna själv om bilden till projektorns upplösning.</li>
+</ul>
+</div>
+
+<div class='block'>
+<h2>Photo</h2>
+<p>Fotografi du har tagit. Det får givetvis vara efterbehandlat.</p>
 <ul>
   <li>Skala gärna själv om bilden till projektorns upplösning.</li>
 </ul>
@@ -31,18 +39,19 @@
 </div>
 
 <div class='block'>
-<h2>Video</h2>
+<h2>Video/Animation</h2>
 <ul>
   <li>Max storlek är 1GB.</li>
   <li>Max längd är 8 minuter.</li>
 	<li>Bidraget ska EJ packas före inlämning (dvs ingen zip/rar). Tillåtna format är mkv, mp4 och avi.</li>
 	<li>Komprimera helst med h264/x264.</li>
 	<li>Allt material måste vara egenproducerat. Inspelning av spel är tillåtet men den som spelar måste vara med i gruppen som lämnar in bidraget.</li>
+	<li>Undantaget från föregående regel är den gerenella regel om fritt material (det är alltså ok att använda det i en lite mängd).</li>
 </ul>
 </div>
 
 <div class='block'>
-<h2>Wild/Demo</h2>
+<h2>Wild</h2>
 <p>Allt som inte passar in i någon ovanstående kategori; går det att visa upp kan du tävla med det. Påhittighet, utseende, "wtf? hur gjorde de det där?", allt bedöms.</p>
 <ul>
   <li>Max längd är 10 minuter.</li>
