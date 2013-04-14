@@ -12,4 +12,8 @@ $settings = array(
 		"host" => "localhost",
 		"port" => 11211
 	),
+	'ffmpeg' => array(
+		'path' => false,
+		'flags' => array(),
+  ),
 );

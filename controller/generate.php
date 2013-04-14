@@ -10,6 +10,16 @@ function create_slide(array $argv){
 
 	flush();
 	ob_flush();
+
+	$path = Settings::get('ffmpeg.path', false);
+	$flags = Settings::get('ffmpeg.flags', array());
+	if ( $path ){
+		putenv("FFMPEG=$path");
+	}
+	if ( count($flags) > 0 ){
+		putenv("FFMPEG_FLAGS=" . implode(' ', $flags));
+	}
+
 	exec($cmd, $output, $rc);
 	if ( $rc != 0 ){
 		echo "Command exited with code $rc:\n";
