@@ -178,6 +178,15 @@ class Entry extends BasicObject {
 	}
 
 	/**
+	 * Path to the actual entry.
+	 */
+	public function source_filename(){
+		global $dir;
+		$this->final_filename($location, $dst);
+		return "$dir/$location";
+	}
+
+	/**
 	 * filename for screenshot
 	 */
 	private function generate_screenshot_filename($original, $ext=null) {
@@ -284,11 +293,8 @@ class Entry extends BasicObject {
 			return $this->mimetype;
 		}
 
-		global $dir;
-		$this->final_filename($location, $dst);
-		$src = "$dir/$location";
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$this->mimetype = finfo_file($finfo, $src);
+		$this->mimetype = finfo_file($finfo, $this->source_filename());
 		finfo_close($finfo);
 		return $this->mimetype;
 	}
