@@ -5,6 +5,7 @@ author=$2
 title=$3
 dst=$4
 
+# create poster image
 convert $template \
 	-fill white \
 	-gravity center \
@@ -12,4 +13,12 @@ convert $template \
 	-pointsize 90 -draw "fill white text  0,-50  '\"$title\"'" \
 	-pointsize 50 -draw "fill white text  0, 50  '$author'" \
 	/tmp/nvote_poster.png
-ffmpeg -loop_input -f image2 -i /tmp/nvote_poster.png -r 29.97 -pix_fmt yuv420p -t 10 -qscale 2 -an -y $dst
+
+# make a short video of the image
+ffmpeg \
+	-loop 1 -f image2 -i /tmp/nvote_poster.png \
+	-f lavfi -i aevalsrc=0 \
+	-pix_fmt yuv420p -c:v libx264 -q:v 2 \
+	-ac 2 \
+	-r 29.97 -t 10 \
+	-y $dst
