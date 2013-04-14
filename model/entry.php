@@ -1,6 +1,6 @@
 <?php
 
-global $upload_errors, $image_types, $video_types, $misc_types, $accepted;
+global $upload_errors, $image_types, $video_types, $music_types, $misc_types, $accepted;
 
 $upload_errors = array(
 	UPLOAD_ERR_OK          => "No errors.",
@@ -27,6 +27,13 @@ $video_types = array(
 	'video/mpeg',
 );
 
+$music_types = array(
+	'application/ogg',
+	'audio/mpeg',
+	'audio/x-wav',
+	'audio/x-flac',
+);
+
 $misc_types = array(
 	'application/gzip',
 	'application/rar',
@@ -37,14 +44,10 @@ $misc_types = array(
 	'application/x-tar',
 	'application/x-zip-compressed',
 	'application/octet-stream',
-	'application/ogg',
-	'audio/mpeg',
-	'audio/x-wav',
-	'audio/x-flac',
 	'text/plain',
 );
 
-$accepted = array_merge($image_types, $video_types, $misc_types);
+$accepted = array_merge($image_types, $video_types, $music_types, $misc_types);
 
 $imagemagick_convert = "convert";
 
