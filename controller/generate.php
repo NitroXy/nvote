@@ -64,9 +64,11 @@ function create_entry_video($dst, $entry){
 	if ( $entry->is_image() ){
 		return resize_image($dst, $entry);
 	} else if ( $entry->is_video() ){
-		if ( !file_exists($dst) ) {
-			link($entry->source_filename(), $dst);
+		/* must remove old in case src was updated */
+		if ( file_exists($dst) ) {
+			unlink($dst);
 		}
+		link($entry->source_filename(), $dst);
 		return $dst;
 	} else if ( $entry->is_music() ){
 		return create_music_poster($dst, $entry);
