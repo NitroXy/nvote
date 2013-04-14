@@ -29,6 +29,10 @@ if ( !file_exists($final) ){
 
 header('Content-Type: text/plain');
 
+if ( !file_exists("$e/template.png") ){
+	die("$e/template.png missing");
+}
+
 foreach ( $category as $cur ){
 	$d = "$final/{$cur->dirname()}";
 	if ( !file_exists($d) ){
