@@ -11,11 +11,15 @@ function create_poster($n, $entry){
 	$author = escapeshellarg($entry->author);
 	$title = escapeshellarg($entry->title);
 	$poster = escapeshellarg("$dst-0.mkv");
-	$cmd = "$app $src $author $title $poster";
+	$cmd = "$app $src $author $title $poster 2>&1";
 	echo $cmd . "\n";
 	flush();
 	ob_flush();
-	exec($cmd);
+	exec($cmd, $output, $rc);
+	if ( $rc != 0 ){
+		echo "Command exited with code $rc:\n";
+		echo implode("\n", $output);
+	}
 	return $poster;
 }
 
