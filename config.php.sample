@@ -15,11 +15,26 @@ class Config {
 		}
 		return new MySQLi(self::$db_host, $username, $password, self::$db_name);
 	}
+
+	public static function fix_nxauth(){
+		global $nxauth_root;
+
+		$cas_config = array(
+			'site' => "nitroxy.com",
+			'port' => 443,
+			'key_id' => "nvote",
+			'private_key' => dirname(__FILE__) . "/nvote.priv",
+			'ca_cert' => "$nxauth_root/certs/GeoTrustGlobalCA.pem" /* If this is null no cert validation will be done */
+		);
+
+		NXAuth::init($cas_config);
+	}
 }
 
 require_once('libs/BasicObject/BasicObject.php');
 require_once('libs/BasicObject/ValidatingBasicObject.php');
 BasicObject::$output_htmlspecialchars = true;
 
+Config::fix_nxauth();
 $db = Config::fix_database();
 $crew_groups = array('Kreativ'); /* Crew groups that are admins */

@@ -2,7 +2,7 @@
 	$dir = dirname(__FILE__);
 
 	require("$dir/autoload.php");
-	require("$dir/nxauth.php");
+	require("$dir/libs/nxauth/include.php");
 	require("$dir/config.php");
 	require("$dir/auth.php");
 
