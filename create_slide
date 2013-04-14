@@ -1,24 +1,218 @@
 #!/bin/bash
 
-template=$1
-author=$2
-title=$3
-dst=$4
+mode=
+duration=10
+rate=29.97
+codec=libx264
 
-# create poster image
-convert $template \
-	-fill white \
-	-gravity center \
-	-font $(dirname $0)/Eurostile.ttf \
-	-pointsize 90 -draw "fill white text  0,-50  '\"$title\"'" \
-	-pointsize 50 -draw "fill white text  0, 50  '$author'" \
-	/tmp/nvote_poster.png
+create_entry_poster(){
+	local src="$1"
+	local dst="$2"
+	if ! convert "$src" \
+		-fill white \
+		-gravity center \
+		-font $(dirname $0)/Eurostile.ttf \
+		-pointsize 90 -draw "fill white text  0,-50  '\"$title\"'" \
+		-pointsize 50 -draw "fill white text  0, 50  '$author'" \
+		"$dst"; then
+		exit 1
+	fi
+}
 
-# make a short video of the image
-ffmpeg \
-	-loop 1 -f image2 -i /tmp/nvote_poster.png \
-	-f lavfi -i aevalsrc=0 \
-	-pix_fmt yuv420p -c:v libx264 -q:v 2 \
-	-ac 2 \
-	-r 29.97 -t 10 \
-	-y $dst
+create_category_poster(){
+	local src=$1
+	local dst=$2
+	if ! convert $src \
+		-fill white \
+		-gravity center \
+		-font $(dirname $0)/Eurostile.ttf \
+		-pointsize 90 -draw "fill white text  0,0  '$category'" \
+		$dst; then
+		exit 1
+	fi
+}
+
+resize_image(){
+	local src=$1
+	local dst=$2
+	local size=$(identify -format "%wx%h" $template)
+	if ! convert $src -gravity center -resize $size -background black -extent $size $dst; then
+		exit 1
+	fi
+}
+
+encode_music(){
+	local src="$1"
+	local music="$2"
+	local dst="$3"
+	local log="-loglevel error"
+	if [[ ${verbose+1} ]]; then
+		log=""
+	fi
+	if ! ${FFMPEG:-ffmpeg} \
+		-loop 1 -f image2 -i "$src" \
+		-i "$music" \
+		-pix_fmt yuv420p -c:v $codec -q:v 2 \
+		-c:a copy \
+		-r $rate -shortest $log \
+		$FFMPEG_FLAGS -y "$dst"; then
+		exit 1
+	fi
+}
+
+encode_video(){
+	local src="$1"
+	local dst="$2"
+	local log="-loglevel error"
+	if [[ ${verbose+1} ]]; then
+		log=""
+	fi
+	if ! ${FFMPEG:-ffmpeg} \
+		-loop 1 -f image2 -i "$src" \
+		-f lavfi -i aevalsrc=0 \
+		-pix_fmt yuv420p -c:v $codec -q:v 2 \
+		-c:a mp3 -ac 2 \
+		-r $rate -t $duration $log \
+		$FFMPEG_FLAGS -y "$dst"; then
+		exit 1
+	fi
+}
+
+show_usage(){
+	echo "usage: $0 -t TITLE [-a AUTHOR] [OPTIONS..] DST"
+	echo "       $0 -c CATEGORY [OPTIONS..] DST"
+	echo "options:"
+	echo "  -t, --title=STRING         Generate a regular entry slide."
+	echo "  -a, --author=STRING        Optional author for regular entry slide"
+	echo "  -c, --category=STRING      Generate a category slide."
+	echo "  -i, --template=FILE        Poster template."
+	echo "  -s, --image=FILE           Generate a slide of a static image."
+	echo "  -m, --music=FILE           Generate a slide with music."
+	echo "  -v, --verbose              Verbose output."
+	echo "  -d INT                     Video length in seconds [default: 10]"
+	echo "  -r FLOAT                   Video framerate [default: 29.97]"
+	echo "  -C STRING                  Video codec [default: libx264]"
+	echo ""
+	echo "Extra arguments to FFmpeg can be passed in FFMPEG_FLAGS. FFmpeg binary can be"
+	echo "overridden using FFMPEG."
+}
+
+ARGS=$(getopt -s bash --options "hva:t:c:i:s:m:d:r:C:" --longoptions="help,author:,title:,category:,template" --name $(basename $0) -- "$@")
+eval set -- "$ARGS"
+
+while true; do
+	case $1 in
+		-h|--help)
+			show_usage
+			exit 0
+			;;
+
+		-a|--author)
+			shift
+			author=$1
+			mode="entry"
+			;;
+
+		-t|--title)
+			shift
+			title=$1
+			mode="entry"
+			;;
+
+		-c|--category)
+			shift
+			category=$1
+			mode="category"
+			;;
+
+		-i|--template)
+			shift
+			template=$1
+			;;
+
+		-s|--image)
+			shift
+			resource=$1
+			mode="image"
+			;;
+
+		-m|--music)
+			shift
+			resource=$1
+			mode="music"
+			;;
+
+		-v|--verbose)
+			verbose=1
+			;;
+
+		-d)
+			shift
+			duration=$1
+			;;
+
+		-r)
+			shift
+			rate=$1
+			;;
+
+		-C)
+			shift
+			codec=$1
+			;;
+
+		--)
+			shift
+			break
+			;;
+	esac
+	shift
+done
+
+if [[ ! ${template+1} ]]; then
+	echo "$0: no template given, use -i to set one" > /dev/stderr
+	exit 1
+fi
+
+if [[ $# -lt 1 ]]; then
+	echo "$0: no destination file given" > /dev/stderr
+	exit 1
+fi
+
+dst=$1
+poster=$(mktemp -t XXXXXXXXXX.png)
+trap "rm -f $poster" EXIT
+shift 1
+
+if [[ -z $(ffmpeg -loglevel error -formats | grep lavfi) ]]; then
+	echo "$0: crippled version of ffmpeg detected, missing lavfi" > /dev/stderr
+	exit 1
+fi
+
+case $mode in
+	entry)
+		create_entry_poster "$template" "$poster"
+		encode_video "$poster" "$dst"
+		;;
+
+	category)
+		create_category_poster "$template" "$poster"
+		encode_video "$poster" "$dst"
+		;;
+
+	image)
+		resize_image "$resource" "$poster"
+		encode_video "$poster" "$dst"
+		;;
+
+	music)
+		create_entry_poster "$template" "$poster"
+		encode_music "$poster" "$resource" "$dst"
+		;;
+
+	*)
+		echo "$0: either -t, -c, -s or -m must be given" > /dev/stderr
+		show_usage
+		exit 1
+		;;
+esac
