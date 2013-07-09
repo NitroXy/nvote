@@ -6,6 +6,16 @@
 	require("$dir/config.php");
 	require("$dir/auth.php");
 
+	require("$dir/libs/MC.php");
+
+	try {
+		$mc = MC::get_instance();
+		BasicObject::enable_structure_cache($mc);
+	} catch(Exception $e) {
+		trigger_error("Exception when trying to enable BasicObject structure cache: ".$e->getMessage());
+		// We can live without memcache
+	}
+
 	$event = NXAPI::current_event();
 	$event_obj = Event::one(array('short_name' => $event));
 	if(!$event_obj) {
