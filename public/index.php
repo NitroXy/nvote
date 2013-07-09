@@ -3,6 +3,7 @@
 
 session_start();
 require('../includes.php');
+require("$dir/auth.php");
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";
 if ( !(file_exists($dst) && is_writable($dst)) ){

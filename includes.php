@@ -2,11 +2,24 @@
 	$dir = dirname(__FILE__);
 
 	require("$dir/autoload.php");
+	require("$dir/libs/MC.php");
 	require("$dir/libs/nxauth/include.php");
 	require("$dir/config.php");
-	require("$dir/auth.php");
+	require_once('libs/BasicObject/BasicObject.php');
+	require_once('libs/BasicObject/ValidatingBasicObject.php');
 
-	require("$dir/libs/MC.php");
+	BasicObject::$output_htmlspecialchars = true;
+
+	$db_settings = $settings['database'];
+	$db = new MySQLi($db_settings['host'], $db_settings['user'], $db_settings['password'], $db_settings['name']);
+
+	unset($db_settings);
+
+	$crew_groups = array('Kreativ'); /* Crew groups that are admins */
+
+	NXAuth::init($settings['cas_config']);
+
+	require("$dir/auth.php");
 
 	try {
 		$mc = MC::get_instance();
@@ -26,4 +39,6 @@
 		));
 		$event_obj->commit();
 	}
+
+	if(!isset($keep_settings) || !$keep_settings) unset($settings);
 ?>

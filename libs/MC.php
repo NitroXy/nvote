@@ -6,8 +6,8 @@ class MC extends Memcache {
 	private static $tried_to_connect=false;
 
 	private function __construct() {
-		// Memcache does not have a constructor (?)
-		global $memcache_settings;
+		global $settings;
+		$memcache_settings = $settings['memcache'];
 		if(!self::$tried_to_connect) {
 			self::$tried_to_connect = true;
 			if(@$this->connect($memcache_settings['host'], $memcache_settings['port']) === false) {
