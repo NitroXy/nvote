@@ -32,6 +32,8 @@ $misc_types = array(
 	'application/rar',
 	'application/zip',
 	'application/x-bzip2',
+	'application/x-gzip',
+	'application/x-rar-compressed',
 	'application/x-tar',
 	'application/x-zip-compressed',
 	'application/octet-stream',
