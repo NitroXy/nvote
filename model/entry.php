@@ -1,6 +1,6 @@
 <?php
 
-global $upload_errors, $image_types, $video_types, $misc_types, $accepted;
+global $upload_errors, $image_types, $video_types, $music_types, $misc_types, $accepted;
 
 $upload_errors = array(
 	UPLOAD_ERR_OK          => "No errors.",
@@ -27,6 +27,13 @@ $video_types = array(
 	'video/mpeg',
 );
 
+$music_types = array(
+	'application/ogg',
+	'audio/mpeg',
+	'audio/x-wav',
+	'audio/x-flac',
+);
+
 $misc_types = array(
 	'application/gzip',
 	'application/rar',
@@ -37,18 +44,16 @@ $misc_types = array(
 	'application/x-tar',
 	'application/x-zip-compressed',
 	'application/octet-stream',
-	'application/ogg',
-	'audio/mpeg',
-	'audio/x-wav',
-	'audio/x-flac',
 	'text/plain',
 );
 
-$accepted = array_merge($image_types, $video_types, $misc_types);
+$accepted = array_merge($image_types, $video_types, $music_types, $misc_types);
 
 $imagemagick_convert = "convert";
 
 class Entry extends BasicObject {
+	private $mimetype = null;
+
 	protected static function table_name(){
 		return 'entry';
 	}
@@ -59,7 +64,7 @@ class Entry extends BasicObject {
 
 	public function upload($file){
 		$error = $file['error'];
-		$mime = $file['type'];
+		$this->mimetype = $file['type'];
 
 		/* check for error indicator */
 		if ( $error > 0 ){
@@ -76,8 +81,8 @@ class Entry extends BasicObject {
 
 		/* validate mime-types */
 		global $accepted;
-		if ( !in_array($mime, $accepted) ){
-			flash('error', "Filformatet \"$mime\" accepterades inte (prata med kreativ-crew om du tycker att du borde få ladda upp detta).");
+		if ( !in_array($this->mimetype, $accepted) ){
+			flash('error', "Filformatet \"{$this->mimetype}\" accepterades inte (prata med kreativ-crew om du tycker att du borde få ladda upp detta).");
 			return false;
 		}
 
@@ -94,7 +99,7 @@ class Entry extends BasicObject {
 			return false;
 		}
 
-		$this->autogenerate_screenshot($dst, $mime);
+		$this->autogenerate_screenshot($dst);
 
 		global $db;
 		$stmt = $db->prepare('INSERT INTO `revision` (`entry_id`, `revision`, `filename`, `original`) VALUES (?, ?, ?, ?)');
@@ -111,12 +116,12 @@ class Entry extends BasicObject {
 		return true;
 	}
 
-	private function autogenerate_screenshot($original, $mime){
+	private function autogenerate_screenshot($original){
 		global $image_types;
 		global $video_types;
 		global $dir;
 
-		if(in_array($mime, $image_types)) {
+		if ( $this->is_image() ) {
 			$screenshot_filename = $this->generate_screenshot_filename($original);
 			$screenshot_dst = "$dir/$screenshot_filename";
 
@@ -124,7 +129,7 @@ class Entry extends BasicObject {
 			$this->screenshot_filename = $screenshot_filename;
 			$this->resize_screenshot();
 			$this->commit();
-		} else if(in_array($mime, $video_types)){
+		} else if( $this->is_video() ){
 			$screenshot_filename = $this->generate_screenshot_filename($original, "gif");
 			$screenshot_dst = "$dir/$screenshot_filename";
 
@@ -170,6 +175,15 @@ class Entry extends BasicObject {
 		$author = preg_replace('/[^a-zA-Z0-9]/', '_', $this->author);
 		$title = preg_replace('/[^a-zA-Z0-9]/', '_', $this->title);
 		$filename = "{$title}_by_{$author}.{$ext}";
+	}
+
+	/**
+	 * Path to the actual entry.
+	 */
+	public function source_filename(){
+		global $dir;
+		$this->final_filename($location, $dst);
+		return "$dir/$location";
 	}
 
 	/**
@@ -259,13 +273,29 @@ class Entry extends BasicObject {
 		return Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
 	}
 
+	public function is_image(){
+		return in_array($this->mimetype(), $GLOBALS['image_types']);
+	}
+
+	public function is_video(){
+		return in_array($this->mimetype(), $GLOBALS['video_types']);
+	}
+
+	public function is_music(){
+		return in_array($this->mimetype(), $GLOBALS['music_types']);
+	}
+
+	/**
+	 * Guess the mimetype of the entry file.
+	 */
 	public function mimetype(){
-		global $dir;
-		$this->final_filename($location, $dst);
-		$src = "$dir/$location";
+		if ( $this->mimetype ){
+			return $this->mimetype;
+		}
+
 		$finfo = finfo_open(FILEINFO_MIME_TYPE);
-		$mime = finfo_file($finfo, $src);
+		$this->mimetype = finfo_file($finfo, $this->source_filename());
 		finfo_close($finfo);
-		return $mime;
+		return $this->mimetype;
 	}
 }
