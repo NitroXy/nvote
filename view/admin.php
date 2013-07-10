@@ -58,7 +58,10 @@ foreach(Event::selection() as $e) { ?>
 </form>
 </div>
 
-<h1>Projektor</h1>
+<h1>Maintainance</h1>
 <div class='block'>
-<a href="/generate">Generera slides</a> (processen tar tid, resultatet hamnar i $event/final/$cat)
+	<h2>Slides</h2>
+	<p style="margin-bottom: 20px"><a href="/generate">Generera slides</a> (processen tar tid, resultatet hamnar i <?=$event?>/final/$cat)</p>
+	<h2>Results.txt</h2>
+	<p><a href="/results.txt">results.txt</a></p>
 </div>
