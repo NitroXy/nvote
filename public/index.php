@@ -16,15 +16,6 @@ foreach ( Category::selection(array('event' => $event)) as $cur ){
 	}
 }
 
-/* Include helpers */
-$helper_dirs = dir("$dir/helpers");
-while(($f = $helper_dirs->read()) !== false ) {
-	$f = "$dir/helpers/$f";
-	if(is_file($f) && pathinfo($f, PATHINFO_EXTENSION) == "php") {
-		require $f;
-	}
-}
-
 $main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : 'index';
 $controller = "../controller/$main.php";
 $view = "../view/$main.php";

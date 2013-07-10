@@ -5,7 +5,7 @@ need_admin();
 $method = $_SERVER['REQUEST_METHOD'];
 $category = Category::selection(array('event' => $event));
 
-if ( $method == 'POST' ){
+if ( $method == 'POST' ) {
 	$arg = $_GET['arg'];
 	switch ( $arg ) {
 	case 'category_status':
@@ -31,6 +31,16 @@ if ( $method == 'POST' ){
 			'event' => $event,
 		));
 		$category->commit();
+		redirect('admin');
+		break;
+	case 'delete_category':
+		$category = Category::from_id($_POST['id']);
+		if(Entry::count(array('category_id' => $category->category_id)) > 0) {
+			flash('error', "Kan inte radera kategori med bidrag");
+			redirect('admin');
+		}
+		$category->delete();
+		flash('success', "Kategorin togs bort");
 		redirect('admin');
 		break;
 	case 'clone':

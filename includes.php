@@ -41,4 +41,13 @@
 	}
 
 	if(!isset($keep_settings) || !$keep_settings) unset($settings);
+
+	/* Include helpers */
+	$helper_dirs = dir("$dir/helpers");
+	while(($f = $helper_dirs->read()) !== false ) {
+		$f = "$dir/helpers/$f";
+		if(is_file($f) && pathinfo($f, PATHINFO_EXTENSION) == "php") {
+			require $f;
+		}
+	}
 ?>

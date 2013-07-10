@@ -6,30 +6,36 @@
 <h1>Kategorier</h1>
 <div class='block'>
 <h2>Befintliga</h2>
-<form>
-	<table>
-		<thead>
-			<tr>
-				<th>Kategori</th>
-				<th>Inlämning</th>
-				<th>Röstning</th>
-			</tr>
-		</thead>
-		<tbody>
-		<?php foreach ($category as $cur){ ?>
-			<tr>
-				<td><?=$cur->name?></td>
-				<td>
-					<input type="checkbox" class='cat_status' data-what='entry' data-id='<?=$cur->category_id?>' <?=$cur->entry_open ? ' checked="checked"' : '' ?>/>
-				</td>
-				<td>
-					<input type="checkbox" class='cat_status' data-what='vote' data-id='<?=$cur->category_id?>' <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/>
-				</td>
-			</tr>
-		<?php } ?>
-		</tbody>
-	</table>
-</form>
+<table>
+	<thead>
+		<tr>
+			<th>Kategori</th>
+			<th>Inlämning</th>
+			<th>Röstning</th>
+			<th>Radera</th>
+		</tr>
+	</thead>
+	<tbody>
+	<?php foreach ($category as $cur){ ?>
+		<tr>
+			<td><?=$cur->name?></td>
+			<td>
+				<form><input type="checkbox" class='cat_status' data-what='entry' data-id='<?=$cur->category_id?>' <?=$cur->entry_open ? ' checked="checked"' : '' ?>/></form>
+			</td>
+			<td>
+				<form><input type="checkbox" class='cat_status' data-what='vote' data-id='<?=$cur->category_id?>' <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/></form>
+			</td>
+			<td style="text-align: center;">
+				<?php if(Entry::count(array('category_id' => $cur->category_id)) == 0) {
+					echo simple_action("/admin/delete_category", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
+				} else { ?>
+				<span title="Kan ej radera, har kategorier">-</span>
+				<?php } ?>
+			</td>
+		</tr>
+	<?php } ?>
+	</tbody>
+</table>
 <h2>Ny kategori</h2>
 	<form method='post' action='/admin/create_category'>
 		<p>
