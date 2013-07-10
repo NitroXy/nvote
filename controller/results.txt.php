@@ -10,6 +10,13 @@ function print_line() {
 	echo "\n";
 }
 
+function str_limit($str, $max_length) {
+	$len = mb_strlen($str, "UTF-8");
+	$padding = $max_length - $len;
+	if($padding < 0) $str = mb_substr($str, 0, $max_length - 3, "UTF-8") . "...";
+	return $str . str_repeat(" ", max($padding, 0));
+}
+
 BasicObject::$output_htmlspecialchars = false;
 
 setlocale(LC_CTYPE, "en_US.UTF-8");
@@ -41,7 +48,12 @@ foreach($category as $cat) {
 	echo "{$cat->name}\n";
 	print_line();
 	foreach($cat->Entry() as $entry) {
-		printf("%-39s %-32s %4dpts\n", $entry->title, html_entity_decode($entry->author), $entry->score());
+		$author = html_entity_decode($entry->author);
+		$line = str_limit($entry->title, 39);
+		$line .= " " . str_limit(html_entity_decode($entry->author), 32);
+		$line .= sprintf(" %4dpts\n", $entry->score());
+		echo $line;
+		#mb_sprintf($derp,"%-39s %-32s %4dpts\n", $entry->title, html_entity_decode($entry->author), $entry->score());
 	}
 	echo "\n";
 }
