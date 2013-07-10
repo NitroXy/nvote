@@ -281,7 +281,52 @@ label {
 }
 
 #admin_toggle a {
+
 	color: #999 !important;
+}
+.form-label {
+	text-align: right;
+	padding-right: 0.5em;
+	min-width: 100px;
+}
+
+.form-field {
+	min-width: 250px;
+	padding-right: 5px;
+}
+
+.form-hint {
+	font-style: italic;
+	min-width: 200px;
+}
+
+.form-error {
+	color: #ea0016;
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+.form-label, .form-hint, .form-error {
+	padding-top: 3px;
+}
+
+.form-group {
+	padding-right: 5px;
+}
+
+.form .tworow {
+	text-align: left;
+}
+
+.form-inline {
+	display: inline;
+}
+
+table .form-field textarea, table .form-field input[type=text], table .form-field input[type=password] {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
 }
 
 .link-submit {

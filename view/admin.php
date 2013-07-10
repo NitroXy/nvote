@@ -16,7 +16,7 @@
 		</tr>
 	</thead>
 	<tbody>
-	<?php foreach ($category as $cur){ ?>
+	<?php foreach ($categories as $cur){ ?>
 		<tr>
 			<td><?=$cur->name?></td>
 			<td>
@@ -37,18 +37,18 @@
 	</tbody>
 </table>
 <h2>Ny kategori</h2>
-	<form method='post' action='/admin/create_category'>
-		<p>
-			<label for='new_name'>Namn:</label>
-			<input type='text' id='new_name' name='name'/>
-		</p>
-		<p>
-			<label for='new_description'>Beskrivning:</label><br/>
-			<textarea name='description' id='new_description' cols='80' rows = '5'></textarea>
-		</p>
-
-		<input type='submit' value='Skapa'/>
-	</form>
+<?php
+	Form::from_object($category, function($f) use ($event) {
+		$f->hidden_field('event', $event);
+		$f->text_field('name', "Namn:");
+		$f->textarea('description', "Beskrivning:", array('cols' => 80, 'rows'=>5, 'tworows' => true));
+		$f->textarea('rules', "Regler:", array('cols' => 80, 'rows'=>5, 'tworows' => true));
+		$f->submit("Skapa");
+	}, array(
+		'layout' => 'p',
+		'action' => '/admin/create_category'
+	));
+?>
 <h2>Klona</h2>
 <form method='post' action='/admin/clone'>
 	<p>

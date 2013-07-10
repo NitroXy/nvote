@@ -3,10 +3,13 @@
 need_admin();
 
 $method = $_SERVER['REQUEST_METHOD'];
-$category = Category::selection(array('event' => $event));
+$categories = Category::selection(array('event' => $event));
+
+$category = new Category(array('event' => $event));
+
+$arg = isset($_GET['arg']) ? $_GET['arg'] : null;
 
 if ( $method == 'POST' ) {
-	$arg = $_GET['arg'];
 	switch ( $arg ) {
 	case 'category_status':
 		$category = Category::from_id($_POST['id']);
@@ -25,13 +28,14 @@ if ( $method == 'POST' ) {
 		flash_json('success', "Ändringarna sparades");
 		break;
 	case 'create_category':
-		$category = new Category(array(
-			'name'=> $_POST['name'],
-			'description' => $_POST['description'],
-			'event' => $event,
-		));
-		$category->commit();
-		redirect('admin');
+		try {
+			$category = Category::update_attributes($_POST['Category'], array('commit' => false));
+			$category->commit();
+			flash('success', "Skapade kategori {$category->name}");
+			redirect('admin');
+		} catch (ValidationException $e) {
+			flash('error', "Kunde inte spara kategorin, något fält saknas");
+		}
 		break;
 	case 'delete_category':
 		$category = Category::from_id($_POST['id']);
@@ -44,8 +48,8 @@ if ( $method == 'POST' ) {
 		redirect('admin');
 		break;
 	case 'clone':
-		foreach(Category::selection(array('event' => $_POST['event'])) as $category) {
-			$c = $category->duplicate();
+		foreach(Category::selection(array('event' => $_POST['event'])) as $cat) {
+			$c = $cat->duplicate();
 			$c->event = $event;
 			$c->commit();
 		}
@@ -53,5 +57,11 @@ if ( $method == 'POST' ) {
 		break;
 	default:
 		die("Invalid command");
+	}
+} else {
+	switch($arg) {
+		case 'categories':
+			output_json($categories);
+			exit;
 	}
 }
