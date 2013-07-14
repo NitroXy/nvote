@@ -8,6 +8,7 @@
 	require_once('libs/BasicObject/BasicObject.php');
 	require_once('libs/BasicObject/ValidatingBasicObject.php');
 
+	Settings::load("$dir/default.php");
 	Settings::load("$dir/config.php");
 	BasicObject::$output_htmlspecialchars = true;
 
