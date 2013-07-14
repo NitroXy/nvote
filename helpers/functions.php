@@ -23,8 +23,9 @@ function return_bytes($val){
 }
 
 function flash($class, $message){
+	global $flash;
 	$_SESSION['flash'] = array($class => $message);
-	$flash['flash'][$class] = $message;
+	$flash[$class] = $message;
 }
 
 function flash_validation_errors($exception, $message) {

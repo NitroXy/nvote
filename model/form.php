@@ -438,10 +438,21 @@ class FormContainer {
 		$this->fields[] = $this->factory('textarea', $key, $label, $attr);
 	}
 
-	public function checkbox($key, $text, $label=null, array $attr=array()) {
+
+	/**
+	 * Create a checkbox
+	 *
+	 * @option 'inline-label' if true the label is placed inline to the right of the checkbox.
+	 *												otherwise it's placed like a normal label according to the layout
+	 */
+	public function checkbox($key, $label=null, array $attr=array()) {
 		list($id, $name, $value) = $this->generate_data($key, $attr);
+		$inline_label = array_key_exists('inline-label', $attr) ? $attr['inline-label'] : false;
 		$this->hidden_field($key, '0');
-		$field = new ManualField($key, $label, "<input type='checkbox' class='checkbox' name='$name' id='$id' value='1' ".($value?"checked='checked'":"")." /> <label for='$id'>$text</label>",null,$name);
+		$label_html = "<label for='$id'>$label</label>";
+		$right_align = $inline_label ? $label_html : "";
+		$left_align = !$inline_label ? $label_html : null;
+		$field = new ManualField($key, $left_align, "<input type='checkbox' class='checkbox' name='$name' id='$id' value='1' ".($value?"checked='checked'":"")." /> $right_align" ,null,$name);
 		$this->fields[] = $field;
 
 		if ( $this->unbuffered() ){

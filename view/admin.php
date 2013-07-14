@@ -10,12 +10,12 @@
 	<h2><?=$event_obj->name?></h2>
 <?php
 Form::from_object($event_obj, function($f) {
-	$f->checkbox('visible', "Synlig");
+	$f->checkbox('visible', "Synlig:");
 	$f->textarea('frontpage_text', "Text på förstasidan:", array(
-		'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+		'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
 	));
 	$f->textarea('general_rules', "Generella regler:", array(
-		'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+		'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
 	));
 	$f->submit("Spara ändringar");
 }, array('action' => "/admin/event/update"));
@@ -94,14 +94,13 @@ Form::from_array("new_event", array(), function($f) {
 		$f->hidden_field('event', $event);
 		$f->text_field('name', "Namn:");
 		$f->textarea('description', "Beskrivning:", array(
-			'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+			'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
 		));
 		$f->textarea('rules', "Regler:", array(
-			'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+			'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
 		));
 		$f->submit("Skapa");
 	}, array(
-		'layout' => 'p',
 		'action' => '/admin/category/create'
 	));
 ?>

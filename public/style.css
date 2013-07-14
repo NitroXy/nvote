@@ -20,7 +20,7 @@ p {
     margin-bottom: 1em;
 }
 
-ul.ul {
+#content ul {
     list-style: disc;
     margin-left: 1.5em;
 }
@@ -350,4 +350,8 @@ table .form-field textarea, table .form-field input[type=text], table .form-fiel
 
 input[type=submit].link-submit {
 	background-color: transparent !important;
+}
+
+.preview_target {
+	font-style: normal;
 }

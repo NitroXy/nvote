@@ -49,6 +49,16 @@ if ( $method == 'POST' ) {
 		flash('success', "Kategorin togs bort");
 		redirect('admin');
 		break;
+	case 'event/update':
+		try {
+			$event_obj = Event::update_attributes($_POST['Event'], array('commit' => false));
+			$event_obj->commit();
+			flash('success', "Ändringarna sparades");
+			redirect('admin');
+		} catch (ValidationException $e) {
+			flash_validation_errors($e, "Kunde inte spara ändringarna");
+		}
+		break;
 	case 'event/create':
 		$api_event = NXAPI::event_info(array('event' => $_POST['event']));
 		if($api_event == null) {
