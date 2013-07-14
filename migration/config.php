@@ -11,14 +11,13 @@ unset($db);
 class Config {
 	public static function fix_database($username=null) {
 		global $settings;
-		$db_settings = $settings['database'];
 		if(is_null($username)) {
-			$username = $db_settings['user'];
-			$password = $db_settings['password'];
+			$username = Settings::get('database.user');
+			$password = Settings::get('database.password');
 		} else {
 			$password = ask_for_password();
 		}
-		return new MySQLi($db_settings['host'], $username, $password, $db_settings['name']);
+		return new MySQLi(Settings::get('database.host'), $username, $password, Settings::get('database.name'));
 	}
 
 	private static function clear_cache() {

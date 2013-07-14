@@ -6,12 +6,12 @@ class MC extends Memcache {
 	private static $tried_to_connect=false;
 
 	private function __construct() {
-		global $settings;
-		$memcache_settings = $settings['memcache'];
 		if(!self::$tried_to_connect) {
 			self::$tried_to_connect = true;
-			if(@$this->connect($memcache_settings['host'], $memcache_settings['port']) === false) {
-				trigger_error("Unable to connect to memcache at ".$memcache_settings['host']." on port ".$memcache_settings['port'], E_USER_WARNING);
+			$host = Settings::get('memcache.host');
+			$port = Settings::get('memcache.port');
+			if(@$this->connect($host, $port) === false) {
+				trigger_error("Unable to connect to memcache at $host:$port", E_USER_WARNING);
 				throw new Exception("Failed to connect");
 			}
 		} else {

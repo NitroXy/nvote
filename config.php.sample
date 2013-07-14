@@ -1,5 +1,8 @@
 <?php
 
+global $nxauth_root;
+
+$version = 1;
 $settings = array(
 	'database' => array(
 		'host' => "127.0.0.1",
@@ -17,7 +20,8 @@ $settings = array(
 	'memcache' => array(
 		"host" => "localhost",
 		"port" => 11211
-	)
+	),
+	'access' => array(
+		'admin_groups' => array('Kreativ'), /* Crew groups that are admins */
+	),
 );
-
-$crew_groups = array('Kreativ'); /* Crew groups that are admins */

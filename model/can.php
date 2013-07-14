@@ -17,9 +17,9 @@ class Can {
 	}
 
 	public static function administrate() {
-		global $crew_groups, $u;
+		global $u;
 		if(!$u) return false;
-		return self::has_crew_groups($u, $crew_groups);
+		return self::has_crew_groups($u, Settings::get('access.admin_groups'));
 	}
 
 	private static function has_crew_groups($user, $groups) {
