@@ -1,6 +1,13 @@
 <?php
 
-class Event extends BasicObject {
+class Event extends ValidatingBasicObject {
+
+	protected function validation_hooks() {
+		$this->validate_presence_of('name');
+		$this->validate_presence_of('short_name');
+		$this->validate_uniqueness_of('short_name');
+	}
+
 	protected static function table_name(){
 		return 'event';
 	}
