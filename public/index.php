@@ -21,7 +21,7 @@ $helper_dirs = dir("$dir/helpers");
 while(($f = $helper_dirs->read()) !== false ) {
 	$f = "$dir/helpers/$f";
 	if(is_file($f) && pathinfo($f, PATHINFO_EXTENSION) == "php") {
-		require $f;
+		require_once $f;
 	}
 }
 
