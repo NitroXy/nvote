@@ -1,10 +1,28 @@
 <script type='text/javascript' src='/js/admin.js'></script>
+<script type='text/javascript' src='/js/preview.js'></script>
 <noscript>
 	<p class='error'>Slå på javascript eller gå och lek med en katt.</p>
 </noscript>
 
 <h1>Event</h1>
+
 <div class='block'>
+	<h2><?=$event_obj->name?></h2>
+<?php
+Form::from_object($event_obj, function($f) {
+	$f->checkbox('visible', "Synlig");
+	$f->textarea('frontpage_text', "Text på förstasidan:", array(
+		'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+	));
+	$f->textarea('general_rules', "Generella regler:", array(
+		'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+	));
+	$f->submit("Spara ändringar");
+}, array('action' => "/admin/event/update"));
+?>
+</div>
+<div class='block'>
+	<!--
 	<h2>Byt aktivt event</h2>
 <?php
 Form::from_array("change_active", array('event' => $event_obj->id), function($f) {
@@ -12,10 +30,11 @@ Form::from_array("change_active", array('event' => $event_obj->id), function($f)
 		return array($e->id, $e->name);
 	}, "Event"));
 	$f->submit("Ändra");
-}, array('action'=> "/admin/change", 'layout' => 'plain'));
+}, array('action'=> "/admin/event/change", 'layout' => 'plain'));
 ?>
 <hr/>
 <br/>
+-->
 	<h2>Skapa nytt event</h2>
 <?php
 Form::from_array("new_event", array(), function($f) {
@@ -31,12 +50,9 @@ Form::from_array("new_event", array(), function($f) {
 	}, "Kopiera event:"));
 
 	$f->submit("Skapa event");
-}, array('action' => '/admin/create'));
+}, array('action' => '/admin/event/create'));
 ?>
 
-</div>
-<div class='block'>
-	<h2><?=$event_obj->name?></h2>
 </div>
 
 <h1>Kategorier</h1>
@@ -63,7 +79,7 @@ Form::from_array("new_event", array(), function($f) {
 			</td>
 			<td style="text-align: center;">
 				<?php if(Entry::count(array('category_id' => $cur->category_id)) == 0) {
-					echo simple_action("/admin/delete/category", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
+					echo simple_action("/admin/category/delete", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
 				} else { ?>
 				<span title="Kan ej radera, har kategorier">-</span>
 				<?php } ?>
@@ -77,12 +93,16 @@ Form::from_array("new_event", array(), function($f) {
 	Form::from_object($category, function($f) use ($event) {
 		$f->hidden_field('event', $event);
 		$f->text_field('name', "Namn:");
-		$f->textarea('description', "Beskrivning:", array('cols' => 80, 'rows'=>5, 'tworows' => true));
-		$f->textarea('rules', "Regler:", array('cols' => 80, 'rows'=>5, 'tworows' => true));
+		$f->textarea('description', "Beskrivning:", array(
+			'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+		));
+		$f->textarea('rules', "Regler:", array(
+			'cols' => 80, 'rows'=>5, 'tworows' => true, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+		));
 		$f->submit("Skapa");
 	}, array(
 		'layout' => 'p',
-		'action' => '/admin/create/category'
+		'action' => '/admin/category/create'
 	));
 ?>
 </div>

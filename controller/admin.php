@@ -29,7 +29,7 @@ if ( $method == 'POST' ) {
 		$category->commit();
 		flash_json('success', "Ändringarna sparades");
 		break;
-	case 'create/category':
+	case 'category/create':
 		try {
 			$category = Category::update_attributes($_POST['Category'], array('commit' => false));
 			$category->commit();
@@ -39,7 +39,7 @@ if ( $method == 'POST' ) {
 			flash('error', "Kunde inte spara kategorin, något fält saknas");
 		}
 		break;
-	case 'delete/category':
+	case 'category/delete':
 		$category = Category::from_id($_POST['id']);
 		if(Entry::count(array('category_id' => $category->category_id)) > 0) {
 			flash('error', "Kan inte radera kategori med bidrag");
@@ -49,7 +49,7 @@ if ( $method == 'POST' ) {
 		flash('success', "Kategorin togs bort");
 		redirect('admin');
 		break;
-	case 'create':
+	case 'event/create':
 		$api_event = NXAPI::event_info(array('event' => $_POST['event']));
 		if($api_event == null) {
 			flash('error', "Kan inte hitta eventet ".$_POST['event']." via api:et");

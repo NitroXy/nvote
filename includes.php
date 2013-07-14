@@ -7,6 +7,7 @@
 	require("$dir/config.php");
 	require_once('libs/BasicObject/BasicObject.php');
 	require_once('libs/BasicObject/ValidatingBasicObject.php');
+	require_once("$dir/libs/php-markdown/MarkdownHelper.php");
 
 	BasicObject::$output_htmlspecialchars = true;
 
