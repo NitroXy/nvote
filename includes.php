@@ -4,20 +4,17 @@
 	require("$dir/autoload.php");
 	require("$dir/libs/MC.php");
 	require("$dir/libs/nxauth/include.php");
-	require("$dir/config.php");
+	require_once("$dir/helpers/settings.php");
 	require_once('libs/BasicObject/BasicObject.php');
 	require_once('libs/BasicObject/ValidatingBasicObject.php');
 
+	Settings::load("$dir/default.php");
+	Settings::load("$dir/config.php");
 	BasicObject::$output_htmlspecialchars = true;
 
-	$db_settings = $settings['database'];
-	$db = new MySQLi($db_settings['host'], $db_settings['user'], $db_settings['password'], $db_settings['name']);
+	$db = new MySQLi(Settings::get('database.host'), Settings::get('database.user'), Settings::get('database.password'), Settings::get('database.name'));
 
-	unset($db_settings);
-
-	$crew_groups = array('Kreativ'); /* Crew groups that are admins */
-
-	NXAuth::init($settings['cas_config']);
+	NXAuth::init(Settings::get('cas_config'));
 
 	require("$dir/auth.php");
 
@@ -40,5 +37,7 @@
 		$event_obj->commit();
 	}
 
-	if(!isset($keep_settings) || !$keep_settings) unset($settings);
+	if ( !isset($keep_settings) || !$keep_settings ){
+		Settings::unset_sensitive();
+	}
 ?>
