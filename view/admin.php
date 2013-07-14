@@ -25,16 +25,14 @@ Form::from_array("new_event", array(), function($f) {
 
 	$f->select(FormSelect::from_array_callback($f, 'clone_event', array_merge(
 		array(
-			new Event(array('id' => -1,'name' => "Inget"))
+			new Event(array('name' => "Inget"))
 		), Event::selection()), function($e) {
 		return array($e->id, $e->name);
 	}, "Kopiera event:"));
 
 	$f->submit("Skapa event");
-}, array('action' => '/admin/new'));
+}, array('action' => '/admin/create'));
 ?>
-<hr/>
-<br/>
 
 </div>
 <div class='block'>
@@ -65,7 +63,7 @@ Form::from_array("new_event", array(), function($f) {
 			</td>
 			<td style="text-align: center;">
 				<?php if(Entry::count(array('category_id' => $cur->category_id)) == 0) {
-					echo simple_action("/admin/delete_category", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
+					echo simple_action("/admin/delete/category", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
 				} else { ?>
 				<span title="Kan ej radera, har kategorier">-</span>
 				<?php } ?>
@@ -84,7 +82,7 @@ Form::from_array("new_event", array(), function($f) {
 		$f->submit("Skapa");
 	}, array(
 		'layout' => 'p',
-		'action' => '/admin/create_category'
+		'action' => '/admin/create/category'
 	));
 ?>
 </div>

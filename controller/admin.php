@@ -29,7 +29,7 @@ if ( $method == 'POST' ) {
 		$category->commit();
 		flash_json('success', "Ändringarna sparades");
 		break;
-	case 'create_category':
+	case 'create/category':
 		try {
 			$category = Category::update_attributes($_POST['Category'], array('commit' => false));
 			$category->commit();
@@ -39,7 +39,7 @@ if ( $method == 'POST' ) {
 			flash('error', "Kunde inte spara kategorin, något fält saknas");
 		}
 		break;
-	case 'delete_category':
+	case 'delete/category':
 		$category = Category::from_id($_POST['id']);
 		if(Entry::count(array('category_id' => $category->category_id)) > 0) {
 			flash('error', "Kan inte radera kategori med bidrag");
@@ -49,16 +49,49 @@ if ( $method == 'POST' ) {
 		flash('success', "Kategorin togs bort");
 		redirect('admin');
 		break;
-	case 'clone':
-		foreach(Category::selection(array('event' => $_POST['event'])) as $cat) {
-			$c = $cat->duplicate();
-			$c->event = $event;
-			$c->commit();
+	case 'create':
+		$api_event = NXAPI::event_info(array('event' => $_POST['event']));
+		if($api_event == null) {
+			flash('error', "Kan inte hitta eventet ".$_POST['event']." via api:et");
+			redirect('admin');
+		}
+		$new_event = new Event(array('short_name' => $_POST['event'], 'name' => $api_event->name));
+		$new_event->location = null; //TODO: Read this data from event_info for the event
+
+		if(trim($_POST['clone_event']) != false) {
+			$clone_event = Event::from_id($_POST['clone_event']);
+			if(!$clone_event) {
+				flash('error', "Kunde inte hitta eventet att klona");
+				redirect('admin');
+			}
+		} else {
+			$clone_event = null;
+		}
+
+		if($clone_event) {
+			$new_event->general_rules = $clone_event->general_rules;
+			$new_event->frontpage_text = $clone_event->frontpage_text;
+			if($new_event->location == null) $new_event->location = $clone_event->location;
+		}
+		try {
+			$new_event->commit();
+			flash('success', "Skapade eventet {$new_event->name}");
+		} catch (ValidationException $e) {
+			flash_validation_errors($e, "Kunde inte skapa eventet:");
+		}
+
+		if($clone_event) {
+			foreach(Category::selection(array('event' => $clone_event->short_name)) as $cat) {
+				$c = $cat->duplicate();
+				$c->event = $new_event->short_name;
+				$c->commit(false);
+			}
 		}
 		redirect('admin');
 		break;
 	default:
-		die("Invalid command");
+		flash('error', "Invalid command $arg");
+		redirect('admin');
 	}
 } else {
 	switch($arg) {
