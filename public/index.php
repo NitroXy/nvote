@@ -6,9 +6,15 @@ require('../includes.php');
 require("$dir/auth.php");
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";
-if ( !(file_exists($dst) && is_writable($dst)) ){
-		die("\"$dst\" fattas eller är inte skrivbar");
+if(!file_exists($dst)) {
+	if(is_writable($dir)) mkdir($dst);
+	else {
+		die("\"$dst\" fattas och $dir är inte skrivbar.");
+	}
+} else if(!is_writable($dst)) {
+	die("\"$dst\" är inte skrivbar.");
 }
+
 foreach ( Category::selection(array('event' => $event)) as $cur ){
 	$tmp = "$dst/{$cur->dirname()}";
 	if ( !file_exists($tmp) ){
