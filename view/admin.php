@@ -3,6 +3,44 @@
 	<p class='error'>Slå på javascript eller gå och lek med en katt.</p>
 </noscript>
 
+<h1>Event</h1>
+<div class='block'>
+	<h2>Byt aktivt event</h2>
+<?php
+Form::from_array("change_active", array('event' => $event_obj->id), function($f) {
+	$f->select(FormSelect::from_array_callback($f, 'event', Event::selection(), function($e) {
+		return array($e->id, $e->name);
+	}, "Event"));
+	$f->submit("Ändra");
+}, array('action'=> "/admin/change", 'layout' => 'plain'));
+?>
+<hr/>
+<br/>
+	<h2>Skapa nytt event</h2>
+<?php
+Form::from_array("new_event", array(), function($f) {
+	$f->select(FormSelect::from_array_callback($f, 'event', Event::uncreated(), function($e) {
+		return array($e->short_name, $e->name);
+	}, "Event"));
+
+	$f->select(FormSelect::from_array_callback($f, 'clone_event', array_merge(
+		array(
+			new Event(array('id' => -1,'name' => "Inget"))
+		), Event::selection()), function($e) {
+		return array($e->id, $e->name);
+	}, "Kopiera event:"));
+
+	$f->submit("Skapa event");
+}, array('action' => '/admin/new'));
+?>
+<hr/>
+<br/>
+
+</div>
+<div class='block'>
+	<h2><?=$event_obj->name?></h2>
+</div>
+
 <h1>Kategorier</h1>
 <div class='block'>
 <h2>Befintliga</h2>
@@ -49,19 +87,6 @@
 		'action' => '/admin/create_category'
 	));
 ?>
-<h2>Klona</h2>
-<form method='post' action='/admin/clone'>
-	<p>
-		<i>Kopiera alla kategorier från tidigare event</i>
-	</p>
-	<select name='event'>
-<?php
-foreach(Event::selection() as $e) { ?>
-	<option value='<?=$e->short_name?>'><?=$e->name?></option>
-<?php } ?>
-</select>
-<input type='submit' value='Klona'/>
-</form>
 </div>
 
 <h1>Maintainance</h1>

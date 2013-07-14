@@ -7,6 +7,8 @@ $categories = Category::selection(array('event' => $event));
 
 $category = new Category(array('event' => $event));
 
+$event_obj = Event::one(array('short_name' => $event));
+
 $arg = isset($_GET['arg']) ? $_GET['arg'] : null;
 
 if ( $method == 'POST' ) {

@@ -1,6 +1,6 @@
 <?php
 
-require_once('Form.php');
+require_once('form.php');
 
 class FormSelect extends FormInput {
 	private $selected;
