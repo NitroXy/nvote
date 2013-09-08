@@ -30,7 +30,8 @@
 		// We can live without memcache
 	}
 
-	$event = NXAPI::current_event();
+	$event = Setting::get('event', NXAPI::current_event(), true);
+
 	$event_obj = Event::one(array('short_name' => $event));
 	if(!$event_obj) {
 		$api_event = NXAPI::event_info(array('event' => $event));
