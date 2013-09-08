@@ -23,7 +23,7 @@ class Config {
 
 	private static function clear_cache() {
 		echo "Clear BasicObject structure cache\n";
-		BasicObject::clear_structure_cache(MC::get_instance());
+		BasicObject::clear_structure_cache(MC::get_instance(), "nvote_");
 	}
 
 	/**

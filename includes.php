@@ -24,7 +24,7 @@
 
 	try {
 		$mc = MC::get_instance();
-		BasicObject::enable_structure_cache($mc);
+		BasicObject::enable_structure_cache($mc, "nvote_");
 	} catch(Exception $e) {
 		trigger_error("Exception when trying to enable BasicObject structure cache: ".$e->getMessage());
 		// We can live without memcache
