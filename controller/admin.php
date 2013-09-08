@@ -5,7 +5,7 @@ need_admin();
 $method = $_SERVER['REQUEST_METHOD'];
 $categories = Category::selection(array('event' => $event));
 
-$category = new Category(array('event' => $event));
+$new_category = new Category(array('event' => $event));
 
 $event_obj = Event::one(array('short_name' => $event));
 
@@ -108,5 +108,8 @@ if ( $method == 'POST' ) {
 		case 'categories':
 			output_json($categories);
 			exit;
+		case 'category/edit':
+			$selected_category = Category::from_id($_GET['id']);
+			break;
 	}
 }

@@ -40,7 +40,7 @@ hr {
 		letter-spacing: 1px;
 }
 
-#header #login_info {
+#header #subtitle {
 	font-size: 0.9em;
 	color: #ccc;
 	padding-left: 0.2em;
@@ -50,10 +50,16 @@ hr {
 	font-size: 3em;
 	font-weight: 800;
 	color: #666;
+	text-transform: uppercase;
 }
 
-#page_title #kreativ {
+.detail {
 	color: #c66600;
+}
+
+#subtitle .detail {
+	font-weight: 300;
+	margin-left: 15px;
 }
 
 #nav {
@@ -346,6 +352,7 @@ table .form-field textarea, table .form-field input[type=text], table .form-fiel
 	font-family: inherit;
 	font-size: inherit;
 	font-weight: inherit;
+	color: #888;
 }
 
 input[type=submit].link-submit {

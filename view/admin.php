@@ -64,7 +64,7 @@ Form::from_array("new_event", array(), function($f) {
 			<th>Kategori</th>
 			<th>Inlämning</th>
 			<th>Röstning</th>
-			<th>Radera</th>
+			<th></th>
 		</tr>
 	</thead>
 	<tbody>
@@ -77,20 +77,40 @@ Form::from_array("new_event", array(), function($f) {
 			<td>
 				<form><input type="checkbox" class='cat_status' data-what='vote' data-id='<?=$cur->category_id?>' <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/></form>
 			</td>
-			<td style="text-align: center;">
+			<td style="text-align: right;">
 				<?php if(Entry::count(array('category_id' => $cur->category_id)) == 0) {
 					echo simple_action("/admin/category/delete", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
-				} else { ?>
-				<span title="Kan ej radera, har kategorier">-</span>
-				<?php } ?>
+					echo " | ";
+				} ?>
+				<a href='/admin/category/edit?id=<?=$cur->category_id?>#edit_category'>Ändra</a>
 			</td>
 		</tr>
 	<?php } ?>
 	</tbody>
 </table>
+<?php if(isset($selected_category)) { ?>
+<a name="edit_category"/>
+<h2>Redigera kategori: <?=$selected_category->name?></h2>
+	<?php
+		Form::from_object($selected_category, function($f) use ($event) {
+			$f->text_field('name', "Namn:");
+			$f->textarea('description', "Beskrivning:", array(
+				'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+			));
+			$f->textarea('rules', "Regler:", array(
+				'cols' => 80, 'rows'=>5, 'class' => 'preview', 'hint' => "<div class='preview_target'/>"
+			));
+			$f->submit("Spara ändringar");
+		}, array(
+			'action' => '/admin/category/update'
+		));
+	?>
+	</div>
+<?php } ?>
+
 <h2>Ny kategori</h2>
 <?php
-	Form::from_object($category, function($f) use ($event) {
+	Form::from_object($new_category, function($f) use ($event) {
 		$f->hidden_field('event', $event);
 		$f->text_field('name', "Namn:");
 		$f->textarea('description', "Beskrivning:", array(
