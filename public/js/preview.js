@@ -1,5 +1,6 @@
 function render_preview(itm) {
-	$.post("/render.md", {'markdown': $(itm).val() }, function(data) {
+	var blockify = $(itm).hasClass('blockify')
+	$.post("/render.md", {'markdown': $(itm).val(), 'blockify': blockify }, function(data) {
 		$(itm).parents("tr").find(".preview_target").html(data)
 	})
 }
