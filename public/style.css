@@ -13,13 +13,14 @@ ul {
 
 h2 {
     margin-top: 1em;
+		margin-bottom: 0.5em;
 }
 
 p {
-    margin-bottom: 0.3em;
+    margin-bottom: 1em;
 }
 
-ul.ul {
+#content ul {
     list-style: disc;
     margin-left: 1.5em;
 }
@@ -28,13 +29,18 @@ a {
 	color: #888;
 }
 
+hr {
+	margin: 15px 0px;
+	color: #EEEEEE;
+}
+
 #header {
     background: #333;
     padding: 1.5em 1em 0em 5em;
 		letter-spacing: 1px;
 }
 
-#header #login_info {
+#header #subtitle {
 	font-size: 0.9em;
 	color: #ccc;
 	padding-left: 0.2em;
@@ -44,10 +50,16 @@ a {
 	font-size: 3em;
 	font-weight: 800;
 	color: #666;
+	text-transform: uppercase;
 }
 
-#page_title #kreativ {
+.detail {
 	color: #c66600;
+}
+
+#subtitle .detail {
+	font-weight: 300;
+	margin-left: 15px;
 }
 
 #nav {
@@ -281,5 +293,72 @@ label {
 }
 
 #admin_toggle a {
+
 	color: #999 !important;
+}
+.form-label {
+	text-align: right;
+	padding-right: 0.5em;
+	min-width: 100px;
+}
+
+.form-field {
+	min-width: 250px;
+	padding-right: 5px;
+}
+
+.form-hint {
+	font-style: italic;
+	min-width: 200px;
+}
+
+.form-error {
+	color: #ea0016;
+	font-weight: bold;
+	margin-left: 5px;
+}
+
+.form-label, .form-hint, .form-error {
+	padding-top: 3px;
+}
+
+.form-group {
+	padding-right: 5px;
+}
+
+.form .tworow {
+	text-align: left;
+}
+
+.form-inline {
+	display: inline;
+}
+
+table .form-field textarea, table .form-field input[type=text], table .form-field input[type=password] {
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.link-submit {
+	background-color: transparent;
+	text-decoration: underline;
+	border: none;
+	cursor: pointer;
+	margin: 0px;
+	margin-left: -2px;
+	padding: 0px;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: inherit;
+	color: #888;
+}
+
+input[type=submit].link-submit {
+	background-color: transparent !important;
+}
+
+.preview_target {
+	font-style: normal;
 }

@@ -12,7 +12,7 @@ $settings = array(
 		'port' => 443,
 		'key_id' => "nvote",                                   /* Name of the key on the server */
 		'private_key' => dirname(__FILE__) . "/nvote.priv",    /* Set this to the filename of your key */
-		'ca_cert' => "$nxauth_root/certs/GeoTrustGlobalCA.pem" /* If this is null no cert validation will be done */
+		'ca_cert' => "certs/GeoTrustGlobalCA.pem" /* If this is null no cert validation will be done */
 	),
 	'memcache' => array(
 		"host" => "localhost",

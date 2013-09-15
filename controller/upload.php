@@ -25,10 +25,10 @@ if ( $method == 'POST' ){
 	$_SESSION['description'] = $_POST['description'];
 
 	if ( !$entry_id ){
-		$entry = new Entry();
-		$entry->user_id = $u->user_id;
-		$entry->category_id = $_POST['category'];
-		$entry->event = $event;
+		$entry = new Entry(array(
+			'user_id' => $u->user_id,
+			'category_id' => $_POST['category']
+		);
 	} else {
 		$entry = Entry::from_id($entry_id);
 		if ( $u->user_id != $entry->user_id ){

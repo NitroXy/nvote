@@ -23,7 +23,22 @@ function return_bytes($val){
 }
 
 function flash($class, $message){
+	global $flash;
 	$_SESSION['flash'] = array($class => $message);
+	$flash[$class] = $message;
+}
+
+function flash_validation_errors($exception, $message) {
+	$msg = "$message<br/>";
+	$errors = $exception->errors;
+	if(isset($errors['base'])) {
+		$msg .= implode(", ",['base'])."<br/>";
+	}
+	unset($errors['base']);
+	foreach($errors as $field => $err) {
+		$msg .= "<strong>$field: </strong> ".implode(", ",$err)."<br/>";
+	}
+	flash('error', $msg);
 }
 
 function sessiondata($key, $default=null){
