@@ -26,13 +26,7 @@ $main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-
 $controller = "../controller/$main.php";
 $view = "../view/$main.php";
 
-$flash = array();
-if ( isset($_SESSION['flash']) ){
-	$flash = $_SESSION['flash'];
-	unset($_SESSION['flash']);
-}
-
-$open_cat = $event->Category(array('entry_open' => true));
+require "../controller/application.php";
 
 /* execute controller */
 if ( file_exists($controller) ){
