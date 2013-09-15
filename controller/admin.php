@@ -3,6 +3,7 @@
 need_admin();
 
 $method = $_SERVER['REQUEST_METHOD'];
+
 $categories = $event->Category;
 
 $new_category = new Category(array('event_id' => $event->id));
@@ -12,20 +13,17 @@ $arg = isset($_GET['arg']) ? $_GET['arg'] : null;
 if ( $method == 'POST' ) {
 	switch ( $arg ) {
 	case 'category_status':
-		$category = Category::from_id($_POST['id']);
-		if(!$category) {
-			flash_json('error', "Okänt kategori-id");
+		try {
+			$category = Category::from_id($_POST['id']);
+			if(!$category) {
+				flash_json('error', "Okänt kategori-id");
+			}
+			$category->status = $_POST['value'];
+			$category->commit();
+			flash_json('success', "Ändringarna sparades");
+		} catch (ValidationException $e) {
+			flash('error', "Det gick inte att spara, någon validering misslyckades.");
 		}
-		$value = $_POST['value'];
-		if($_POST['what'] == 'entry') {
-			$category->entry_open = $value;
-		} else if($_POST['what'] == 'vote') {
-			$category->vote_open = $value;
-		} else {
-			flash_json('error', "Internt fel (unknown 'what')");
-		}
-		$category->commit();
-		flash_json('success', "Ändringarna sparades");
 		break;
 	case 'category/create':
 		try {

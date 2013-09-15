@@ -362,3 +362,22 @@ input[type=submit].link-submit {
 .preview_target {
 	font-style: normal;
 }
+
+.category_status {
+	text-align: center;
+}
+
+th.category_status {
+	font-weight: normal;
+	font-style: italic;
+	padding: 5px;
+}
+
+.category_table {
+	border-collapse: collapse;
+}
+
+.category_table td {
+	border-top: 1px solid #ccc;
+	padding: 5px;
+}

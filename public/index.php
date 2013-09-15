@@ -22,8 +22,9 @@ foreach ( $event->Category as $cur ){
 	}
 }
 
-$main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : 'index';
+$main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : null;
 $controller = "../controller/$main.php";
+if($main == null) $main = "index";
 $view = "../view/$main.php";
 
 require "../controller/application.php";
@@ -44,7 +45,7 @@ if ( file_exists($controller) ){
 		<script type="application/javascript" src="/js/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
-				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '{$x->description}'"; }, $open_cat), ', ') ?>
+				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '". json_encode(render_markdown($x->description)) . "'"; }, $event->Category(array('status:!=' => 'hidden'))), ', ') ?>
 			};
 			var upload_max_filesize = <?=return_bytes(ini_get('upload_max_filesize'))?>;
 		</script>
@@ -62,11 +63,11 @@ if ( file_exists($controller) ){
 					<ul>
 						<li><a href="/">Start</a></li>
 						<li><a href="/rules">Regler</a></li>
-						<?php if ( Category::count(array('vote_open' => 1)) > 0 || (Can::administrate())) { ?>
+						<?php if ( Category::count(array('status:in' => Category::$entries_show_statuses)) > 0 || admin_mode()) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>
-							<?php if ( count($open_cat) > 0 ){ ?>
+							<?php if ( Category::count(array('status' => 'entry_open')) > 0 || admin_mode()){ ?>
 								<li><a href="/upload">Inlämning</a></li>
 							<?php } ?>
 							<li><a href="/my">Mina bidrag</a></li>

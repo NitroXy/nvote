@@ -1,9 +1,9 @@
 $(function() {
-	$(".cat_status").click(function() {
+	$(".cat_status").change(function() {
+		var id = $(this).parents("tr").data('id')
 		$.post('/admin/category_status', {
-			what: $(this).data('what'),
-			id: $(this).data('id'),
-			value: $(this).is(':checked') ? 1 : 0
+			id: id,
+			value: $("input[name='cat_status_" + id + "']:checked" ).val()
 		}, function(data) {
 			flash_data(data);
 		})
