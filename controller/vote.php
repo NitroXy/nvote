@@ -74,8 +74,8 @@ if ( isset($_GET['arg']) ){
 
 	$view = '../view/list_entry.php';
 } else {
-	$selection = array('event' => $event);
+	$selection = array();
 	if(!$admin_mode) $selection['vote_open'] = true;
-	$category = Category::selection($selection);
+	$category = $event->Category($selection);
 	$view = '../view/list_cat.php';
 }

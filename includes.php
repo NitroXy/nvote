@@ -30,16 +30,17 @@
 		// We can live without memcache
 	}
 
-	$event = Setting::get('event', NXAPI::current_event(), true);
+	$event_short_name = Setting::get('event', NXAPI::current_event(), true);
 
-	$event_obj = Event::one(array('short_name' => $event));
-	if(!$event_obj) {
-		$api_event = NXAPI::event_info(array('event' => $event));
-		$event_obj = new Event(array(
-			'short_name' => $event,
+	$event = Event::one(array('short_name' => $event_short_name));
+
+	if(!$event) {
+		$api_event = NXAPI::event_info(array('event' => $event_short_name));
+		$event = new Event(array(
+			'short_name' => $event_short_name,
 			'name' => $api_event->name
 		));
-		$event_obj->commit();
+		$event->commit();
 	}
 
 	if(!isset($keep_settings) || !$keep_settings) unset($settings);

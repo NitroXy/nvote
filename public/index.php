@@ -5,7 +5,7 @@ session_start();
 require('../includes.php');
 require("$dir/auth.php");
 /* ensure all directories works properly */
-$dst = "$dir/upload/$event";
+$dst = "$dir/upload/{$event->short_name}";
 if(!file_exists($dst)) {
 	if(is_writable("$dir/upload")) mkdir($dst);
 	else {
@@ -15,7 +15,7 @@ if(!file_exists($dst)) {
 	die("\"$dst\" är inte skrivbar.");
 }
 
-foreach ( Category::selection(array('event' => $event)) as $cur ){
+foreach ( $event->Category as $cur ){
 	$tmp = "$dst/{$cur->dirname()}";
 	if ( !file_exists($tmp) ){
 		mkdir($tmp);
@@ -32,7 +32,7 @@ if ( isset($_SESSION['flash']) ){
 	unset($_SESSION['flash']);
 }
 
-$open_cat = Category::selection(array('event' => $event, 'entry_open' => true));
+$open_cat = $event->Category(array('entry_open' => true));
 
 /* execute controller */
 if ( file_exists($controller) ){
@@ -58,11 +58,11 @@ if ( file_exists($controller) ){
 	<body>
 			<div id="header">
 				<div id="page_title">
-					NITROXY
-					<span id='kreativ'>KREATIV</span>
+					NitroXy
+					<span class='detail'>Kreativ</span>
 				</div>
 				<?php if ( $u ){ ?>
-				<p id='login_info'>Inloggad som <?=$u->username?>.</p>
+				<p id='subtitle'>Inloggad som <?=$u->username?> | <?=$event->name?></p>
 				<?php } ?>
 				<div id="nav">
 					<ul>

@@ -23,31 +23,33 @@ setlocale(LC_CTYPE, "en_US.UTF-8");
 
 need_admin();
 
-$event_obj = Event::one(array('short_name' => $event));
+$categories = $event->Category;
 
-$category = Category::selection(array('event' => $event));
-
-usort($category, function($a, $b) {
+usort($categories, function($a, $b) {
 	/* Just look at this unoptimal crap
 	 * (But at least BO caches it for us)
 	 */
 	return count($b->Entry(array('disqualified' => '0'))) - count($a->Entry(array('disqualified' => '0'))) ;
 });
 
-$info = $event_obj->info();
+$info = $event->info();
 
 $year = date("Y", strtotime($info->event_start));
 
 header('Content-Type: text/plain');
 
-echo "{$event_obj->name} ($year)
+echo "{$event->name} ($year)
 Sweden, Burseryd
 \n";
 
-foreach($category as $cat) {
+foreach($categories as $cat) {
 	echo "{$cat->name}\n";
 	print_line();
-	foreach($cat->Entry() as $entry) {
+	$entries = $cat->Entry(array('disqualified' => '0'));
+	usort($entries, function($a, $b) {
+		return $b->score() - $a->score();
+	});
+	foreach($entries as $entry) {
 		$author = html_entity_decode($entry->author);
 		$line = str_limit($entry->title, 39);
 		$line .= " " . str_limit(html_entity_decode($entry->author), 32);

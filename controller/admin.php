@@ -3,11 +3,9 @@
 need_admin();
 
 $method = $_SERVER['REQUEST_METHOD'];
-$categories = Category::selection(array('event' => $event));
+$categories = $event->Category;
 
-$new_category = new Category(array('event' => $event));
-
-$event_obj = Event::one(array('short_name' => $event));
+$new_category = new Category(array('event_id' => $event->id));
 
 $arg = isset($_GET['arg']) ? $_GET['arg'] : null;
 
@@ -61,8 +59,8 @@ if ( $method == 'POST' ) {
 		break;
 	case 'event/update':
 		try {
-			$event_obj = Event::update_attributes($_POST['Event'], array('commit' => false));
-			$event_obj->commit();
+			$event = Event::update_attributes($_POST['Event'], array('commit' => false));
+			$event->commit();
 			flash('success', "Ändringarna sparades");
 			redirect('admin');
 		} catch (ValidationException $e) {
