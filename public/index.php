@@ -100,6 +100,8 @@ if ( file_exists($controller) ){
 				/* render view */
 				if ( file_exists($view) ){
 					require($view);
+				} else if( file_exists("../errors/404.php")) {
+					require("../errors/404.php");
 				} else {
 					echo '<h1>404: Not found</h1>';
 				}
