@@ -39,6 +39,16 @@ if ( $method == 'POST' ) {
 			flash('error', "Kunde inte spara kategorin, något fält saknas");
 		}
 		break;
+	case 'category/update':
+		try {
+			$category = Category::update_attributes($_POST['Category'], array('commit' => false));
+			$category->commit();
+			flash('success', "Ändringarna sparades");
+			redirect('admin');
+		} catch (ValidationException $e) {
+			flash_validation_errors($e, "Kunde inte spara ändringarna");
+		}
+		break;
 	case 'category/delete':
 		$category = Category::from_id($_POST['id']);
 		if(Entry::count(array('category_id' => $category->category_id)) > 0) {
