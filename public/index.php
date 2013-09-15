@@ -7,9 +7,9 @@ require("$dir/auth.php");
 /* ensure all directories works properly */
 $dst = "$dir/upload/$event";
 if(!file_exists($dst)) {
-	if(is_writable($dir)) mkdir($dst);
+	if(is_writable("$dir/upload")) mkdir($dst);
 	else {
-		die("\"$dst\" fattas och $dir är inte skrivbar.");
+		die("\"$dst\" fattas och $dir/upload är inte skrivbar.");
 	}
 } else if(!is_writable($dst)) {
 	die("\"$dst\" är inte skrivbar.");
