@@ -1,0 +1,2 @@
+<?php
+$categories = $event->Category();

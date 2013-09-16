@@ -5,23 +5,20 @@ session_start();
 require('../includes.php');
 require("$dir/auth.php");
 /* ensure all directories works properly */
-$dst = "$dir/upload/$event";
-if ( !(file_exists($dst) && is_writable($dst)) ){
-		die("\"$dst\" fattas eller är inte skrivbar");
+$dst = "$dir/upload/{$event->short_name}";
+if(!file_exists($dst)) {
+	if(is_writable("$dir/upload")) mkdir($dst);
+	else {
+		die("\"$dst\" fattas och $dir/upload är inte skrivbar.");
+	}
+} else if(!is_writable($dst)) {
+	die("\"$dst\" är inte skrivbar.");
 }
-foreach ( Category::selection(array('event' => $event)) as $cur ){
+
+foreach ( $event->Category as $cur ){
 	$tmp = "$dst/{$cur->dirname()}";
 	if ( !file_exists($tmp) ){
 		mkdir($tmp);
-	}
-}
-
-/* Include helpers */
-$helper_dirs = dir("$dir/helpers");
-while(($f = $helper_dirs->read()) !== false ) {
-	$f = "$dir/helpers/$f";
-	if(is_file($f) && pathinfo($f, PATHINFO_EXTENSION) == "php") {
-		require $f;
 	}
 }
 
@@ -29,13 +26,7 @@ $main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-
 $controller = "../controller/$main.php";
 $view = "../view/$main.php";
 
-$flash = array();
-if ( isset($_SESSION['flash']) ){
-	$flash = $_SESSION['flash'];
-	unset($_SESSION['flash']);
-}
-
-$open_cat = Category::selection(array('event' => $event, 'entry_open' => true));
+require "../controller/application.php";
 
 /* execute controller */
 if ( file_exists($controller) ){
@@ -61,11 +52,11 @@ if ( file_exists($controller) ){
 	<body>
 			<div id="header">
 				<div id="page_title">
-					NITROXY
-					<span id='kreativ'>KREATIV</span>
+					NitroXy
+					<span class='detail'>Kreativ</span>
 				</div>
 				<?php if ( $u ){ ?>
-				<p id='login_info'>Inloggad som <?=$u->username?>.</p>
+				<p id='subtitle'>Inloggad som <?=$u->username?> | <?=$event->name?></p>
 				<?php } ?>
 				<div id="nav">
 					<ul>
@@ -103,6 +94,8 @@ if ( file_exists($controller) ){
 				/* render view */
 				if ( file_exists($view) ){
 					require($view);
+				} else if( file_exists("../errors/404.php")) {
+					require("../errors/404.php");
 				} else {
 					echo '<h1>404: Not found</h1>';
 				}

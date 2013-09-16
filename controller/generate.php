@@ -23,9 +23,9 @@ function create_poster($n, $entry){
 	return $poster;
 }
 
-$category = Category::selection(array('event' => $event));
+$categories = $event->Category;
 
-$e = "$dir/upload/$event";
+$e = "$dir/upload/{$event->short_name}";
 $final = "$e/final";
 if ( !file_exists($final) ){
 	mkdir($final);
@@ -37,7 +37,7 @@ if ( !file_exists("$e/template.png") ){
 	die("$e/template.png missing");
 }
 
-foreach ( $category as $cur ){
+foreach ( $categories as $cur ){
 	$d = "$final/{$cur->dirname()}";
 	if ( !file_exists($d) ){
 		mkdir($d);

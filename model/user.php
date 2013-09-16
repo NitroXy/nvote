@@ -24,11 +24,11 @@ class User extends BasicObject {
 		global $event;
 		switch($attr) {
 		case "crew_groups":
-			return NXAPI::crew_groups(array('event' => $event, 'user' => $this->user_id));
+			return NXAPI::crew_groups(array('event' => $event->short_name, 'user' => $this->user_id));
 		case "has_ticket":
-			return (NXAPI::ticket_status(array('event' => $event, 'user' => $this->user_id)) == 'paid');
+			return (NXAPI::ticket_status(array('event' => $event->short_name, 'user' => $this->user_id)) == 'paid');
 		case "is_crew":
-			return NXAPI::is_crew(array('event' => $event, 'user' => $this->user_id));
+			return NXAPI::is_crew(array('event' => $event->short_name, 'user' => $this->user_id));
 		default:
 			return parent::__get($attr);
 		}

@@ -51,8 +51,16 @@ $accepted = array_merge($image_types, $video_types, $music_types, $misc_types);
 
 $imagemagick_convert = "convert";
 
-class Entry extends BasicObject {
+class Entry extends ValidatingBasicObject {
 	private $mimetype = null;
+	private $score = null;
+
+	protected function validation_hooks() {
+		$this->validate_presence_of('category_id');
+		$this->validate_presence_of('author');
+		$this->validate_presence_of('title');
+		$this->validate_presence_of('user_id');
+	}
 
 	protected static function table_name(){
 		return 'entry';
@@ -148,12 +156,11 @@ class Entry extends BasicObject {
 	}
 
 	private function generate_filename($original, $revision, $ext=null){
-		global $event;
 		if ( $ext == null ){
 			$ext = pathinfo($original, PATHINFO_EXTENSION);
 		}
 		$username = preg_replace('/[^a-zA-Z0-9]/', '_', $this->User->username);
-		return "upload/{$event}/{$this->Category->dirname()}/{$username}_{$this->entry_id}_r{$revision}.{$ext}";
+		return "upload/{$this->Category->Event->short_name}/{$this->Category->dirname()}/{$username}_{$this->entry_id}_r{$revision}.{$ext}";
 	}
 
 	/**
@@ -270,7 +277,10 @@ class Entry extends BasicObject {
 
 	public function score() {
 		if($this->disqualified) return -1;
-		return Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
+		if($this->score == null) {
+			$this->score = Vote::sum('score', array('entry_id' => $this->entry_id)) + 0;
+		}
+		return $this->score;
 	}
 
 	public function is_image(){

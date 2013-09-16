@@ -4,7 +4,12 @@ $dir = dirname(__FILE__) . "/../";
 
 $keep_settings = true;
 
-require("$dir/includes.php");
+try {
+	require("$dir/includes.php");
+} catch(Exception $e) {
+	echo "Error in include: {$e->getMessage()}, continue anyway? (enter or ctrl+c)";
+	fgets(STDIN);
+}
 $db->close();
 unset($db);
 
@@ -23,7 +28,7 @@ class Config {
 
 	private static function clear_cache() {
 		echo "Clear BasicObject structure cache\n";
-		BasicObject::clear_structure_cache(MC::get_instance());
+		BasicObject::clear_structure_cache(MC::get_instance(), "nvote_");
 	}
 
 	/**
