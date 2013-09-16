@@ -4,7 +4,8 @@
 }
 
 body {
-    background: url("pattern.png") repeat;
+    /*background: url("pattern.png") repeat;*/
+	background: #efecec;
 }
 
 ul {
@@ -120,7 +121,15 @@ hr {
 #content h1 {
 	font-size: 4em;
 	font-weight: 800;
-	color: #ccc;
+	color: #b0b0b0;
+	margin-bottom: -0.5em;
+}
+
+#content h2.subtitle {
+	font-size: 2em;
+	font-weight: 800;
+	color: #c0c0c0;
+	margin-top: 0.5em;
 	margin-bottom: -0.5em;
 }
 
