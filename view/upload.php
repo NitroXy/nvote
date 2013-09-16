@@ -12,11 +12,11 @@
 	<div>
 		<label for="category">Kategori:</label>
 		<select name="category" id="category">
-			<?php foreach ( $category as $cur ){ ?>
+			<?php foreach ( $categories as $cur ){ ?>
 			<option value="<?=$cur->category_id?>"<?=$cur->category_id == $selected_category ? ' selected="selected"' : ''?>><?=$cur->name?></option>
 			<?php } ?>
 		</select>
-		<span id="cat_description" class="help"></span>
+		<p id="cat_description" class="help"></p>
 	</div>
 	<?php } ?>
 

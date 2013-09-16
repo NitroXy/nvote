@@ -106,10 +106,10 @@ hr {
 #content {
     margin: 0em 7em 2em 7em;
     padding: 1em;
-		color: #444;
-		font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-		font-size: 0.8em;
-		letter-spacing: 0.2px;
+	color: #444;
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+	font-size: 0.8em;
+	letter-spacing: 0.2px;
 }
 
 #content h1, h2, h3 {
@@ -130,9 +130,11 @@ hr {
 }
 
 #upload .help {
-    padding-left: 1em;
+    margin-left: 150px;
+	padding-left: 5px;
     font-size: 0.8em;
     color: #666;
+	margin-top: 7px;
 }
 
 #upload input[type=text] {

@@ -19,19 +19,19 @@ class Category extends ValidatingBasicObject {
 	}
 
 	public function visible() {
-		return $this->state != 'hidden';
+		return $this->status != 'hidden';
 	}
 
 	public function voting_open() {
-		return $this->state == 'voting_open';
+		return $this->status == 'voting_open';
 	}
 
 	public function entry_open() {
-		return $this->state == 'entry_open';
+		return $this->status == 'entry_open';
 	}
 
 	public function results_public() {
-		return $this->state == 'results_public';
+		return $this->status == 'results_public';
 	}
 
 }

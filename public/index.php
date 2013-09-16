@@ -44,7 +44,7 @@ if ( file_exists($controller) ){
 		<script type="application/javascript" src="/js/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
-				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '". json_encode(render_markdown($x->description)) . "'"; }, $event->Category(array('status:!=' => 'hidden'))), ', ') ?>
+				<?php echo implode(array_map(function($x){ return "{$x->category_id}: ". json_encode(render_markdown($x->description)) ; }, $event->Category(array('status:!=' => 'hidden'))), ', ') ?>
 			};
 			var upload_max_filesize = <?=return_bytes(ini_get('upload_max_filesize'))?>;
 		</script>
