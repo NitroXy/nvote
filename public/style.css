@@ -392,3 +392,7 @@ th.category_status {
 	border-top: 1px solid #ccc;
 	padding: 5px;
 }
+
+.select_admin_event {
+	float: right;
+}

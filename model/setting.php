@@ -21,4 +21,14 @@ class Setting extends BasicObject {
 		}
 		return $setting->value;
 	}
+
+	public static function set($key, $value) {
+		$setting = Setting::one(array('key' => $key));
+		if($setting == null) {
+			$setting = new Setting(array('key' => $key));
+		}
+		$setting->value = $value;
+		$setting->commit();
+		return $setting;
+	}
 };

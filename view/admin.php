@@ -7,7 +7,17 @@
 <h1>Event</h1>
 
 <div class='block'>
-	<h2><?=$event->name?></h2>
+<?php
+Form::from_array("edit_event", array('select_event' => $event->id), function($f) {
+	global $event;
+	$f->select(FormSelect::from_array_callback($f, 'select_event', Event::selection(), function($e) {
+		return array($e->id, $e->name);
+	}, "Redigera annat event:", array('selected' => $event->id, 'postback' => true)));
+}, array('action'=> "/admin", 'layout' => 'plain', 'class' => 'select_admin_event'));
+?>
+
+<h2><?=$event->name?></h2>
+
 <?php
 Form::from_object($event, function($f) {
 	$f->checkbox('visible', "Synlig:");
@@ -22,20 +32,21 @@ Form::from_object($event, function($f) {
 ?>
 </div>
 <div class='block'>
-	<!--
-	<h2>Byt aktivt event</h2>
+
+<h2>Byt aktivt event</h2>
 <?php
 Form::from_array("change_active", array('event' => $event->id), function($f) {
+	global $event;
 	$f->select(FormSelect::from_array_callback($f, 'event', Event::selection(), function($e) {
 		return array($e->id, $e->name);
-	}, "Event"));
+	}, "Event", array('selected' => $event->id)));
 	$f->submit("Ändra");
 }, array('action'=> "/admin/event/change", 'layout' => 'plain'));
 ?>
 <hr/>
 <br/>
--->
-	<h2>Skapa nytt event</h2>
+
+<h2>Skapa nytt event</h2>
 <?php
 Form::from_array("new_event", array(), function($f) {
 	$f->select(FormSelect::from_array_callback($f, 'event', Event::uncreated(), function($e) {
@@ -56,6 +67,7 @@ Form::from_array("new_event", array(), function($f) {
 </div>
 
 <h1>Kategorier</h1>
+<h2 class='subtitle'>för <?=$event->name?></h2>
 
 <?php
 $statuses = array(
