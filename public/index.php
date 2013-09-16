@@ -22,9 +22,8 @@ foreach ( $event->Category as $cur ){
 	}
 }
 
-$main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : null;
+$main = (isset($_GET['main']) && strlen($_GET['main']) > 0) ? preg_replace('[^a-b]', '', $_GET['main']) : 'index';
 $controller = "../controller/$main.php";
-if($main == null) $main = "index";
 $view = "../view/$main.php";
 
 require "../controller/application.php";
