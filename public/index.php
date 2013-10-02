@@ -70,14 +70,14 @@ if ( file_exists($controller) ){
 						<li><a href="/rules">Regler</a></li>
 						<?php if ( admin_mode() ) { ?>
 							<li><a href="/entries">Bidrag</a></li>
-						<?php } else if( Category::count(array('status' => Category::$RESULTS_PUBLIC)) > 0) { ?>
+						<?php } else if( Category::count(array('event_id' => $event->id, 'status' => Category::$RESULTS_PUBLIC)) > 0) { ?>
 							<li><a href="/entries">Resultat</a></li>
 						<?php } ?>
-						<?php if ( Category::count(array('status' => Category::$VOTING_OPEN)) > 0) { ?>
+						<?php if ( Category::count(array('event_id' => $event->id, 'status' => Category::$VOTING_OPEN)) > 0) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>
-							<?php if ( Category::count(array('status' => Category::$ENTRY_OPEN)) > 0 || admin_mode()){ ?>
+							<?php if ( Category::count(array('event_id' => $event->id, 'status' => Category::$ENTRY_OPEN)) > 0 || admin_mode()){ ?>
 								<li><a href="/upload">Inlämning</a></li>
 							<?php } ?>
 							<li><a href="/my">Mina bidrag</a></li>

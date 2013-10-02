@@ -1,3 +1,7 @@
 <?php
 
-$categories = $event->Category(array('status:!=' => Category::$HIDDEN));
+
+$selection = array();
+if( !admin_mode() ) $selection['status:!='] = Category::$HIDDEN;
+
+$categories = $event->Category($selection);
