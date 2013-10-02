@@ -1,16 +1,6 @@
-<?php if(Can::administrate() ) { ?>
-<div id='admin_toggle'>
-<?php if(!$admin_mode) { ?>
-		<a href="/vote/<?=$category->id?>?admin">Till adminläge</a>
-	<?php } else { ?>
-		<a href="/vote/<?=$category->id?>">Till normalläge</a>
-	<?php }?>
-</div>
-<?php }?>
-
 <h1><?=$category->name?></h1>
 
-<?php if(Can::vote() && !$admin_mode) { ?>
+<?php if(Can::vote() && !admin_mode()) { ?>
 <form action="/vote/<?=$category->id?>" method="post" id="vote_form">
 <div class='block'>
 	<input type="hidden" name="vote" value="do"/>
@@ -54,7 +44,7 @@
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 
-	<?php if(Can::vote() && !$admin_mode) { ?>
+	<?php if(Can::vote() && !admin_mode()) { ?>
 	<div class="vote">
 		<table class="vote_table">
 			<tr>
@@ -73,12 +63,12 @@
 			</tr>
 		</table>
 	</div>
-	<?php } else if($admin_mode) { ?>
+	<?php } else if(admin_mode()) { ?>
 		<div class="score_display"><?=$cur->score()?></div>
 	<?php } ?>
 
 	<p class="clear" />
-	<?php if($admin_mode) { ?>
+	<?php if(admin_mode()) { ?>
 	<form action="/disqualify" method="post">
 		<input type="hidden" name="entry_id" value="<?=$cur->id?>"/>
 		<input type="hidden" name="cat_id" value="<?=$category->id?>"/>
@@ -96,7 +86,7 @@
 </div>
 <?php } ?>
 
-<?php if(Can::vote() && !$admin_mode) { ?>
+<?php if(Can::vote() && !admin_mode()) { ?>
 <noscript>
 <div class='block'>
 		<input type="submit" value="Spara röster" class="vote_button"/>

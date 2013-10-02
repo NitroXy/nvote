@@ -396,3 +396,23 @@ th.category_status {
 .select_admin_event {
 	float: right;
 }
+
+#admin-box {
+	float: right;
+	background: #EFECEC;
+	padding: 10px;
+	font-size: 0.8em;
+	margin: 0px 0px 10px 10px;
+}
+
+.admin-toggle {
+	text-decoration: underline;
+}
+
+.admin-toggle-on {
+	color: #0f0;
+}
+
+.admin-toggle-off {
+	color: #f00;
+}

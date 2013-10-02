@@ -50,6 +50,12 @@ if ( file_exists($controller) ){
 		</script>
 	</head>
 	<body>
+		<?php
+		if(Can::administrate()) { ?>
+			<div id="admin-box">
+				Admin mode: <a href="?admin_mode=<?=(admin_mode()?'off':'on')?>" class='admin-toggle admin-toggle-<?=(admin_mode()?'on':'off')?>'><?=admin_mode()?"ON":"OFF"?></a>
+			</div>
+		<?php } ?>
 			<div id="header">
 				<div id="page_title">
 					NitroXy
@@ -62,7 +68,9 @@ if ( file_exists($controller) ){
 					<ul>
 						<li><a href="/">Start</a></li>
 						<li><a href="/rules">Regler</a></li>
-						<?php if ( Category::count(array('status:in' => Category::$entries_show_statuses)) > 0 || admin_mode()) { ?>
+						<?php if( admin_mode() ) { ?>
+							<li><a href="/vote">Bidrag</a></li>
+						<?php } else if ( Category::count(array('status:in' => Category::$entries_show_statuses)) > 0) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>

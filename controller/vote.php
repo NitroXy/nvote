@@ -1,7 +1,5 @@
 <?php
 
-$admin_mode = (isset($_GET['admin']) && Can::administrate() );
-
 if ( isset($_GET['arg']) ){
 	$cat_id = $_GET['arg'];
 	$category = Category::from_id($cat_id);
@@ -47,10 +45,10 @@ if ( isset($_GET['arg']) ){
 	}
 
 	$selection = array('category_id' => $cat_id);
-	if(! $admin_mode ) $selection['disqualified'] = 0;
+	if(! admin_mode() ) $selection['disqualified'] = 0;
 	$entry = Entry::selection($selection);
 
-	if(!$admin_mode) {
+	if(!admin_mode()) {
 		$vote_map = array();
 		$blank_votes = array();
 
@@ -75,7 +73,7 @@ if ( isset($_GET['arg']) ){
 	$view = '../view/list_entry.php';
 } else {
 	$selection = array();
-	if(!$admin_mode) $selection['status'] = 'voting_open';
+	if(!admin_mode()) $selection['status'] = 'voting_open';
 	$category = $event->Category($selection);
 	$view = '../view/list_cat.php';
 }
