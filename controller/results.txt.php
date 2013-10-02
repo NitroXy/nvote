@@ -21,9 +21,10 @@ BasicObject::$output_htmlspecialchars = false;
 
 setlocale(LC_CTYPE, "en_US.UTF-8");
 
-need_admin();
+$selection = array();
+if( !admin_mode() ) $selection['status'] = Category::$RESULTS_PUBLIC;
 
-$categories = $event->Category;
+$categories = $event->Category($selection);;
 
 usort($categories, function($a, $b) {
 	/* Just look at this unoptimal crap
