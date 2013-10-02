@@ -2,6 +2,6 @@
 
 <div class='big_links'>
 <?php foreach ( $category as $cur ){ ?>
-	 <a href="/vote/<?=$cur->id?>"><?=$cur->name?></a>
+	<a href="/<?=$main?>/<?=$cur->id?>"><?=$cur->name?></a>
 <?php } ?>
 </div>

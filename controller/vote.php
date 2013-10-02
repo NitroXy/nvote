@@ -70,7 +70,7 @@ if ( isset($_GET['arg']) ){
 		});
 	}
 
-	$view = '../view/list_entry.php';
+	$view = '../view/vote.php';
 } else {
 	$selection = array();
 	if(!admin_mode()) $selection['status'] = 'voting_open';
