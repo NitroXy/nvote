@@ -44,7 +44,7 @@ if ( file_exists($controller) ){
 		<script type="application/javascript" src="/js/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
-				<?php echo implode(array_map(function($x){ return "{$x->category_id}: ". json_encode(render_markdown($x->description)) ; }, $event->Category(array('status:!=' => 'hidden'))), ', ') ?>
+				<?php echo implode(array_map(function($x){ return "{$x->category_id}: ". json_encode(render_markdown($x->description)) ; }, $event->Category(array('status:!=' => Category::$HIDDEN))), ', ') ?>
 			};
 			var upload_max_filesize = <?=return_bytes(ini_get('upload_max_filesize'))?>;
 		</script>
@@ -68,13 +68,16 @@ if ( file_exists($controller) ){
 					<ul>
 						<li><a href="/">Start</a></li>
 						<li><a href="/rules">Regler</a></li>
-						<?php if( admin_mode() ) { ?>
-							<li><a href="/vote">Bidrag</a></li>
-						<?php } else if ( Category::count(array('status:in' => Category::$entries_show_statuses)) > 0) { ?>
+						<?php if ( admin_mode() ) { ?>
+							<li><a href="/entries">Bidrag</a></li>
+						<?php } else if( Category::count(array('status' => Category::$RESULTS_PUBLIC)) > 0) { ?>
+							<li><a href="/entries">Resultat</a></li>
+						<?php } ?>
+						<?php if ( Category::count(array('status' => Category::$VOTING_OPEN)) > 0) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>
-							<?php if ( Category::count(array('status' => 'entry_open')) > 0 || admin_mode()){ ?>
+							<?php if ( Category::count(array('status' => Category::$ENTRY_OPEN)) > 0 || admin_mode()){ ?>
 								<li><a href="/upload">Inlämning</a></li>
 							<?php } ?>
 							<li><a href="/my">Mina bidrag</a></li>

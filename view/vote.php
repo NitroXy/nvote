@@ -1,6 +1,5 @@
 <h1><?=$category->name?></h1>
 
-<?php if(Can::vote() && !admin_mode()) { ?>
 <form action="/vote/<?=$category->id?>" method="post" id="vote_form">
 <div class='block'>
 	<input type="hidden" name="vote" value="do"/>
@@ -28,15 +27,9 @@
 		Du kan inte ge två bidrag samma poäng.<br/>
 		<p class="clear"/>
 </div>
-<?php } ?>
 
 <?php foreach ( $entry as $cur ){ ?>
-<div class="block entry <?=($cur->disqualified?'disqualified':'')?>">
-	<?php if($cur->disqualified) { ?>
-		<h2>Diskvalifierad</h2>
-		<strong>Anledning: <?=$cur->disqualified_reason?></strong>
-		<p class="clear"/>
-	<?php } ?>
+<div class="block entry">
 <?php if($cur->has_screenshot()) { ?>
 	<a href="/download/<?=$cur->entry_id?>"><img class="screenshot" src="/screenshot/<?=$cur->entry_id?>"/></a>
 <?php } ?>
@@ -44,7 +37,6 @@
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 
-	<?php if(Can::vote() && !admin_mode()) { ?>
 	<div class="vote">
 		<table class="vote_table">
 			<tr>
@@ -63,37 +55,17 @@
 			</tr>
 		</table>
 	</div>
-	<?php } else if(admin_mode()) { ?>
-		<div class="score_display"><?=$cur->score()?></div>
-	<?php } ?>
 
 	<p class="clear" />
-	<?php if(admin_mode()) { ?>
-	<form action="/disqualify" method="post">
-		<input type="hidden" name="entry_id" value="<?=$cur->id?>"/>
-		<input type="hidden" name="cat_id" value="<?=$category->id?>"/>
-		<?php if(!$cur->disqualified) { ?>
-			<input type="hidden" name="new_value" value="1"/>
-			<label for="reason">Anledning: </label>
-			<input type="text" name="reason" id="reason"/>
-			<input type="submit" value="Diskvalifiera"/>
-		<?php } else { ?>
-			<input type="hidden" name="new_value" value="0"/>
-			<input type="submit" value="Ta bort diskvalifiering"/>
-		<?php } ?>
-	</form>
-	<?php } ?>
 </div>
 <?php } ?>
 
-<?php if(Can::vote() && !admin_mode()) { ?>
 <noscript>
 <div class='block'>
 		<input type="submit" value="Spara röster" class="vote_button"/>
 </div>
 </noscript>
-	</form>
-<?php } ?>
+</form>
 
 <script type="text/javascript">
 	$(function() {
