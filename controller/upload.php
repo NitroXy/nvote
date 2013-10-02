@@ -69,7 +69,7 @@ if ( $method == 'POST' ){
 	redirect('my');
 } else if ( $method == 'GET' ){
 	$filter = array();
-	if(!admin_mode()) $filter['status'] = 'entry_open';
+	if(!admin_mode()) $filter['status'] = Category::$ENTRY_OPEN;
 	$categories = $event->Category($filter);
 	$selected_category = sessiondata('category');
 	$title = sessiondata('title');

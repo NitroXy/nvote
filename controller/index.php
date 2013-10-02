@@ -1,3 +1,3 @@
 <?php
 
-$categories = $event->Category(array('status:!=' => 'hidden'));
+$categories = $event->Category(array('status:!=' => Category::$HIDDEN));
