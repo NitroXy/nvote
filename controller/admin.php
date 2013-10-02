@@ -27,17 +27,13 @@ if ( $method == 'POST' ) {
 	}
 	switch ( $arg ) {
 	case 'category_status':
-		try {
-			$category = Category::from_id($_POST['id']);
-			if(!$category) {
-				flash_json('error', "Okänt kategori-id");
-			}
-			$category->status = $_POST['value'];
-			$category->commit();
-			flash_json('success', "Ändringarna sparades");
-		} catch (ValidationException $e) {
-			flash('error', "Det gick inte att spara, någon validering misslyckades.");
+		$category = Category::from_id($_POST['id']);
+		if(!$category) {
+			flash_json('error', "Okänt kategori-id");
 		}
+		$category->status = $_POST['value'];
+		$category->commit(false);
+		flash_json('success', "Ändringarna sparades");
 		break;
 	case 'category/create':
 		try {
