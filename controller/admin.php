@@ -3,6 +3,17 @@
 need_admin();
 
 $method = $_SERVER['REQUEST_METHOD'];
+
+$global_event = $event;
+if(isset($_SESSION['admin_selected_event'])) {
+	$event = Event::from_id($_SESSION['admin_selected_event']);
+	if($event == null) {
+		unset($_SESSION['admin_selected_event']);
+		flash('error', "Ogiltligt event valt för redigering, återställer till global inställning");
+		$event = $global_event;
+	}
+}
+
 $categories = $event->Category;
 
 $new_category = new Category(array('event_id' => $event->id));
@@ -10,21 +21,18 @@ $new_category = new Category(array('event_id' => $event->id));
 $arg = isset($_GET['arg']) ? $_GET['arg'] : null;
 
 if ( $method == 'POST' ) {
+	if(isset($_POST['select_event'])) {
+		$_SESSION['admin_selected_event'] = $_POST['select_event'];
+		unset($_POST['select_event']);
+	}
 	switch ( $arg ) {
 	case 'category_status':
 		$category = Category::from_id($_POST['id']);
 		if(!$category) {
 			flash_json('error', "Okänt kategori-id");
 		}
-		$value = $_POST['value'];
-		if($_POST['what'] == 'entry') {
-			$category->entry_open = $value;
-		} else if($_POST['what'] == 'vote') {
-			$category->vote_open = $value;
-		} else {
-			flash_json('error', "Internt fel (unknown 'what')");
-		}
-		$category->commit();
+		$category->status = $_POST['value'];
+		$category->commit(false);
 		flash_json('success', "Ändringarna sparades");
 		break;
 	case 'category/create':
@@ -56,6 +64,16 @@ if ( $method == 'POST' ) {
 		$category->delete();
 		flash('success', "Kategorin togs bort");
 		redirect('admin');
+		break;
+	case 'event/change':
+		/* Validate that the event exist: */
+		$event = Event::from_id($_POST['event']);
+		if($event != null) {
+			Setting::set('event', $event->short_name);
+			flash('success', "Ändrade aktivt event");
+		} else {
+			flash('error', "Kunde inte hitta valt event");
+		}
 		break;
 	case 'event/update':
 		try {
@@ -105,6 +123,9 @@ if ( $method == 'POST' ) {
 				$c->commit(false);
 			}
 		}
+		redirect('admin');
+		break;
+	case '':
 		redirect('admin');
 		break;
 	default:

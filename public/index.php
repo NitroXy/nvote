@@ -44,12 +44,18 @@ if ( file_exists($controller) ){
 		<script type="application/javascript" src="/js/nvote.js"></script>
 		<script type="application/javascript">
 			var category_desc = {
-				<?php echo implode(array_map(function($x){ return "{$x->category_id}: '{$x->description}'"; }, $open_cat), ', ') ?>
+				<?php echo implode(array_map(function($x){ return "{$x->category_id}: ". json_encode(render_markdown($x->description)) ; }, $event->Category(array('status:!=' => Category::$HIDDEN))), ', ') ?>
 			};
 			var upload_max_filesize = <?=return_bytes(ini_get('upload_max_filesize'))?>;
 		</script>
 	</head>
 	<body>
+		<?php
+		if(Can::administrate()) { ?>
+			<div id="admin-box">
+				Admin mode: <a href="?admin_mode=<?=(admin_mode()?'off':'on')?>" class='admin-toggle admin-toggle-<?=(admin_mode()?'on':'off')?>'><?=admin_mode()?"ON":"OFF"?></a>
+			</div>
+		<?php } ?>
 			<div id="header">
 				<div id="page_title">
 					NitroXy
@@ -62,11 +68,16 @@ if ( file_exists($controller) ){
 					<ul>
 						<li><a href="/">Start</a></li>
 						<li><a href="/rules">Regler</a></li>
-						<?php if ( Category::count(array('vote_open' => 1)) > 0 || (Can::administrate())) { ?>
+						<?php if ( admin_mode() ) { ?>
+							<li><a href="/entries">Bidrag</a></li>
+						<?php } else if( Category::count(array('event_id' => $event->id, 'status' => Category::$RESULTS_PUBLIC)) > 0) { ?>
+							<li><a href="/entries">Resultat</a></li>
+						<?php } ?>
+						<?php if ( Category::count(array('event_id' => $event->id, 'status' => Category::$VOTING_OPEN)) > 0) { ?>
 							<li><a href="/vote">Rösta</a></li>
 						<?php } ?>
 						<?php if ( Can::submit() ){ ?>
-							<?php if ( count($open_cat) > 0 ){ ?>
+							<?php if ( Category::count(array('event_id' => $event->id, 'status' => Category::$ENTRY_OPEN)) > 0 || admin_mode()){ ?>
 								<li><a href="/upload">Inlämning</a></li>
 							<?php } ?>
 							<li><a href="/my">Mina bidrag</a></li>

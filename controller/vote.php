@@ -1,11 +1,18 @@
 <?php
 
-$admin_mode = (isset($_GET['admin']) && Can::administrate() );
+$show_results_txt = false;
+
+if(!Can::vote()) {
+	$error_title = "Kan inte rösta.";
+	$error_msg = "Du har inte rätt att rösta.";
+	$view = '../view/error.php';
+	return;
+}
 
 if ( isset($_GET['arg']) ){
 	$cat_id = $_GET['arg'];
 	$category = Category::from_id($cat_id);
-	if ( !($category && (Can::administrate() || $category->vote_open)) ){
+	if ( !($category && $category->voting_open() ) ){
 		$view = '../view/bad_cat.php';
 		return;
 	}
@@ -46,36 +53,28 @@ if ( isset($_GET['arg']) ){
 		redirect("vote/$cat_id");
 	}
 
-	$selection = array('category_id' => $cat_id);
-	if(! $admin_mode ) $selection['disqualified'] = 0;
-	$entry = Entry::selection($selection);
+	$entry = Entry::selection(array('category_id' => $cat_id, 'disqualified' => 0));
 
-	if(!$admin_mode) {
-		$vote_map = array();
-		$blank_votes = array();
+	$vote_map = array();
+	$blank_votes = array();
 
-		if( $u ) {
-			foreach(Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)) as $v) {
-				$vote_map[$v->entry_id] = $v->score;
-				if($v->entry_id == null) $blank_votes[] = $v->score;
-			}
-
-			shuffle($entry);
-			usort($entry, function($a, $b) {
-				global $u;
-				return $b->user_vote($u) - $a->user_vote($b);
-			});
+	if( $u ) {
+		foreach(Vote::selection(array('category_id' => $category->category_id, 'user_id' => $u->user_id)) as $v) {
+			$vote_map[$v->entry_id] = $v->score;
+			if($v->entry_id == null) $blank_votes[] = $v->score;
 		}
-	} else {
+
+		shuffle($entry);
 		usort($entry, function($a, $b) {
-			return $b->score() - $a->score();
+			global $u;
+			return $b->user_vote($u) - $a->user_vote($b);
 		});
 	}
 
-	$view = '../view/list_entry.php';
+	$view = '../view/vote.php';
 } else {
 	$selection = array();
-	if(!$admin_mode) $selection['vote_open'] = true;
-	$category = $event->Category($selection);
+	$category = $event->Category(array('status' => Category::$VOTING_OPEN));
+	if(count($category) == 0) redirect("");
 	$view = '../view/list_cat.php';
 }

@@ -1,10 +1,10 @@
 <?php /* -*- mode: html; -*- */ ?>
 <h1>Mina inlämnade bidrag</h1>
 
-<?php $category = null; ?>
-<?php foreach ( $entry as $cur ){ ?>
-
-<?php if ( $category != $cur->category_id ){ ?>
+<?php
+foreach ( $entry as $cur ){
+	if ( $category != $cur->category_id ){
+?>
 <h2><?=$cur->Category->name?></h2>
 <?php $category = $cur->category_id; } ?>
 
@@ -21,7 +21,7 @@
 	<span class="author">av <b><?=$cur->author?></b> (rev <?=$cur->get_revision()?>)</span>
 	<div class="description"><?=str_replace("\n", "<br/>", $cur->description)?></div>
 
-	<?php if ( $cur->Category->entry_open ){ ?>
+	<?php if ( $cur->Category->entry_open() ){ ?>
 	<ul>
 		<li><a href="/edit/<?=$cur->entry_id?>">Redigera</a></li>
 		<li><a href="/reupload/<?=$cur->entry_id?>">Ladda upp ny version</a></li>
@@ -30,7 +30,9 @@
 	<?php } ?>
 	<p class="clear"/>
 </div>
-<?php } ?>
-<?php if ( count($entry) == 0 ){ ?>
-<div class='block'>Inga bidrag inlämnade.</div>
+<?php
+}
+
+if ( count($entry) == 0 ) { ?>
+	<div class='block'>Inga bidrag inlämnade.</div>
 <?php } ?>

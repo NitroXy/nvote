@@ -4,7 +4,8 @@
 }
 
 body {
-    background: url("pattern.png") repeat;
+    /*background: url("pattern.png") repeat;*/
+	background: #efecec;
 }
 
 ul {
@@ -106,10 +107,10 @@ hr {
 #content {
     margin: 0em 7em 2em 7em;
     padding: 1em;
-		color: #444;
-		font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-		font-size: 0.8em;
-		letter-spacing: 0.2px;
+	color: #444;
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+	font-size: 0.8em;
+	letter-spacing: 0.2px;
 }
 
 #content h1, h2, h3 {
@@ -120,7 +121,15 @@ hr {
 #content h1 {
 	font-size: 4em;
 	font-weight: 800;
-	color: #ccc;
+	color: #b0b0b0;
+	margin-bottom: -0.5em;
+}
+
+#content h2.subtitle {
+	font-size: 2em;
+	font-weight: 800;
+	color: #c0c0c0;
+	margin-top: 0.5em;
 	margin-bottom: -0.5em;
 }
 
@@ -130,9 +139,11 @@ hr {
 }
 
 #upload .help {
-    padding-left: 1em;
+    margin-left: 150px;
+	padding-left: 5px;
     font-size: 0.8em;
     color: #666;
+	margin-top: 7px;
 }
 
 #upload input[type=text] {
@@ -361,4 +372,47 @@ input[type=submit].link-submit {
 
 .preview_target {
 	font-style: normal;
+}
+
+.category_status {
+	text-align: center;
+}
+
+th.category_status {
+	font-weight: normal;
+	font-style: italic;
+	padding: 5px;
+}
+
+.category_table {
+	border-collapse: collapse;
+}
+
+.category_table td {
+	border-top: 1px solid #ccc;
+	padding: 5px;
+}
+
+.select_admin_event {
+	float: right;
+}
+
+#admin-box {
+	float: right;
+	background: #EFECEC;
+	padding: 10px;
+	font-size: 0.8em;
+	margin: 0px 0px 10px 10px;
+}
+
+.admin-toggle {
+	text-decoration: underline;
+}
+
+.admin-toggle-on {
+	color: #0f0;
+}
+
+.admin-toggle-off {
+	color: #f00;
 }

@@ -66,6 +66,10 @@ function need_admin(){
 	}
 }
 
+function admin_mode() {
+	return Can::administrate() && isset($_SESSION['admin_mode']) && $_SESSION['admin_mode'] == true;
+}
+
 function output_json($data) {
 	header("Content-Type: text/json");
 	echo json_encode($data);

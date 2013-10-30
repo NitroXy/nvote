@@ -28,7 +28,7 @@ if ( $method == 'POST' ){
 		$entry = new Entry(array(
 			'user_id' => $u->user_id,
 			'category_id' => $_POST['category']
-		);
+		));
 	} else {
 		$entry = Entry::from_id($entry_id);
 		if ( $u->user_id != $entry->user_id ){
@@ -37,7 +37,7 @@ if ( $method == 'POST' ){
 		}
 	}
 
-	if ( !$entry->Category->entry_open ){
+	if ( !$entry->Category->entry_open() && !admin_mode() ){
 		flash('error', 'Inlämningen har stängt');
 		redirect($from);
 	}
@@ -68,7 +68,9 @@ if ( $method == 'POST' ){
 	flash('success', $entry ? 'Ändringarna sparade' : 'Bidraget uppladdat');
 	redirect('my');
 } else if ( $method == 'GET' ){
-	$category = $open_cat;
+	$filter = array();
+	if(!admin_mode()) $filter['status'] = Category::$ENTRY_OPEN;
+	$categories = $event->Category($filter);
 	$selected_category = sessiondata('category');
 	$title = sessiondata('title');
 	$author = sessiondata('author', $u->username);

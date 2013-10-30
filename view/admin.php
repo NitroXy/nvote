@@ -7,7 +7,17 @@
 <h1>Event</h1>
 
 <div class='block'>
-	<h2><?=$event->name?></h2>
+<?php
+Form::from_array("edit_event", array('select_event' => $event->id), function($f) {
+	global $event;
+	$f->select(FormSelect::from_array_callback($f, 'select_event', Event::selection(), function($e) {
+		return array($e->id, $e->name);
+	}, "Redigera annat event:", array('selected' => $event->id, 'postback' => true)));
+}, array('action'=> "/admin", 'layout' => 'plain', 'class' => 'select_admin_event'));
+?>
+
+<h2><?=$event->name?></h2>
+
 <?php
 Form::from_object($event, function($f) {
 	$f->checkbox('visible', "Synlig:");
@@ -22,20 +32,21 @@ Form::from_object($event, function($f) {
 ?>
 </div>
 <div class='block'>
-	<!--
-	<h2>Byt aktivt event</h2>
+
+<h2>Byt aktivt event</h2>
 <?php
 Form::from_array("change_active", array('event' => $event->id), function($f) {
+	global $event;
 	$f->select(FormSelect::from_array_callback($f, 'event', Event::selection(), function($e) {
 		return array($e->id, $e->name);
-	}, "Event"));
+	}, "Event", array('selected' => $event->id)));
 	$f->submit("Ändra");
 }, array('action'=> "/admin/event/change", 'layout' => 'plain'));
 ?>
 <hr/>
 <br/>
--->
-	<h2>Skapa nytt event</h2>
+
+<h2>Skapa nytt event</h2>
 <?php
 Form::from_array("new_event", array(), function($f) {
 	$f->select(FormSelect::from_array_callback($f, 'event', Event::uncreated(), function($e) {
@@ -56,27 +67,46 @@ Form::from_array("new_event", array(), function($f) {
 </div>
 
 <h1>Kategorier</h1>
+<h2 class='subtitle'>för <?=$event->name?></h2>
+
+<?php
+$statuses = array(
+	'hidden' => 'Dold',
+	'visible' => 'Synlig',
+	'entry_open' => "Inlämning öppen",
+	'entry_closed' => "Inlämning stängd",
+	'voting_open' => "Röstning öppen",
+	'voting_closed' => "Röstning stängd",
+	'results_public' => "Resultat publik"
+);
+?>
+
 <div class='block'>
 <h2>Befintliga</h2>
-<table>
+<form>
+<table class='category_table'>
 	<thead>
 		<tr>
 			<th>Kategori</th>
-			<th>Inlämning</th>
-			<th>Röstning</th>
+			<th colspan='<?=count($statuses)?>'>Status</th>
+			<th></th>
+		</tr>
+		<tr>
+			<th></th>
+<?php foreach($statuses as $status => $name) {
+	echo "<th class='category_status'>$name</th>";
+}?>
 			<th></th>
 		</tr>
 	</thead>
 	<tbody>
 	<?php foreach ($categories as $cur){ ?>
-		<tr>
+		<tr data-id='<?=$cur->id?>'>
 			<td><?=$cur->name?></td>
-			<td>
-				<form><input type="checkbox" class='cat_status' data-what='entry' data-id='<?=$cur->category_id?>' <?=$cur->entry_open ? ' checked="checked"' : '' ?>/></form>
-			</td>
-			<td>
-				<form><input type="checkbox" class='cat_status' data-what='vote' data-id='<?=$cur->category_id?>' <?=$cur->vote_open  ? ' checked="checked"' : '' ?>/></form>
-			</td>
+
+			<?php foreach($statuses as $status => $name) {
+				echo "<td class='category_status'><input type='radio' class='cat_status' name='cat_status_{$cur->id}' value='$status' ".( $cur->status == $status ? 'checked="checked"' : '')."/></td>";
+			}?>
 			<td style="text-align: right;">
 				<?php if(Entry::count(array('category_id' => $cur->category_id)) == 0) {
 					echo simple_action("/admin/category/delete", "Radera", array('id' => $cur->category_id), array('confirm' => "Är du säker på att du vill radera kategorin?"));
@@ -88,6 +118,7 @@ Form::from_array("new_event", array(), function($f) {
 	<?php } ?>
 	</tbody>
 </table>
+</form>
 <?php if(isset($selected_category)) { ?>
 <a name="edit_category"/>
 <h2>Redigera kategori: <?=$selected_category->name?></h2>
