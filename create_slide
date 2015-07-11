@@ -3,7 +3,7 @@
 template=$1
 author=$2
 title=$3
-dst=$4
+dst="$4"
 
 # create poster image
 convert $template \
@@ -21,4 +21,4 @@ ffmpeg \
 	-pix_fmt yuv420p -c:v libx264 -q:v 2 \
 	-ac 2 \
 	-r 29.97 -t 10 \
-	-y $dst
+	-y "$dst"
