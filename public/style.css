@@ -86,21 +86,21 @@ hr {
     display: table-cell;
 }
 
-#message {
+.message {
     margin: 1em 0;
     padding: 0.5em;
     border: 1px solid #000;
 }
 
-#message.error {
+.message.error {
     background: #fcc;
 }
 
-#message.info {
+.message.info {
     background: #ccf;
 }
 
-#message.success {
+.message.success {
     background: #cfc;
 }
 

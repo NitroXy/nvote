@@ -83,7 +83,6 @@ if ( file_exists($controller) ){
 							<li><a href="/my">Mina bidrag</a></li>
 						<?php } ?>
 
-
 						<?php if ( Can::administrate() ){ ?>
 							<li><a href="/admin">Admin</a></li>
 						<?php } ?>
@@ -99,8 +98,13 @@ if ( file_exists($controller) ){
 
 			<div id="content">
 				<?php foreach ( $flash as $class => $message ){ ?>
-				<p id="message" class="<?=$class?>"><?=$message?></p>
+				<p class="message <?=$class?>"><?=$message?></p>
 				<?php } ?>
+				
+				<?php if ( !Can::submit() ){ ?>
+				<p class="message info">Du måste vara inloggad och ha en betald biljett för att ladda upp bidrag och rösta.</p>
+				<?php } ?>
+				
 				<?php
 				/* render view */
 				if ( file_exists($view) ){

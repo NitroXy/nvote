@@ -5,7 +5,7 @@ var flash = function(){
     var show = function(string, cls){
         $content = $('#message');
         if ( $content.length == 0 ){
-            $content = $('<p id="message" class="'+cls+'" style="display:none;">'+string+'<p>');
+            $content = $('<p id="message" class="message '+cls+'" style="display:none;">'+string+'<p>');
             $('#content').prepend($content);
             $content.fadeIn();
         } else {
