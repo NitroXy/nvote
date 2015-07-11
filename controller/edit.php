@@ -8,7 +8,7 @@ if ( !$entry ){
 	return;
 }
 
-if ( !$entry->Category->entry_open ){
+if ( !$entry->Category->entry_open() ){
 	$view = '../view/entry_closed.php';
 	return;
 }
