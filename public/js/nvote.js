@@ -7,14 +7,15 @@ var flash = function(){
         if ( $content.length == 0 ){
             $content = $('<p id="message" class="message '+cls+'" style="display:none;">'+string+'<p>');
             $('#content').prepend($content);
-            $content.fadeIn();
+            $content.fadeIn().delay(5000).fadeOut();
         } else {
             $content.fadeOut(400, function(){
-                $content.attr('class', cls);
+                $content.attr('class', "message " + cls);
                 $content.html(string);
-                $content.fadeIn();
+                $content.fadeIn().delay(5000).fadeOut();
             });
         }
+		$('#message').width($("#content").width() - 12);
     };
 
     return {

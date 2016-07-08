@@ -14,7 +14,7 @@ ul {
 
 h2 {
     margin-top: 1em;
-		margin-bottom: 0.5em;
+	margin-bottom: 0.5em;
 }
 
 p {
@@ -70,12 +70,12 @@ hr {
 #nav a {
     color: #999;
     text-decoration: none;
-		font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
-		font-size: 14px;
-		font-weight: 500;
-		line-height: 44px;
-		margin-right: 22px;
-		text-transform: uppercase;
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 44px;
+	margin-right: 22px;
+	text-transform: uppercase;
 }
 
 #nav a:hover {
@@ -87,7 +87,9 @@ hr {
 }
 
 .message {
-    margin: 1em 0;
+	position: fixed;
+	top: 2px;
+    margin: 5px 0;
     padding: 0.5em;
     border: 1px solid #000;
 }
@@ -304,9 +306,9 @@ label {
 }
 
 #admin_toggle a {
-
 	color: #999 !important;
 }
+
 .form-label {
 	text-align: right;
 	padding-right: 0.5em;
