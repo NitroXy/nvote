@@ -42,6 +42,10 @@
     - name: config php
       template: src=php.ini.j2 dest=/etc/php5/apache2/php.ini
       notify: restart apache2
+    - name: install python-mysqldb
+      apt: name=python-mysqldb state=installed
+    - name: create mysql db
+      mysql_db: name=nvote state=present
   handlers:
     - name: restart apache2
       service: name=apache2 state=restarted
