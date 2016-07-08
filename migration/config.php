@@ -13,7 +13,7 @@ try {
 $db->close();
 unset($db);
 
-class Config {
+class MigrationConfig {
 	public static function fix_database($username=null) {
 		global $settings;
 		$db_settings = $settings['database'];
@@ -54,7 +54,7 @@ class Config {
 	 */
 	public static function end_hook() {
 		//Clear basic object after end too (good way to manually clear cache by just running update_database)
-		Config::clear_cache();
+		MigrationConfig::clear_cache();
 	}
 
 	/**
@@ -71,7 +71,7 @@ class Config {
 	 */
 	public static function post_migration_hook($migration_name) {
 		//Clear basic object cache after each migration
-		Config::clear_cache();
+		MigrationConfig::clear_cache();
 	}
 	/*
 	 * Called after a migration rollback has occurred, just before exit()
