@@ -1,0 +1,242 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "c3f5ae3679a84a1d5f80831069b5563e",
+    "content-hash": "5826f1264cd35e2d7df94e4ff7c78c71",
+    "packages": [
+        {
+            "name": "leafo/scssphp",
+            "version": "v0.3.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/leafo/scssphp.git",
+                "reference": "e89391b29b5eb66e211ce4d20ccb2bb519137c08"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/leafo/scssphp/zipball/e89391b29b5eb66e211ce4d20ccb2bb519137c08",
+                "reference": "e89391b29b5eb66e211ce4d20ccb2bb519137c08",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "require-dev": {
+                "kherge/box": "~2.5",
+                "phpunit/phpunit": "~3.7",
+                "squizlabs/php_codesniffer": "~2.3"
+            },
+            "bin": [
+                "bin/pscss"
+            ],
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "classmap.php"
+                ],
+                "psr-4": {
+                    "Leafo\\ScssPhp\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Leaf Corcoran",
+                    "email": "leafot@gmail.com",
+                    "homepage": "http://leafo.net"
+                }
+            ],
+            "description": "scssphp is a compiler for SCSS written in PHP.",
+            "homepage": "http://leafo.github.io/scssphp/",
+            "keywords": [
+                "css",
+                "less",
+                "sass",
+                "scss",
+                "stylesheet"
+            ],
+            "time": "2015-10-23 17:15:30"
+        },
+        {
+            "name": "michelf/php-markdown",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NitroXy/php-markdown.git",
+                "reference": "053f8f324050da3c194e805a74a55d0d9a05dc93"
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-lib": "1.3.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Michelf": ""
+                }
+            },
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michel Fortin",
+                    "email": "michel.fortin@michelf.ca",
+                    "homepage": "http://michelf.ca/",
+                    "role": "Developer"
+                },
+                {
+                    "name": "John Gruber",
+                    "homepage": "http://daringfireball.net/"
+                }
+            ],
+            "description": "PHP Markdown",
+            "homepage": "http://michelf.ca/projects/php-markdown/",
+            "keywords": [
+                "markdown"
+            ],
+            "time": "2013-11-17 20:48:54"
+        },
+        {
+            "name": "nitroxy/basic-object",
+            "version": "v1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NitroXy/BasicObject.git",
+                "reference": "6b3a2d96484cc1de337f2abc2e4a0261bb435dbe"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NitroXy/BasicObject/zipball/6b3a2d96484cc1de337f2abc2e4a0261bb435dbe",
+                "reference": "6b3a2d96484cc1de337f2abc2e4a0261bb435dbe",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "BasicObject.php",
+                    "ValidatingBasicObject.php",
+                    "IBasicObjectMemCache.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David Sveningsson",
+                    "email": "ext@sidvind.com"
+                },
+                {
+                    "name": "Eric Druid",
+                    "email": "eric.druid+github@gmail.com"
+                },
+                {
+                    "name": "Andreas Tarandi",
+                    "email": "torandi@gmail.com"
+                },
+                {
+                    "name": "Petter Blomberg",
+                    "email": "github@petterblomberg.se"
+                }
+            ],
+            "description": "Yet anoyther object relational mapper",
+            "time": "2016-02-14 23:44:12"
+        },
+        {
+            "name": "nitroxy/nxauth",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/NitroXy/nxauth.git",
+                "reference": "87d185733699100860a4870877160451026995b8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/NitroXy/nxauth/zipball/87d185733699100860a4870877160451026995b8",
+                "reference": "87d185733699100860a4870877160451026995b8",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Andreas Tarandi",
+                    "email": "torandi@gmail.com"
+                }
+            ],
+            "description": "A module for authenticating with NitroXys CAS-service",
+            "time": "2015-02-21 20:25:32"
+        },
+        {
+            "name": "torandi/php-migrations",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/torandi/php_migrations.git",
+                "reference": "00e7f7d2fc525fc1be436e1f9b5b9aeff0d0269f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/torandi/php_migrations/zipball/00e7f7d2fc525fc1be436e1f9b5b9aeff0d0269f",
+                "reference": "00e7f7d2fc525fc1be436e1f9b5b9aeff0d0269f",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Andreas Tarandi",
+                    "email": "torandi@gmail.com"
+                }
+            ],
+            "time": "2016-02-15 18:35:09"
+        }
+    ],
+    "packages-dev": [
+        {
+            "name": "torandi/php-console",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/torandi/php_console.git",
+                "reference": "ff4c2550bc02301f91a057845c3d5e154bed6fbb"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/torandi/php_console/zipball/ff4c2550bc02301f91a057845c3d5e154bed6fbb",
+                "reference": "ff4c2550bc02301f91a057845c3d5e154bed6fbb",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Andreas Tarandi",
+                    "email": "torandi@gmail.com"
+                }
+            ],
+            "time": "2016-02-15 18:15:46"
+        }
+    ],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "michelf/php-markdown": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
