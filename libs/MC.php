@@ -1,5 +1,6 @@
 <?php
-class MC extends Memcache {
+
+class MC extends Memcache implements IBasicObjectMemCache {
 	private static $instance;
 	private $writes=0;
 	private $reads=0;
@@ -30,8 +31,8 @@ class MC extends Memcache {
 		return $this->writes;
 	}
 
-	public function set($key, $var, $flag, $expire) {
-		parent::set($key, $var, $flag, $expire);
+	public function set($key, $var) {
+		parent::set($key, $var);
 		$this->writes++;
 	}
 
@@ -42,5 +43,9 @@ class MC extends Memcache {
 	public function get($key, $flags=null) {
 		$this->reads++;
 		return parent::get($key, $flags);
+	}
+
+	public function delete($key) {
+		parent::delete($key);
 	}
 }

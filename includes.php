@@ -2,12 +2,13 @@
 	$dir = dirname(__FILE__);
 
 	require("$dir/autoload.php");
-	require("$dir/libs/MC.php");
-	require("$dir/vendor/nitroxy/nxauth/include.php");
-	require("$dir/config.php");
-	require_once('vendor/nitroxy/basic-object/BasicObject.php');
+	require_once("$dir/vendor/autoload.php");
 	require_once('vendor/nitroxy/basic-object/ValidatingBasicObject.php');
 	require_once("$dir/vendor/michelf/php-markdown/MarkdownHelper.php");
+	require("$dir/libs/MC.php");
+
+	require("$dir/vendor/nitroxy/nxauth/include.php");
+	require("$dir/config.php");
 
 	BasicObject::$output_htmlspecialchars = true;
 
