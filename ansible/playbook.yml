@@ -1,0 +1,47 @@
+---
+- hosts: default
+  become: true
+  tasks:
+    #- name: upgrade packages
+    #  apt: update_cache=yes upgrade=safe
+    - name: uninstall exim4
+      apt: name=exim4* state=absent
+    - name: install apache2
+      apt: name=apache2-mpm-prefork state=installed
+    - name: install php5
+      apt: name=libapache2-mod-php5 state=installed
+      notify: restart apache2
+    - name: install php5-mysql
+      apt: name=php5-mysql state=installed
+      notify: restart apache2
+    - name: install php5-memcache
+      apt: name=php5-memcache state=installed
+    - name: install memcached
+      apt: name=memcached state=installed
+    - name: install mysql
+      apt: name=mysql-server state=installed
+    - name: config apache2 (enable rewrite module)
+      apache2_module: state=present name=rewrite
+      notify: restart apache2
+    - name: config apache2 (create vhost)
+      template: src=vhost.conf.j2 dest=/etc/apache2/sites-enabled/vhost.conf
+      notify: restart apache2
+    - name: config apache2 (remove default vhost)
+      file: path=/etc/apache2/sites-enabled/000-default.conf state=absent
+      notify: restart apache2
+    - name: config apache2 (allow access to /vagrant)
+      blockinfile:
+        dest: /etc/apache2/apache2.conf
+        block: |
+          <Directory /vagrant>
+                  Options Indexes FollowSymLinks
+                  AllowOverride All
+                  Require all granted
+          </Directory>
+      notify: restart apache2
+    - name: config php
+      template: src=php.ini.j2 dest=/etc/php5/apache2/php.ini
+      notify: restart apache2
+  handlers:
+    - name: restart apache2
+      service: name=apache2 state=restarted
