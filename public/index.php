@@ -7,8 +7,9 @@ require("$dir/auth.php");
 /* ensure all directories works properly */
 $dst = "$dir/upload/{$event->short_name}";
 if(!file_exists($dst)) {
-	if(is_writable("$dir/upload")) mkdir($dst);
-	else {
+	if(is_writable("$dir/upload")) {
+		mkdir($dst);
+	} else {
 		die("\"$dst\" fattas och $dir/upload är inte skrivbar.");
 	}
 } else if(!is_writable($dst)) {
