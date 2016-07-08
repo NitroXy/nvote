@@ -1,7 +1,7 @@
 *~
 \#*\#
 .\#*
-upload
+upload/*
 config.php
 .console_history
 *.priv
