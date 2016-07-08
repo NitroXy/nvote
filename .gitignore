@@ -5,3 +5,5 @@ upload
 config.php
 .console_history
 *.priv
+.vagrant/
+*.swp

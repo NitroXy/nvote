@@ -1,0 +1,9 @@
+<VirtualHost *:80>
+	RewriteEngine on
+	DocumentRoot /vagrant/public
+	<Directory /vagrant/public>
+		Options -Indexes +FollowSymLinks
+		AllowOverride All
+	</Directory>
+	ErrorLog /vagrant/error.log
+</VirtualHost>
