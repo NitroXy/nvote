@@ -1,1 +1,1 @@
-../libs/php_migrations/create_migration.php
+../vendor/torandi/php-migrations/create_migration.php

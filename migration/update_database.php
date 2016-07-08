@@ -1,1 +1,1 @@
-../libs/php_migrations/update_database.php
+../vendor/torandi/php-migrations/update_database.php
