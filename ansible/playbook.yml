@@ -16,6 +16,10 @@
       notify: restart apache2
     - name: install php5-memcache
       apt: name=php5-memcache state=installed
+      notify: restart apache2
+    - name: install php5-curl
+      apt: name=php5-curl state=installed
+      notify: restart apache2
     - name: install memcached
       apt: name=memcached state=installed
     - name: install mysql
