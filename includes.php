@@ -3,11 +3,11 @@
 
 	require("$dir/autoload.php");
 	require("$dir/libs/MC.php");
-	require("$dir/libs/nxauth/include.php");
+	require("$dir/vendor/nitroxy/nxauth/include.php");
 	require("$dir/config.php");
-	require_once('libs/BasicObject/BasicObject.php');
-	require_once('libs/BasicObject/ValidatingBasicObject.php');
-	require_once("$dir/libs/php-markdown/MarkdownHelper.php");
+	require_once('vendor/nitroxy/basic-object/BasicObject.php');
+	require_once('vendor/nitroxy/basic-object/ValidatingBasicObject.php');
+	require_once("$dir/vendor/michelf/php-markdown/MarkdownHelper.php");
 
 	BasicObject::$output_htmlspecialchars = true;
 
