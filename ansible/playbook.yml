@@ -50,6 +50,9 @@
       apt: name=python-mysqldb state=installed
     - name: create mysql db
       mysql_db: name=nvote state=present
+    - name: create uploads folder /opt/nvote-uploads
+      file: dest=/opt/nvote-uploads state=directory mode=0777
+
   handlers:
     - name: restart apache2
       service: name=apache2 state=restarted
